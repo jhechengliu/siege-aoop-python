@@ -5,7 +5,7 @@ ARGS=("$@")
 NAME=rsa
 REPOSITORY="argnctu/aoop_unity"
 TAG="latest"
-REPO_NAME=oop-proj-unity-ros
+REPO_NAME=siege-aoop-python
 
 IMG="${REPOSITORY}:${TAG}"
 
