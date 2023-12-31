@@ -9,8 +9,8 @@ class Map:
     def __init__(self):
         self.map_array = None
         self.map_publisher = rospy.Publisher('/map_information', UInt8MultiArray, queue_size=1)
-        self.attacker_mouse_subsricer = rospy.Subscriber('/attacker_mouse_event', UInt8MultiArray, self.attacker_mouse_callback)
-        self.defender_mouse_subsricer = rospy.Subscriber('/defender_mouse_event', UInt8MultiArray, self.defender_mouse_callback)
+        self.attacker_mouse_subsriber = rospy.Subscriber('/attacker_mouse_event', UInt8MultiArray, self.attacker_mouse_callback)
+        self.defender_mouse_subsriber = rospy.Subscriber('/defender_mouse_event', UInt8MultiArray, self.defender_mouse_callback)
         self.map_message = UInt8MultiArray()
 
     def __load_map():
