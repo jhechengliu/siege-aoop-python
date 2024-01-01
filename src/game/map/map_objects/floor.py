@@ -11,5 +11,9 @@ class Floor():
     def __init__(self, location:tuple):
         self.__location = location
 
-    def get_location(self):
+    def get_location(self) -> tuple:
+        """
+        Returns: 
+            (tuple) location of the floor 
+        """
         return self.__location

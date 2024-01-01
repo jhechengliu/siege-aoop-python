@@ -21,18 +21,19 @@ class Door():
         self.__is_broken = False
         self.__location = location
 
-    def use(self):
+    def use(self) -> None:
         """
         open/close the door. If the door is open, close the door. If the door is closed, open the door.
 
-        Returns: None
+        Returns: 
+            (None)
         """
         if (self.__is_broken == False):
             self.__is_open = not self.__is_open
         else:
             self.__is_open = True
 
-    def break_it(self):
+    def break_it(self) -> None:
         """
         break the door. If the door is still there, break the door. If door is dead, then do nothing.
         the door will turn into closed state and cannot be open because um...
@@ -42,9 +43,10 @@ class Door():
         self.__is_broken = True
         self.__is_open = True
 
-    def get_location(self):
+    def get_location(self) -> tuple:
         """
-        Returns: the location of the door object
+        Returns: 
+            (tuple) the location of the door object
         """
         return self.__location
     

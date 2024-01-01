@@ -42,8 +42,8 @@ class MapBuilder:
             file_name (string): the json file's name (without '.json') in the Assets/Data Folder
 
         Returns:
-            A new MapBuilder Class
-        """
+            (MapBuilder) A new MapBuilder Class
+        """ 
         self.__map_json = None
         self.__load_map(file_name)
 
@@ -55,14 +55,14 @@ class MapBuilder:
             file_name (string): the json file's name (without '.json') in the Assets/Data Folder
 
         Returns:
-            None
+            (None)
         """
         with open('././Assets/Data/' + file_name + '.json', 'r') as json_file:
             # Load the JSON content into a Python dictionary
             self.__map_json = json.load(json_file)
             print(self.__map_json)
 
-    def __id_to_map_object(array: list, map: dict):
+    def __id_to_map_object(array: list, map: dict) -> None:
         """
         Change the list from number to map objects by looking at the map dictionary
 
@@ -77,7 +77,7 @@ class MapBuilder:
             'floor', 'wall', 'soft_wall', 'door', 'window'
 
         Returns:
-            None, but the value of the array will change after doing this
+            (None) but the value of the array will change after doing this
 
         Throws:
             NoSuchJsonObjectTypeError: thrown when array has non recognized id in array or map has unknown object type strings 
