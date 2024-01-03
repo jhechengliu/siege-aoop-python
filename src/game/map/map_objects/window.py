@@ -12,3 +12,10 @@ class Window():
         """
         self.__isbroken = False
         self.__location = None
+    
+    def get_location(self) -> tuple:
+        """
+        Returns: 
+            (tuple) location of the window
+        """
+        return self.__location
