@@ -1,3 +1,5 @@
+from game import Player
+
 class Operator(Player):
     """
     This class represents an operator in the game.

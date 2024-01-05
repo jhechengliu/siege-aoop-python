@@ -9,9 +9,12 @@ class Invoker():
     allowing for parameterization, queuing, and logging.
 
     Attributes:
-        _commands (list): A list to store the history of executed commands.
+        __instance (Invoker): The instance of the Invoker class.
+        __commands (list): A list to store the history of executed commands.
+        last_command (Command): The last executed command.
 
     Methods:
+        get_instance(): Returns the instance of the Invoker class.
         execute(command): Execute the given command.
         undo(): Undo the last executed command.
         batch_execute(commands): Execute a batch of commands simultaneously.
@@ -23,7 +26,7 @@ class Invoker():
         """
         Initialize the Invoker with an empty list to store commands.
         """
-        self._commands = []
+        self.__commands = []
         warnings.warn("Use get_instance class method to obtain the instance", UserWarning)
 
     @classmethod
@@ -41,7 +44,7 @@ class Invoker():
             command: The command to be executed.
         """
         command.execute()
-        self._commands.append(command)
+        self.__commands.append(command)
 
     def undo(self):
         """
@@ -51,8 +54,8 @@ class Invoker():
             IndexError: If there are no commands to undo.
         """
         try:
-            last_command = self._commands.pop()
-            last_command.undo()
+            last__command = self.__commands.pop()
+            last__command.undo()
         except IndexError:
             raise IndexError("No commands to undo.")
 
