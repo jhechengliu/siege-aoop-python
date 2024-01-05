@@ -1,6 +1,8 @@
 class Player():
     """
     This class represents a player in the game.
+    It contains the name of the player and the identity of the player.
+    The identity of the player is either Attacker or Defender.
 
     Attributes:
         name (str): The name of the player.
@@ -20,7 +22,7 @@ class Player():
         """
 
         self.name = name
-        self.get_identity = []
+        self.get_identity = None
     
     def get_name(self):
         """
