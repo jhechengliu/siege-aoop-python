@@ -1,4 +1,7 @@
 import json
+from game.map.map_objects import door, floor, window, soft_wall, wall
+import pprint
+
 class MapBuilder:
     """
     NOTE: Use get_instance method to get the instance, DONT use constructor 
@@ -46,6 +49,8 @@ class MapBuilder:
         """ 
         self.__map_json = None
         self.__load_map(file_name)
+        self.__map = {}
+        self.__id_to_map_object(self.__map_json["map"], self.__map_json)
 
     def __load_map(self, file_name) -> None:
         """
@@ -62,7 +67,7 @@ class MapBuilder:
             self.__map_json = json.load(json_file)
             print(self.__map_json)
 
-    def __id_to_map_object(array: list, map: dict) -> None:
+    def __id_to_map_object(self, array: list, map: dict) -> None:
         """
         Change the list from number to map objects by looking at the map dictionary
 
@@ -77,38 +82,45 @@ class MapBuilder:
             'floor', 'wall', 'soft_wall', 'door', 'window'
 
         Returns:
-            (None) but the value of the array will change after doing this
+            (None) but the value of the self.__map_array will change after doing this
 
         Throws:
             NoSuchJsonObjectTypeError: thrown when array has non recognized id in array or map has unknown object type strings 
         """
 
-        width = len(array[0])
-        length = len(array)
-        for length_index in range(width):
-            for width_index in range(length):
+        x_len = len(array[0])
+        y_len = len(array)
+        print("x_len", x_len, "y_len", y_len)
+        for y in range(y_len):
+            for x in range(x_len):
+                location = (x, y)
+                
                 try:
-                    object_type = map(str(array[length][width]))
+                    object_type = map[str(array[y][x])]
+                    print(object_type)
                 except KeyError:
                     raise NoSuchJsonObjectTypeError()
                 
-                if (object_type == "wall"):
-                    pass
+                print(x, y, object_type)
+                if (object_type == "wall"): 
+                    self.__map[location] = wall.Wall(location)
                 elif (object_type == "floor"):
-                    pass
-                elif (object_type == "soft_wall"):
-                    pass
+                    self.__map[location] = floor.Floor(location)
+                elif (object_type == "softWall"):
+                    self.__map[location] = soft_wall.SoftWall(location)
                 elif (object_type == "window"):
-                    pass
+                    self.__map[location] = window.Window(location)
                 elif (object_type == "door"):
-                    pass
+                    self.__map[location] = door.Door(location)
                 else:
                     raise NoSuchJsonObjectTypeError()
                 
+        pprint.pprint(self.__map, indent=4, sort_dicts=True)
+
 
 class NoSuchJsonObjectTypeError(Exception):
     """
-    Used in replacing id with objects in MapBuilder class __id_to_map_object methods
+    Called when someone does something bad in replacing id with objects in MapBuilder class __id_to_map_object methods
     """
     pass
 

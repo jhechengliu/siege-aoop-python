@@ -17,3 +17,9 @@ class Floor():
             (tuple) location of the floor 
         """
         return self.__location
+    
+    def __str__(self):
+        return f"Floor ({self.__location})"
+    
+    def __repr__(self):
+        return f"Floor ({self.__location})"

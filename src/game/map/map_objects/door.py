@@ -50,3 +50,9 @@ class Door():
         """
         return self.__location
     
+    def __str__(self):
+        return f"Door ({self.__location})"
+    
+    def __repr__(self):
+        return f"Door ({self.__location})"
+    

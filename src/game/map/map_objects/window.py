@@ -11,7 +11,7 @@ class Window():
                 __location (tuple): A private attribute to store the location of the object.
         """
         self.__isbroken = False
-        self.__location = None
+        self.__location = location
     
     def get_location(self) -> tuple:
         """
@@ -19,3 +19,9 @@ class Window():
             (tuple) location of the window
         """
         return self.__location
+    
+    def __str__(self):
+        return f"Window ({self.__location})"
+    
+    def __repr__(self):
+        return f"Window ({self.__location})"
