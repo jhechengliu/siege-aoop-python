@@ -14,9 +14,35 @@ class Operator(Player):
         mode (str): The current mode of the operator.
         sight_range (int): The range of vision for the operator.
         sight_distance (int): The maximum distance the operator can see.
+        sight_angle (int): The angle of vision for the operator.
+        sight_direction (int): The direction the operator is facing.
         steps (int): The number of steps the operator can take in a turn.
         special_actions (List[str]): The list of special actions the operator can perform.
         available_modes (List[str]): The list of available modes for the operator.
+
+    Methods:
+        get_xp() -> int: Returns the experience points of the operator.
+        get_weapons() -> List[str]: Returns the list of weapons the operator possesses.
+        get_mode() -> str: Returns the current mode of the operator.
+        get_sight_range() -> int: Returns the range of vision for the operator.
+        get_sight_distance() -> int: Returns the maximum distance the operator can see.
+        get_sight_angle() -> int: Returns the angle of vision for the operator.
+        get_sight_direction() -> int: Returns the direction the operator is facing.
+        get_steps() -> int: Returns the number of steps the operator can take in a turn.
+        set_xp(xp: int): Sets the experience points of the operator.
+        set_mode(mode: str): Sets the current mode of the operator.
+        set_sight_range(sight_range: int): Sets the range of vision for the operator.
+        set_sight_distance(sight_distance: int): Sets the maximum distance the operator can see.
+        set_sight_angle(sight_angle: int): Sets the angle of vision for the operator.
+        set_sight_direction(sight_direction: int): Sets the direction the operator is facing.
+        set_steps(steps: int): Sets the number of steps the operator can take in a turn.
+        switch_mode(mode: str): Switches the operator's mode.
+        throw_grenade() -> str: Throws a grenade.
+        break() -> str: Breaks door/window/soft wall.
+        aim(target: str) -> str: Aims at the specified target.
+        shoot() -> str: Shoots the weapon.
+        calculate_accuracy(distance: int) -> float: Calculates the accuracy of the operator's shot based on the distance.
+        calculate_damage(accuracy: float) -> int: Calculates the damage of the operator's shot based on the accuracy.
     """
     def __init__(self, player_type: str) -> None:
         super().__init__(player_type)
@@ -25,6 +51,8 @@ class Operator(Player):
         self.mode: str = 'normal'
         self.sight_range: int = 360
         self.sight_distance: int = 10
+        self.sight_angle: int = 360
+        self.sight_direction: int = 0
         self.steps: int = 5
         self.special_actions: List[str] = ['switch_mode', 'throw_grenade', 'break', 'pre_aim']
         self.available_modes: List[str] = ['normal', 'stealth', 'sniper']
