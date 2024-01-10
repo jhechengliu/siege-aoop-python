@@ -1,5 +1,7 @@
 import random
 from typing import List
+from player import Player
+
 class Operator(Player):
     """
     This class represents an operator in the game.
