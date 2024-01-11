@@ -38,10 +38,6 @@ class Operator(Player):
         set_steps(steps: int): Sets the number of steps the operator can take in a turn.
         switch_mode(mode: str): Switches the operator's mode.
         ##break() -> str: Breaks door/window/soft wall. ##Use breakable object class?
-        aim(target: str) -> str: Aims at the specified target.
-        shoot() -> str: Shoots the weapon.
-        calculate_accuracy(distance: int) -> float: Calculates the accuracy of the operator's shot based on the distance.
-        calculate_damage(accuracy: float) -> int: Calculates the damage of the operator's shot based on the accuracy.
     """
     def __init__(self, player_type: str) -> None:
         super().__init__(player_type)
@@ -199,49 +195,6 @@ class Operator(Player):
             mode (str): The mode to switch to.
         """
         self.mode = mode
-
-    def aim(self, target: str) -> str:
-        """
-        Aims at the specified target.
-
-        Args:
-            target (str): The target to aim at.
-
-        Returns:
-            str: The result of aiming at the target.
-        """
-        # Implementation logic for aiming at the target
-        return f"Aiming at {target}..."
-
-    def shoot(self) -> str:
-        """
-        Shoots the weapon.
-
-        Returns:
-            str: The result of shooting the weapon.
-        """
-        # Implementation logic for shooting the weapon
-        return "Weapon fired!"
-    
-    def calculate_accuracy(self, distance: int) -> float:
-        """
-        Calculates the accuracy of the operator's shot based on the distance.
-
-        Args:
-            distance (int): The distance to the target.
-
-        Returns:
-            float: The accuracy of the shot as a percentage.
-        """
-        # Implementation logic for calculating accuracy based on distance
-        if distance <= self.sight_distance:
-            return 100.0
-        elif distance <= self.sight_range:
-            return 75.0
-        else:
-            return 50.0
-
-    def calculate_damage(self, accuracy: float) -> int:
         """
         Calculates the damage of the operator's shot based on the accuracy.
 
