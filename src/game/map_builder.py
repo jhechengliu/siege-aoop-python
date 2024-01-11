@@ -57,7 +57,7 @@ class MapBuilder:
         """
         Get the map the builder builds
         """
-        self.__map_object = map.Map.get_instance()
+        return map.Map.get_instance()
 
     def __load_map(self, file_name) -> None:
         """
