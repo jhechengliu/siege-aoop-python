@@ -1,6 +1,8 @@
 class Player():
     """
     This class represents a player in the game.
+    A player is a real player playing the game
+    A player can have multiple operators. In this game, we have 5 of them.
     It contains the name of the player and the identity of the player.
     The identity of the player is either Attacker or Defender.
 

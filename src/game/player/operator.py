@@ -5,8 +5,10 @@ from player import Player
 class Operator(Player):
     """
     This class represents an operator in the game.
+    An operator is a pawn in the game.
     It contains the name of the operator and the type of the operator.
     The type of the operator is either Attacker or Defender.
+    A player has five operators.
 
     Attributes:
         hp (int): The health points of the operator.
