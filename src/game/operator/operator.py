@@ -1,8 +1,7 @@
 import random
 from typing import List
-from player import Player
 
-class Operator(Player):
+class Operator():
     """
     This class represents an operator in the game.
     An operator is a pawn in the game.

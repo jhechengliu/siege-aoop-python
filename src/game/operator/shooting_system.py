@@ -1,4 +1,4 @@
-from player import operator
+from operator import operator
 import random
 
 class ShootingSystem:
