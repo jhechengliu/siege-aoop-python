@@ -1,6 +1,7 @@
 import json
 from game.map.map_objects import door, floor, window, soft_wall, wall
 import pprint
+from game.map import map
 
 class MapBuilder:
     """
@@ -51,6 +52,12 @@ class MapBuilder:
         self.__load_map(file_name)
         self.__map = {}
         self.__id_to_map_object(self.__map_json["map"], self.__map_json)
+
+    def get_map(self):
+        """
+        Get the map the builder builds
+        """
+        self.__map_object = map.Map.get_instance()
 
     def __load_map(self, file_name) -> None:
         """
