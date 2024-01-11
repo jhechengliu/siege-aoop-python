@@ -103,18 +103,15 @@ class MapBuilder:
 
         x_len = len(array[0])
         y_len = len(array)
-        print("x_len", x_len, "y_len", y_len)
         for y in range(y_len):
             for x in range(x_len):
                 location = (x, y)
                 
                 try:
                     object_type = map[str(array[y][x])]
-                    print(object_type)
                 except KeyError:
                     raise NoSuchJsonObjectTypeError()
                 
-                print(x, y, object_type)
                 if (object_type == "wall"): 
                     self.__map[location] = wall.Wall(location)
                 elif (object_type == "floor"):
@@ -127,7 +124,7 @@ class MapBuilder:
                     self.__map[location] = door.Door(location)
                 else:
                     raise NoSuchJsonObjectTypeError()
-                
+
         pprint.pprint(self.__map, indent=4, sort_dicts=True)
 
 
