@@ -6,7 +6,7 @@ class GameFlowDirector:
         warnings.warn("Use get_instance class method to obtain the instance", UserWarning)
 
     @classmethod
-    def get_instance():
+    def get_instance(cls):
         if GameFlowDirector.__instance == None:
             GameFlowDirector.__instance = GameFlowDirector()
         

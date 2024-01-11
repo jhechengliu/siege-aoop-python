@@ -1,5 +1,6 @@
 import random
 from typing import List
+from game.player import Player
 
 class Operator():
     """
@@ -40,8 +41,8 @@ class Operator():
         switch_mode(mode: str): Switches the operator's mode.
         ##break() -> str: Breaks door/window/soft wall. ##Use breakable object class?
     """
-    def __init__(self, player_type: str) -> None:
-        super().__init__(player_type)
+    def __init__(self, boss:Player) -> None:
+        self.__boss = boss
         self.hp: int = 100
         self.weapons: List[str] = ['gun', 'grenade']
         self.mode: str = 'normal'

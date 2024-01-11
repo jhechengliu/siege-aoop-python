@@ -2,6 +2,7 @@ import json
 from game.map.map_objects import door, floor, window, soft_wall, wall
 import pprint
 from game.map import map
+from game.player import Player
 
 class MapBuilder:
     """
@@ -22,7 +23,7 @@ class MapBuilder:
     instance = None
 
     @classmethod
-    def get_instance(file_name):
+    def get_instance(cls, file_name:str, defend_player:Player, attack_player:Player):
         """
         Only use this to get the instance of this class
 
@@ -34,11 +35,11 @@ class MapBuilder:
             if not, returns the already made instance
         """
         if (MapBuilder.instance == None):
-            MapBuilder.instance = MapBuilder(file_name)
+            MapBuilder.instance = MapBuilder(file_name, defend_player, attack_player)
         
         return MapBuilder.instance
     
-    def __init__(self, file_name):
+    def __init__(self, file_name:str, defend_player:Player, attack_player:Player):
         """
         Make a builder
 
@@ -52,12 +53,17 @@ class MapBuilder:
         self.__load_map(file_name)
         self.__map = {}
         self.__id_to_map_object(self.__map_json["map"], self.__map_json)
+        self.__defend_player = defend_player
+        self.__attack_player = attack_player
 
-    def get_map(self):
+    def get_map(self) -> map.Map:
         """
         Get the map the builder builds
+
+        Returns:
+            (Map) The map object which the MapBuilder builds
         """
-        return map.Map.get_instance()
+        return map.Map.get_instance(self.__map, self.__defend_player, self.__attack_player, 5, 5)
 
     def __load_map(self, file_name) -> None:
         """
