@@ -195,19 +195,3 @@ class Operator(Player):
             mode (str): The mode to switch to.
         """
         self.mode = mode
-        """
-        Calculates the damage of the operator's shot based on the accuracy.
-
-        Args:
-            accuracy (float): The accuracy of the shot as a percentage.
-
-        Returns:
-            int: The damage inflicted by the shot.
-        """
-        # Implementation logic for calculating damage based on accuracy
-        if accuracy >= 90.0:
-            return random.randint(80, 100)
-        elif accuracy >= 70.0:
-            return random.randint(50, 80)
-        else:
-            return random.randint(20, 50)
