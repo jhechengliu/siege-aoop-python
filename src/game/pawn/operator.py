@@ -1,58 +1,52 @@
 import random
 from typing import List
 from game.player import Player
+from game.pawn.weapon import Weapon, Weapons
+from game.pawn.mode import Mode, Modes
 
 class Operator():
     """
     This class represents an operator in the game.
     An operator is a pawn in the game.
-    It contains the name of the operator and the type of the operator.
-    The type of the operator is either Attacker or Defender.
-    A player has five operators.
+    #It contains the name of the operator and the type of the operator.
+    #The type of the operator is either Attacker or Defender.
+    #A player has five operators.
 
     Attributes:
-        hp (int): The health points of the operator.
-        weapons (List[str]): The list of weapons the operator possesses.
-        mode (str): The current mode of the operator.
-        sight_range (int): The range of vision for the operator.
-        sight_distance (int): The maximum distance the operator can see.
-        sight_angle (int): The angle of vision for the operator.
-        sight_direction (int): The direction the operator is facing.
-        steps (int): The number of steps the operator can take in a turn.
-        special_actions (List[str]): The list of special actions the operator can perform.
-        available_modes (List[str]): The list of available modes for the operator.
+        __boss (Player): The player that owns the operator.
+        __name (str): The name of the operator. #In R6 has many operators.
+        __hp (int): The health points of the operator.
+        __inhand (List[str]): The list of items in the operator's hand. Weapons, gadgets, etc.
+        __sight_direction (int): The direction the operator is facing.
+        __steps (int): The number of steps the operator can take in a turn.
+        __special_actions (List[str]): The list of special actions the operator can perform.
+        __weapon_holding (Weapons): The weapon the operator is holding.
+        __mode_in (Modes): The mode the operator is in.
 
     Methods:
         get_hp() -> int: Returns the health points of the operator.
-        get_weapons() -> List[str]: Returns the list of weapons the operator possesses.
-        get_mode() -> str: Returns the current mode of the operator.
-        get_sight_range() -> int: Returns the range of vision for the operator.
-        get_sight_distance() -> int: Returns the maximum distance the operator can see.
-        get_sight_angle() -> int: Returns the angle of vision for the operator.
+        get_inhand() -> List[str]: Returns the list of items in the operator's hand.
         get_sight_direction() -> int: Returns the direction the operator is facing.
         get_steps() -> int: Returns the number of steps the operator can take in a turn.
+        get_weapon() -> Weapon: Returns the weapon the operator is holding.
+        get_mode() -> Mode: Returns the mode the operator is in.
         set_hp(hp: int): Sets the health points of the operator.
-        set_mode(mode: str): Sets the current mode of the operator.
-        set_sight_range(sight_range: int): Sets the range of vision for the operator.
-        set_sight_distance(sight_distance: int): Sets the maximum distance the operator can see.
-        set_sight_angle(sight_angle: int): Sets the angle of vision for the operator.
         set_sight_direction(sight_direction: int): Sets the direction the operator is facing.
         set_steps(steps: int): Sets the number of steps the operator can take in a turn.
-        switch_mode(mode: str): Switches the operator's mode.
-        ##break() -> str: Breaks door/window/soft wall. ##Use breakable object class?
+        set_inhand(inhand: List[str]): Sets the list of items in the operator's hand.
+        set_weapon(weapon: Weapon): Sets the weapon the operator is holding.
+        set_mode(mode: Mode): Sets the mode the operator is in.
     """
-    def __init__(self, boss:Player) -> None:
+    def __init__(self, boss: Player) -> None:
         self.__boss = boss
-        self.hp: int = 100
-        self.weapons: List[str] = ['gun', 'grenade']
-        self.mode: str = 'normal'
-        self.sight_range: int = 360
-        self.sight_distance: int = 10
-        self.sight_angle: int = 360
-        self.sight_direction: int = 0
-        self.steps: int = 5
-        self.special_actions: List[str] = ['switch_mode', 'throw_grenade', 'break', 'pre_aim']
-        self.available_modes: List[str] = ['normal', 'stealth', 'sniper']
+        self.__name: str = None
+        self.__hp: int = 100
+        self.__inhand: str = None
+        self.__weapon_holding: Weapons = None
+        self.__mode_in: Modes = None
+        self.__sight_direction: int = 0
+        self.__steps: int = 5
+        self.__special_actions: List[str] = ['switch_mode', 'throw_grenade', 'break', 'pre_aim']
 
     def get_hp(self) -> int:
         """
@@ -61,53 +55,17 @@ class Operator():
         Returns:
             int: The health points of the operator.
         """
-        return self.hp
+        return self.__hp
 
-    def get_weapons(self) -> List[str]:
+    def get_inhand(self) -> List[str]:
         """
-        Returns the list of weapons the operator possesses.
-
-        Returns:
-            List[str]: The list of weapons the operator possesses.
-        """
-        return self.weapons
-    
-    def get_mode(self) -> str:
-        """
-        Returns the current mode of the operator.
+        Returns the list of items in the operator's hand.
 
         Returns:
-            str: The current mode of the operator.
+            List[str]: The list of items in the operator's hand.
         """
-        return self.mode
-    
-    def get_sight_range(self) -> int:
-        """
-        Returns the range of vision for the operator.
+        return self.__inhand
 
-        Returns:
-            int: The range of vision for the operator.
-        """
-        return self.sight_range
-    
-    def get_sight_distance(self) -> int:
-        """
-        Returns the maximum distance the operator can see.
-
-        Returns:
-            int: The maximum distance the operator can see.
-        """
-        return self.sight_distance
-    
-    def get_sight_angle(self) -> int:
-        """
-        Returns the angle of vision for the operator.
-
-        Returns:
-            int: The angle of vision for the operator.
-        """
-        return self.sight_angle
-    
     def get_sight_direction(self) -> int:
         """
         Returns the direction the operator is facing.
@@ -115,8 +73,8 @@ class Operator():
         Returns:
             int: The direction the operator is facing.
         """
-        return self.sight_direction
-    
+        return self.__sight_direction
+
     def get_steps(self) -> int:
         """
         Returns the number of steps the operator can take in a turn.
@@ -124,8 +82,26 @@ class Operator():
         Returns:
             int: The number of steps the operator can take in a turn.
         """
-        return self.steps
+        return self.__steps
     
+    def get_weapon(self) -> Weapons:
+        """
+        Returns the weapon the operator is holding.
+
+        Returns:
+            Weapon: The weapon the operator is holding.
+        """
+        return self.__weapon_holding
+
+    def get_mode(self) -> Modes:    
+        """
+        Returns the mode the operator is in.
+
+        Returns:
+            Mode: The mode the operator is in.
+        """
+        return self.__mode_in
+
     def set_hp(self, hp: int):
         """
         Sets the health points of the operator.
@@ -133,44 +109,8 @@ class Operator():
         Args:
             hp (int): The health points of the operator.
         """
-        self.hp = hp
+        self.__hp = hp
 
-    def set_mode(self, mode: str):
-        """
-        Sets the current mode of the operator.
-
-        Args:
-            mode (str): The current mode of the operator.
-        """
-        self.mode = mode
-
-    def set_sight_range(self, sight_range: int):
-        """
-        Sets the range of vision for the operator.
-
-        Args:
-            sight_range (int): The range of vision for the operator.
-        """
-        self.sight_range = sight_range
-
-    def set_sight_distance(self, sight_distance: int):
-        """
-        Sets the maximum distance the operator can see.
-
-        Args:
-            sight_distance (int): The maximum distance the operator can see.
-        """
-        self.sight_distance = sight_distance
-    
-    def set_sight_angle(self, sight_angle: int):
-        """
-        Sets the angle of vision for the operator.
-
-        Args:
-            sight_angle (int): The angle of vision for the operator.
-        """
-        self.sight_angle = sight_angle
-    
     def set_sight_direction(self, sight_direction: int):
         """
         Sets the direction the operator is facing.
@@ -178,7 +118,7 @@ class Operator():
         Args:
             sight_direction (int): The direction the operator is facing.
         """
-        self.sight_direction = sight_direction
+        self.__sight_direction = sight_direction
     
     def set_steps(self, steps: int):
         """
@@ -187,13 +127,25 @@ class Operator():
         Args:
             steps (int): The number of steps the operator can take in a turn.
         """
-        self.steps = steps
-    
-    def switch_mode(self, mode: str):
+        self.__steps = steps
+
+    def set_inhand(self, inhand: str):
         """
-        Switches the operator's mode.
+        Sets the list of items in the operator's hand.
 
         Args:
-            mode (str): The mode to switch to.
+            inhand (List[str]): The list of items in the operator's hand.
         """
-        self.mode = mode
+        self.__inhand = inhand
+
+    def set_weapon(self, weapon: Weapons):
+        """
+        Sets the weapon the operator is holding.
+        """
+        self.__weapon_holding = weapon
+    
+    def set_mode(self, mode: Modes):
+        """
+        Sets the mode the operator is in.
+        """
+        self.__mode_in = mode
