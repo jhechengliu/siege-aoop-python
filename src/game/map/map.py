@@ -10,14 +10,17 @@ from game.pawn.attaker import Attacker
 from game.pawn.defender import Defender
 from game.player import Player
 import json
-import warnings
+import logging
 
 class Map:
+    logger = logging.getLogger('map')
     """
     Map is where the battle situated
 
     Attributes:
         __map (dict): key is (x, y) and value is map object
+        __map_width (int): the width of the map
+        __map_height (int): the height of the map
         __defend_player (Player): The real player who is the defending side
         __attack_player (Player): The real player who is the attacking side
         __defenders (deque):  contains operators who is defending the map
@@ -29,12 +32,14 @@ class Map:
 
     # singleton instance sits here
     __instance = None
-    def __init__(self, map:dict, defend_player:Player, attack_player:Player, defender_count:int, attacker_count:int):
+    def __init__(self, map:dict, map_width:int, map_height:int, defend_player:Player, attack_player:Player, defender_count:int, attacker_count:int):
         """
         Don't use constructor to init this class, use get_instance method instead
 
         Attributes:
             map (dict): a dict that its keys are location and values are map objects
+            map_width (int): the width of the map
+            map_height (int): the height of the map
             defend_player (Player): The real player who is the defend team
             attack_player (Player): The real player who is the attacking side
             defender_count (int): The count of the operators who is defending the map. Default is 5 operators
@@ -43,12 +48,14 @@ class Map:
         Returns:
             Dont use this thing you XXXXXX
         """
-        warnings.warn("Use get_instance class method to obtain the instance", UserWarning)
+        Map.logger.warning("<map.py> Use get_instance class method to obtain the instance")
         self.__map = map
         self.__defend_player = defend_player
         self.__attack_player = attack_player
         self.__defenders = deque()
         self.__attackers = deque()
+        self.__map_width = map_width
+        self.__map_height = map_height
         self.__map_data_processor = MapDataProcessor.get_instance()
         self.__game_data_publisher = GameDataPublisher.get_instance()
         self.__game_flow_director = GameFlowDirector.get_instance()
@@ -60,12 +67,14 @@ class Map:
             self.__attackers.append(Attacker(self.__attack_player))
 
     @classmethod
-    def get_instance(cls, map:dict, defend_player:Player, attack_player:Player, defender_count=5, attacker_count=5):
+    def get_instance(cls, map:dict, map_width:int, map_height:int, defend_player:Player, attack_player:Player, defender_count=5, attacker_count=5):
         """
         Use this method to get the instance of the only Map running in the program
 
         Atributes (Only matters when this is the first time init the class):
             map (dict): a dict that its keys are location and values are map objects
+            map_width (int): the width of the map
+            map_height (int): the height of the map
             defend_player (Player): The real player who is the defend team
             attack_player (Player): The real player who is the attacking side
             defender_count (int): The count of the operators who is defending the map. Default is 5 operators
@@ -75,10 +84,18 @@ class Map:
             A Map object
         """
         if Map.__instance == None:
-            warnings.warn("Use get_instance class method to obtain the instance", UserWarning)
-            Map.__instance = Map(map, defend_player, attack_player, defender_count, attacker_count)
+            Map.logger.warning("<map.py> Use get_instance class method to obtain the instance")
+            Map.__instance = Map(map, map_width, map_height, defend_player, attack_player, defender_count, attacker_count)
 
         return Map.__instance
+    
+    def print_map(self):
+        Map.logger.info(f"Printing the current map... (Size: {self.__map_width} * {self.__map_height})")
+        for y in range(self.__map_height):
+            for x in range(self.__map_width):
+                print('{0:<20}'.format(f'{self.__map[(x, y)]}'), end=" ")
+            print()
+            
 
 
         # self.map_publisher = rospy.Publisher('/map_information', UInt8MultiArray, queue_size=1)

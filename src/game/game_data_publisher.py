@@ -1,9 +1,10 @@
-import warnings
+import logging
 
 class GameDataPublisher:
+    logger = logging.getLogger('GameDataPublisher')
     __instance = None
     def __init__(self):
-        warnings.warn("Use get_instance class method to obtain the instance", UserWarning)
+        GameDataPublisher.logger.warning("<game_data_publisher.py> Use get_instance class method to obtain the instance")
 
     @classmethod
     def get_instance(cls):

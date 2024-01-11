@@ -3,8 +3,10 @@ from game.map.map_objects import door, floor, window, soft_wall, wall
 import pprint
 from game.map import map
 from game.player import Player
+import logging
 
 class MapBuilder:
+    logger = logging.getLogger('MapBuilder')
     """
     NOTE: Use get_instance method to get the instance, DONT use constructor 
     A Builder that builds a Map object with its esseitials stuff such as the map,
@@ -50,6 +52,8 @@ class MapBuilder:
             (MapBuilder) A new MapBuilder Class
         """ 
         self.__map_json = None
+        self.__map_width = 0
+        self.__map_height = 0
         self.__load_map(file_name)
         self.__map = {}
         self.__id_to_map_object(self.__map_json["map"], self.__map_json)
@@ -63,7 +67,7 @@ class MapBuilder:
         Returns:
             (Map) The map object which the MapBuilder builds
         """
-        return map.Map.get_instance(self.__map, self.__defend_player, self.__attack_player, 5, 5)
+        return map.Map.get_instance(self.__map, self.__map_width, self.__map_height, self.__defend_player, self.__attack_player, 5, 5)
 
     def __load_map(self, file_name) -> None:
         """
@@ -78,7 +82,11 @@ class MapBuilder:
         with open('././Assets/Data/' + file_name + '.json', 'r') as json_file:
             # Load the JSON content into a Python dictionary
             self.__map_json = json.load(json_file)
-            print(self.__map_json)
+            MapBuilder.logger.info("Raw map file loaded")
+            self.__map_width = len(self.__map_json['map'][0])
+            self.__map_height = len(self.__map_json['map'])
+            MapBuilder.logger.info(f"Map size loaded {self.__map_width} * {self.__map_height}")
+            
 
     def __id_to_map_object(self, array: list, map: dict) -> None:
         """
@@ -125,6 +133,7 @@ class MapBuilder:
                 else:
                     raise NoSuchJsonObjectTypeError()
 
+        MapBuilder.logger.info("<map_build.py> Map ID -> Obj Done")
         pprint.pprint(self.__map, indent=4, sort_dicts=True)
 
 

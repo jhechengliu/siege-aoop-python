@@ -1,9 +1,10 @@
-import warnings
+import logging
 
 class GameFlowDirector:
     __instance = None
+    logger = logging.getLogger('GameFlowDirector')
     def __init__(self):
-        warnings.warn("Use get_instance class method to obtain the instance", UserWarning)
+        GameFlowDirector.logger.warning("<game_flow_director.py> Use get_instance class method to obtain the instance")
 
     @classmethod
     def get_instance(cls):
