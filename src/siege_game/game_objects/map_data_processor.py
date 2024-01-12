@@ -1,4 +1,5 @@
 import logging
+import warnings
 
 class MapDataProcessor:
     """
@@ -16,3 +17,9 @@ class MapDataProcessor:
             MapDataProcessor.__instance = MapDataProcessor()
         
         return MapDataProcessor.__instance
+    
+    def get_defender_map(self):
+        warnings.warn("This method is WIP")
+
+    def get_attacker_map(self):
+        warnings.warn("This method is WIP")

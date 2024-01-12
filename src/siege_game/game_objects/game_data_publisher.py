@@ -1,5 +1,6 @@
 import logging
-
+import warnings
+from siege_game.game_objects.map.map import Map  
 class GameDataPublisher:
     logger = logging.getLogger('GameDataPublisher')
     __instance = None
@@ -12,3 +13,6 @@ class GameDataPublisher:
             GameDataPublisher.__instance = GameDataPublisher()
 
         return GameDataPublisher.__instance
+    
+    def publish(self):
+        warnings.warn("This method is WIP or broken")
