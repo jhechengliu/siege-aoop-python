@@ -1,5 +1,5 @@
 import json
-from siege_game.game_objects.map.map_objects import door, floor, window, soft_wall, wall
+from siege_game.game_objects.map.map_objects import door, floor, window, soft_wall, wall, entrance, barrier
 from siege_game.game_objects.map import map
 from siege_game.game_objects.player import Player
 import logging
@@ -111,6 +111,10 @@ class MapBuilder:
                     self.__map[location] = window.Window(location)
                 elif (object_type == "door"):
                     self.__map[location] = door.Door(location)
+                elif (object_type == "entrance"):
+                    self.__map[location] = entrance.Entrance(location)
+                elif (object_type == "barrier"):
+                    self.__map[location] = barrier.Barrier(location)
                 else:
                     raise NoSuchJsonObjectTypeError()
 
