@@ -4,7 +4,6 @@ from abc import ABC
 class IBreakable(ABC):
     @abc.abstractmethod
     def break_it(self):
-        raise NoneOverwriteError()
+        raise NotImplementedError()
 
-class NoneOverwriteError(Exception):
-    pass
+
