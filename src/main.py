@@ -1,11 +1,5 @@
-from siege_game.game_objects.map_builder import MapBuilder
-import logging
-from siege_game.game_objects.player import Player
+from siege_game.game import Game
 
-logging.basicConfig(level=logging.INFO)
+game = Game.get_instance("DCtime", "JL")
+game.run()
 
-defend_player = Player("DCtime")
-attack_player = Player("JL")
-builder = MapBuilder.get_instance("map_example", defend_player, attack_player)
-map = builder.get_map()
-map.print_map()
