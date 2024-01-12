@@ -39,11 +39,11 @@ class Operator():
     """
     def __init__(self, boss: Player) -> None:
         self.__boss = boss
-        self.__name: str = None
+        self.__name: str = boss.get_identity()
         self.__hp: int = 100
         self.__inhand: str = None
         self.__weapon_holding: Weapons = None
-        self.__mode_in: Modes = None
+        self.__mode_in: Modes = Modes.NORMAL
         self.__sight_direction: int = 0
         self.__steps: int = 5
         self.__special_actions: List[str] = ['switch_mode', 'throw_grenade', 'break', 'pre_aim']

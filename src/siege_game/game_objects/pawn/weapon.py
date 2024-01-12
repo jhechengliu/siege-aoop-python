@@ -21,11 +21,12 @@ class Weapon:
 class Weapons():
     """
     Enum for the different weapons.
+    Eg. Weapons.GUNS.RIFLE.value
     """
-    class GUNS(Enum):
+    class Guns(Enum):
         RIFLE: Weapon = Weapon("rifle", 20, 2)
         PISTOL: Weapon = Weapon("pistol", 10, 1)
         KNIFE: Weapon = Weapon("knife", 100, 1)
-        
-    class EXPLOSIVES(Enum):
+
+    class Explosive(Enum):
         GRENADE: Weapon = Weapon("grenade", 70, 1)
