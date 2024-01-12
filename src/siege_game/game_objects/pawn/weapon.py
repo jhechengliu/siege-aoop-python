@@ -1,4 +1,5 @@
 from typing import List
+from enum import Enum
 
 class Weapon:
     """
@@ -8,7 +9,6 @@ class Weapon:
         __name (str): The name of the weapon.
         __damage (int): The basic damage of the weapon.
         __required_hands (int): The number of hands required to hold the weapon.
-        #也許之後加個遞減率之類的
     """
     def __init__(self, name: str, damage: int, __required_hands: int) -> None:
         """
@@ -18,12 +18,14 @@ class Weapon:
         self.__damage = damage
         self.__required_hands = __required_hands
 
-class Weapons:
+class Weapons():
     """
     Enum for the different weapons.
     """
-    RIFLE: Weapon = Weapon("rifle", 20, 2)
-    PISTOL: Weapon = Weapon("pistol", 10, 1)
-    KNIFE: Weapon = Weapon("knife", 100, 1)
-    GRENADE: Weapon = Weapon("grenade", 70, 1)
-    WEAPONS: List[Weapon] = [RIFLE, PISTOL, KNIFE, GRENADE]
+    class GUNS(Enum):
+        RIFLE: Weapon = Weapon("rifle", 20, 2)
+        PISTOL: Weapon = Weapon("pistol", 10, 1)
+        KNIFE: Weapon = Weapon("knife", 100, 1)
+        
+    class EXPLOSIVES(Enum):
+        GRENADE: Weapon = Weapon("grenade", 70, 1)

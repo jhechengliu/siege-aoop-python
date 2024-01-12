@@ -1,4 +1,5 @@
 from typing import List
+from enum import Enum
 
 class Mode:
     """
@@ -16,11 +17,9 @@ class Mode:
         self.__sight_distance: int = sight_distance
         self.__sight_angle: int = sight_angle
 
-class Modes:
+class Modes(Enum):
     """
     Enum for the different modes of the operator.
-    """
-    
+    """    
     NORMAL: Mode = Mode(5, 270)
     AIM_DOWN_SIGHT: Mode = Mode(10, 45)
-    MODES: List[Mode] = [NORMAL, AIM_DOWN_SIGHT]
