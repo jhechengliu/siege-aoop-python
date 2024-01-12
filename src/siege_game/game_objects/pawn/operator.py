@@ -1,8 +1,8 @@
 import random
 from typing import List
-from game.player import Player
-from game.pawn.weapon import Weapon, Weapons
-from game.pawn.mode import Mode, Modes
+from siege_game.game_objects.player import Player
+from siege_game.game_objects.pawn.weapon import Weapon, Weapons
+from siege_game.game_objects.pawn.mode import Mode, Modes
 
 class Operator():
     """

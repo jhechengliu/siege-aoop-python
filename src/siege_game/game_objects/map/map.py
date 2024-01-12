@@ -2,13 +2,13 @@
 # import rospy
 # from std_msgs.msg import UInt8MultiArray
 # from sensor_msgs.msg import Mouse
-from game.map_data_processor import MapDataProcessor
-from game.game_data_publisher import GameDataPublisher
-from game.game_flow_director import GameFlowDirector
+from siege_game.game_objects.map_data_processor import MapDataProcessor
+from siege_game.game_objects.game_data_publisher import GameDataPublisher
+from siege_game.game_objects.game_flow_director import GameFlowDirector
 from collections import deque
-from game.pawn.attaker import Attacker
-from game.pawn.defender import Defender
-from game.player import Player
+from siege_game.game_objects.pawn.attaker import Attacker
+from siege_game.game_objects.pawn.defender import Defender
+from siege_game.game_objects.player import Player
 import json
 import logging
 

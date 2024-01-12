@@ -1,8 +1,7 @@
 import json
-from game.map.map_objects import door, floor, window, soft_wall, wall
-import pprint
-from game.map import map
-from game.player import Player
+from siege_game.game_objects.map.map_objects import door, floor, window, soft_wall, wall
+from siege_game.game_objects.map import map
+from siege_game.game_objects.player import Player
 import logging
 
 class MapBuilder:
@@ -134,7 +133,6 @@ class MapBuilder:
                     raise NoSuchJsonObjectTypeError()
 
         MapBuilder.logger.info("<map_build.py> Map ID -> Obj Done")
-        pprint.pprint(self.__map, indent=4, sort_dicts=True)
 
 
 class NoSuchJsonObjectTypeError(Exception):
