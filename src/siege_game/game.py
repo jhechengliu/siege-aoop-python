@@ -22,7 +22,7 @@ class Game():
     def run(self):
         defend_player = Player(self.__defend_player_name)
         attack_player = Player(self.__attack_player_name)
-        builder = MapBuilder.get_instance(self.__map_name, defend_player, attack_player)
+        builder = MapBuilder(self.__map_name, defend_player, attack_player)
         map = builder.get_map()
         map.print_map()
 

@@ -30,8 +30,6 @@ class Map:
         __game_flow_director: an object which is the main judge of the game
     """
 
-    # singleton instance sits here
-    __instance = None
     def __init__(self, map:dict, map_width:int, map_height:int, defend_player:Player, attack_player:Player, defender_count:int, attacker_count:int):
         """
         Don't use constructor to init this class, use get_instance method instead
@@ -56,38 +54,15 @@ class Map:
         self.__attackers = deque()
         self.__map_width = map_width
         self.__map_height = map_height
-        self.__map_data_processor = MapDataProcessor.get_instance()
-        self.__game_data_publisher = GameDataPublisher.get_instance()
-        self.__game_flow_director = GameFlowDirector.get_instance()
+        self.__map_data_processor = MapDataProcessor()
+        self.__game_data_publisher = GameDataPublisher()
+        self.__game_flow_director = GameFlowDirector()
 
         for _ in range(defender_count):
             self.__defenders.append(Defender(self.__defend_player))
 
         for _ in range(attacker_count):
             self.__attackers.append(Attacker(self.__attack_player))
-
-    @classmethod
-    def get_instance(cls, map:dict, map_width:int, map_height:int, defend_player:Player, attack_player:Player, defender_count=5, attacker_count=5):
-        """
-        Use this method to get the instance of the only Map running in the program
-
-        Atributes (Only matters when this is the first time init the class):
-            map (dict): a dict that its keys are location and values are map objects
-            map_width (int): the width of the map
-            map_height (int): the height of the map
-            defend_player (Player): The real player who is the defend team
-            attack_player (Player): The real player who is the attacking side
-            defender_count (int): The count of the operators who is defending the map. Default is 5 operators
-            attacker_count (int): The count of the operators who is attacking the map. Default is 5 operators
-
-        Returns:
-            A Map object
-        """
-        if Map.__instance == None:
-            Map.logger.warning("<map.py> Use get_instance class method to obtain the instance")
-            Map.__instance = Map(map, map_width, map_height, defend_player, attack_player, defender_count, attacker_count)
-
-        return Map.__instance
     
     def print_map(self):
         Map.logger.info(f"Printing the current map... (Size: {self.__map_width} * {self.__map_height})")

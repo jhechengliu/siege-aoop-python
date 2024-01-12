@@ -2,7 +2,6 @@ import logging
 from siege_game.game_objects.states.state import State, StartState, BattleState, SettingUpState, EndState
 
 class GameFlowDirector:
-    __instance = None
     logger = logging.getLogger('GameFlowDirector')
 
     def __init__(self):
@@ -24,12 +23,5 @@ class GameFlowDirector:
             self.__state = StartState()
             GameFlowDirector.logger.info(f"Switch from EndState to StartState")
 
-
-    @classmethod
-    def get_instance(cls):
-        if GameFlowDirector.__instance == None:
-            GameFlowDirector.__instance = GameFlowDirector()
-        
-        return GameFlowDirector.__instance
     
     

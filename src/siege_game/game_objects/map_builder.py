@@ -21,24 +21,6 @@ class MapBuilder:
         __load_map: well, load a map and put the data into the __map_json attribute
         __id_to_map_object: chnage the array content from numbers to map objects such as Wall object Floor object etc
     """
-    instance = None
-
-    @classmethod
-    def get_instance(cls, file_name:str, defend_player:Player, attack_player:Player):
-        """
-        Only use this to get the instance of this class
-
-        Attributes:
-            file_name (string): the json file's name (without '.json') in the Assets/Data Folder
-
-        Returns:
-            if there is no instance made before, make a new instance and returns it
-            if not, returns the already made instance
-        """
-        if (MapBuilder.instance == None):
-            MapBuilder.instance = MapBuilder(file_name, defend_player, attack_player)
-        
-        return MapBuilder.instance
     
     def __init__(self, file_name:str, defend_player:Player, attack_player:Player):
         """
@@ -66,7 +48,7 @@ class MapBuilder:
         Returns:
             (Map) The map object which the MapBuilder builds
         """
-        return map.Map.get_instance(self.__map, self.__map_width, self.__map_height, self.__defend_player, self.__attack_player, 5, 5)
+        return map.Map(self.__map, self.__map_width, self.__map_height, self.__defend_player, self.__attack_player, 5, 5)
 
     def __load_map(self, file_name) -> None:
         """
