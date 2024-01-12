@@ -23,5 +23,8 @@ class GameFlowDirector:
             self.__state = StartState()
             GameFlowDirector.logger.info(f"Switch from EndState to StartState")
 
+    def get_state(self):
+        return self.__state
+
     
     
