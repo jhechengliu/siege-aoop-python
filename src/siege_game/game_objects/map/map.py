@@ -70,6 +70,9 @@ class Map:
             for x in range(self.__map_width):
                 print('{0:<20}'.format(f'{self.__map[(x, y)]}'), end=" ")
             print()
+
+    def get_game_flow_director(self):
+        return self.__game_flow_director
             
 
 

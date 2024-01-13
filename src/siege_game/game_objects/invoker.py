@@ -29,7 +29,6 @@ class Invoker():
         """
         Initialize the Invoker with an empty list to store commands.
         """
-        self.__commands = []
         warnings.warn("Use get_instance class method to obtain the instance", UserWarning)
         self.__commander = game.get_commander()
         # self.attacker_mouse_subsriber = rospy.Subscriber('/attacker_mouse_event', UInt8MultiArray, self.attacker_mouse_callback)
@@ -42,25 +41,11 @@ class Invoker():
         
         return Invoker.__instance
 
-    def execute(self, command):
-        """
-        Execute the given command and add it to the command history.
-
-        Args:
-            command: The command to be executed.
-        """
-        command.execute()
-        self.__commands.append(command)
-
     def run_terminal(self):
         while (True):
             input_str = input()
-            self.__commander.execute_command(input_str)
             Invoker.logger.info(f"Received Command \"{input_str}\" from terminal")
-            Invoker.logger.debug(self.__commander.test_variable)
-
-
-
+            self.__commander.execute_command(input_str)
 
     # def attacker_mouse_callback(self, message):
     #     print("message")
