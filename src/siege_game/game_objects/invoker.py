@@ -28,6 +28,8 @@ class Invoker():
         """
         self.__commands = []
         warnings.warn("Use get_instance class method to obtain the instance", UserWarning)
+        # self.attacker_mouse_subsriber = rospy.Subscriber('/attacker_mouse_event', UInt8MultiArray, self.attacker_mouse_callback)
+        # self.defender_mouse_subsriber = rospy.Subscriber('/defender_mouse_event', UInt8MultiArray, self.defender_mouse_callback)
 
     @classmethod
     def get_instance():
@@ -68,3 +70,11 @@ class Invoker():
         """
         for command in commands:
             self.execute(command)
+
+    # def attacker_mouse_callback(self, message):
+    #     print("message")
+    #     print(type(message))
+
+    # def defender_mouse_callback(self, message):
+    #     print("message")
+    #     print(type(message))
