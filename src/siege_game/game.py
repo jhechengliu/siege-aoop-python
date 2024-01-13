@@ -2,6 +2,7 @@ from siege_game.game_objects.map_builder import MapBuilder
 import logging
 from siege_game.game_objects.player import Player
 from siege_game.game_objects.commander import Commander
+import time
 
 logging.basicConfig(level=logging.INFO)
 
@@ -14,6 +15,14 @@ class Game():
         self.__attack_player_name:str = attack_player_name
         self.__map_name = "map_example"
         self.__commander = None
+        self.__map = None
+
+        defend_player = Player(self.__defend_player_name)
+        attack_player = Player(self.__attack_player_name)
+        builder = MapBuilder(self.__map_name, defend_player, attack_player)
+        self.__map = builder.get_map()
+        self.__commander = Commander(self.__map)
+        Game.logger.info(f"Command set: {self.__commander}")
 
     @classmethod
     def get_instance(cls, defend_player_name:str, attack_player_name:str):
@@ -23,16 +32,12 @@ class Game():
         return cls.instance
     
     def run(self):
-        defend_player = Player(self.__defend_player_name)
-        attack_player = Player(self.__attack_player_name)
-        builder = MapBuilder(self.__map_name, defend_player, attack_player)
-        map = builder.get_map()
-        self.__commander = Commander(map)
-        Game.logger.info(f"Command set: {self.__commander}")
-        map.print_map()
-
+        self.__map.print_map()
         while (True):
             pass
+
+    def get_commander(self):
+        return self.__commander
 
 
 

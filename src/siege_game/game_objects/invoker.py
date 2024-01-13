@@ -1,4 +1,6 @@
 import warnings
+from siege_game.game import Game
+import logging 
 
 class Invoker():
     """
@@ -19,15 +21,17 @@ class Invoker():
         undo(): Undo the last executed command.
         batch_execute(commands): Execute a batch of commands simultaneously.
     """
+    logger = logging.getLogger("Invoker")
     __instance = None
 
-    def __init__(self) -> None:
+    def __init__(self, game:Game) -> None:
 
         """
         Initialize the Invoker with an empty list to store commands.
         """
         self.__commands = []
         warnings.warn("Use get_instance class method to obtain the instance", UserWarning)
+        self.__commander = game.get_commander()
         # self.attacker_mouse_subsriber = rospy.Subscriber('/attacker_mouse_event', UInt8MultiArray, self.attacker_mouse_callback)
         # self.defender_mouse_subsriber = rospy.Subscriber('/defender_mouse_event', UInt8MultiArray, self.defender_mouse_callback)
 
@@ -47,6 +51,15 @@ class Invoker():
         """
         command.execute()
         self.__commands.append(command)
+
+    def run_terminal(self):
+        while (True):
+            input_str = input()
+            self.__commander.execute_command(input_str)
+            Invoker.logger.info(f"Received Command \"{input_str}\" from terminal")
+
+
+
 
     # def attacker_mouse_callback(self, message):
     #     print("message")
