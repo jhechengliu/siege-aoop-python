@@ -48,29 +48,6 @@ class Invoker():
         command.execute()
         self.__commands.append(command)
 
-    def undo(self):
-        """
-        Undo the last executed command.
-
-        Raises:
-            IndexError: If there are no commands to undo.
-        """
-        try:
-            last__command = self.__commands.pop()
-            last__command.undo()
-        except IndexError:
-            raise IndexError("No commands to undo.")
-
-    def batch_execute(self, commands):
-        """
-        Execute a batch of commands simultaneously.
-
-        Args:
-            commands (list): A list of commands to be executed.
-        """
-        for command in commands:
-            self.execute(command)
-
     # def attacker_mouse_callback(self, message):
     #     print("message")
     #     print(type(message))
