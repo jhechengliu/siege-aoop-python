@@ -4,8 +4,6 @@ from siege_game.game_objects.player import Player
 from siege_game.game_objects.commander import Commander
 import time
 
-logging.basicConfig(level=logging.INFO)
-
 class Game():
     instance = None
     logger = logging.getLogger("Game")

@@ -57,6 +57,7 @@ class Invoker():
             input_str = input()
             self.__commander.execute_command(input_str)
             Invoker.logger.info(f"Received Command \"{input_str}\" from terminal")
+            Invoker.logger.debug(self.__commander.test_variable)
 
 
 

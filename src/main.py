@@ -1,6 +1,9 @@
 from siege_game.game import Game
 from siege_game.game_objects.invoker import Invoker
 from threading import Thread
+import logging
+
+logging.basicConfig(level=logging.NOTSET)
 
 game = Game.get_instance("DCtime", "JL")
 invoker = Invoker(game)
