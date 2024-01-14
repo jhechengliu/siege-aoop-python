@@ -9,6 +9,7 @@ from collections import deque
 from siege_game.game_objects.pawn.attaker import Attacker
 from siege_game.game_objects.pawn.defender import Defender
 from siege_game.game_objects.player import Player
+from siege_game.game_objects.pawn.shooting_system import ShootingSystem
 import json
 import logging
 
@@ -48,6 +49,7 @@ class Map:
         """
         Map.logger.warning("<map.py> Use get_instance class method to obtain the instance")
         self.__map = map
+        self.__shooting_system = ShootingSystem()
         self.__defend_player = defend_player
         self.__attack_player = attack_player
         self.__defenders = deque()
@@ -89,10 +91,10 @@ class Map:
         return self.__max_attacker_count
     
     def add_attacker(self, location:list[float]) -> None:
-        self.__attackers.append(Attacker(self.__attack_player, location))
+        self.__attackers.append(Attacker(self.__attack_player, location, self.__shooting_system))
 
     def add_defender(self, location:list[float]) -> None:
-        self.__defenders.append(Defender(self.__defend_player, location))
+        self.__defenders.append(Defender(self.__defend_player, location, self.__shooting_system))
 
     def map_status(self):
         Map.logger.info("--- Map Status ---")
@@ -100,9 +102,9 @@ class Map:
         Map.logger.info(f"Defenders: {self.__defenders}")
         Map.logger.info("--- End of Map Status ---")
             
-
-
-
-
-
-
+    def get_map_width(self) -> int:
+        return self.__map_width
+    
+    def get_map_height(self) -> int:
+        return self.__map_height
+    

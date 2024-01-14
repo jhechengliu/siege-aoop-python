@@ -30,8 +30,6 @@ class Player():
 
         self.__name = name
         self.__identity:Identity = None
-        self.__number_of_operators = 0
-        self.__alive_operators = 0
 
 class Identity():
     ATTACK = uuid.uuid4()

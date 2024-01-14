@@ -4,6 +4,7 @@ from typing import List
 from siege_game.game_objects.player import Player
 from siege_game.game_objects.pawn.weapon import Weapon, Weapons
 from siege_game.game_objects.pawn.mode import Mode, Modes
+from siege_game.game_objects.pawn.shooting_system import ShootingSystem
 
 class Operator():
     """
@@ -26,7 +27,7 @@ class Operator():
 
     Methods:
     """
-    def __init__(self, boss: Player, location: list[int]) -> None:
+    def __init__(self, boss: Player, location: list[int], shooting_system:ShootingSystem) -> None:
         self.__boss = boss
         self.__name: str = boss.get_identity()
         self.__hp: int = 100
@@ -36,6 +37,14 @@ class Operator():
         self.__sight_direction: int = 0
         self.__steps: int = 5
         self.__location: list[float] = location
+        self.__shooting_system = shooting_system
+
+    def get_location(self) -> list[float]:
+        return self.__location
+
+    def shoot(self, target: 'Operator') -> None:
+        self.__shooting_system.aim(self)
+        self.__shooting_system.shoot(target)
 
 class SpecialActions(Enum):
     SWITCH_MODE: str = 'switch_mode'
