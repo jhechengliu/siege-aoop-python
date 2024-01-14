@@ -57,12 +57,14 @@ class Map:
         self.__map_data_processor = MapDataProcessor()
         self.__game_data_publisher = GameDataPublisher()
         self.__game_flow_director = GameFlowDirector()
+        self.__max_defender_count = defender_count
+        self.__max_attacker_count = attacker_count
 
-        for _ in range(defender_count):
-            self.__defenders.append(Defender(self.__defend_player))
+        # for _ in range(defender_count):
+        #     self.__defenders.append(Defender(self.__defend_player))
 
-        for _ in range(attacker_count):
-            self.__attackers.append(Attacker(self.__attack_player))
+        # for _ in range(attacker_count):
+        #     self.__attackers.append(Attacker(self.__attack_player))
     
     def print_map(self):
         Map.logger.info(f"Printing the current map... (Size: {self.__map_width} * {self.__map_height})")
@@ -71,8 +73,32 @@ class Map:
                 print('{0:<20}'.format(f'{self.__map[(x, y)]}'), end=" ")
             print()
 
-    def get_game_flow_director(self):
+    def get_game_flow_director(self) -> GameFlowDirector:
         return self.__game_flow_director
+    
+    def get_defenders(self) -> deque:
+        return self.__defenders
+    
+    def get_attackers(self) -> deque:
+        return self.__attackers
+        
+    def get_max_defender_count(self) -> int:
+        return self.__max_defender_count
+    
+    def get_max_attacker_count(self) -> int:
+        return self.__max_attacker_count
+    
+    def add_attacker(self, location:list[float]) -> None:
+        self.__attackers.append(Attacker(self.__attack_player, location))
+
+    def add_defender(self, location:list[float]) -> None:
+        self.__defenders.append(Defender(self.__defend_player, location))
+
+    def map_status(self):
+        Map.logger.info("--- Map Status ---")
+        Map.logger.info(f"Attackers: {self.__attackers}")
+        Map.logger.info(f"Defenders: {self.__defenders}")
+        Map.logger.info("--- End of Map Status ---")
             
 
 

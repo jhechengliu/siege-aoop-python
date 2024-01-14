@@ -37,7 +37,7 @@ class Operator():
         set_weapon(weapon: Weapon): Sets the weapon the operator is holding.
         set_mode(mode: Mode): Sets the mode the operator is in.
     """
-    def __init__(self, boss: Player) -> None:
+    def __init__(self, boss: Player, location: list[int]) -> None:
         self.__boss = boss
         self.__name: str = boss.get_identity()
         self.__hp: int = 100
@@ -47,6 +47,7 @@ class Operator():
         self.__sight_direction: int = 0
         self.__steps: int = 5
         self.__special_actions: List[str] = ['switch_mode', 'throw_grenade', 'break', 'pre_aim']
+        self.__location: list[float] = location
 
     def get_hp(self) -> int:
         """
@@ -149,3 +150,9 @@ class Operator():
         Sets the mode the operator is in.
         """
         self.__mode_in = mode
+
+    def set_location(self, location: list[float]):
+        self.__location = location
+
+    def get_location(self):
+        return self.__location

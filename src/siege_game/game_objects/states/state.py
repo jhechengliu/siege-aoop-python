@@ -11,6 +11,9 @@ class State(ABC):
     pass
 
 class SettingUpState(State):
+    def __init__(self):
+        pass
+    
     def __repr__(self):
         return f"SettingUpState"
 

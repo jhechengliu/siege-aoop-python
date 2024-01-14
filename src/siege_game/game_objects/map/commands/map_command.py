@@ -6,13 +6,12 @@ from siege_game.game_objects.player import Player
 import typing
 
 class MapCommand(ABC):
-    def __init__(self, sender:Player, map:Map, args:tuple[str]):
-        self.__sender:Player = sender
+    def __init__(self, map:Map, args:tuple[str]):
         self.__map:Map = map
         self.__args:tuple[str] = args
 
     @abc.abstractmethod
-    def execute(self) -> bool:
+    def execute(self) -> None:
         raise NotImplementedError()
     
     @abc.abstractmethod
