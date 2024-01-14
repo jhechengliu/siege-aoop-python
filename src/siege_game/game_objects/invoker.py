@@ -1,6 +1,7 @@
 import warnings
 from siege_game.game import Game
 import logging 
+from siege_game.game_objects.player import Identity
 
 class Invoker():
     """
@@ -42,10 +43,18 @@ class Invoker():
         return Invoker.__instance
 
     def run_terminal(self):
+        current_identity = Identity.ATTACK
         while (True):
             input_str = input()
+            if (input_str == 'switch_identity'):
+                if (current_identity == Identity.ATTACK):
+                    current_identity = Identity.DEFEND
+                else:
+                    current_identity = Identity.ATTACK
+                continue
+
             Invoker.logger.info(f"Received Command \"{input_str}\" from terminal")
-            self.__commander.execute_command(input_str)
+            self.__commander.execute_command(input_str, current_identity)
 
     # def attacker_mouse_callback(self, message):
     #     print("message")
