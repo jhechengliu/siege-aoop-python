@@ -1,3 +1,5 @@
+import uuid
+
 class Player():
     """
     This class represents a player in the game.
@@ -34,7 +36,7 @@ class Player():
         """
 
         self.__name = name
-        self.__identity = None
+        self.__identity:Identity = None
         self.__number_of_operators = 0
 
     def get_name(self) -> str:
@@ -116,3 +118,7 @@ class Player():
         """
 
         self.__alive_operators = alive_operators
+
+class Identity():
+    ATTACK = uuid.uuid4()
+    DEFEND = uuid.uuid4()

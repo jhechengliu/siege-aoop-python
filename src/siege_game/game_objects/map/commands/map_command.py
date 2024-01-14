@@ -21,9 +21,6 @@ class MapCommand(ABC):
     def get_map(self) -> Map:
         return self.__map
     
-    def get_sender(self) -> Player:
-        return self.__sender
-    
     def get_args(self) -> Player:
         return self.__args
     

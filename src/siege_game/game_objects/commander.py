@@ -13,7 +13,6 @@ class Commander():
             "start": StartGameMapCommand,
             "init": InitPlayerSettingUpCommand
         }
-
     def execute_command(self, command:str):
         Commander.logger.info("Executing Command")
         command_list = command.split()

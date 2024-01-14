@@ -11,7 +11,7 @@ class StartGameMapCommand(MapCommand):
     def __init__(self, map:Map, args:tuple[str]):
         super().__init__(map, args)
     
-    def execute(self) -> bool:
+    def execute(self) -> None:
         self.get_map().get_game_flow_director().next_state()
     
     def check(self) -> bool:

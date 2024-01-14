@@ -4,7 +4,7 @@ import logging
 
 class InitPlayerSettingUpCommand(MapCommand):
     """
-    command: init A 1 2 => Init Attacker at location x=1, y=2
+    command: init A 1.5 2.5 => Init Attacker at location x=1.5, y=2.5
     """
     logger = logging.getLogger("PutPlayerSettingUpCommand")
 
