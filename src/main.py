@@ -5,7 +5,7 @@ import logging
 
 logging.basicConfig(level=logging.NOTSET)
 
-game = Game.get_instance("DCtime", "JL")
+game = Game.get_instance()
 invoker = Invoker(game)
 
 thread1 = Thread(target=game.run, args=())

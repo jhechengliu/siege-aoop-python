@@ -8,16 +8,13 @@ class Game():
     instance = None
     logger = logging.getLogger("Game")
 
-    def __init__(self, defend_player_name:str = "Player1", attack_player_name:str = "Player2"):
-        self.__defend_player_name:str = defend_player_name
-        self.__attack_player_name:str = attack_player_name
+    def __init__(self):
+        self.__defend_player_name:str = "player1"
+        self.__attack_player_name:str = "player2"
         self.__map_name = "map_example"
         self.__commander = None
         self.__map = None
-
-        defend_player = Player(self.__defend_player_name)
-        attack_player = Player(self.__attack_player_name)
-        builder = MapBuilder(self.__map_name, defend_player, attack_player)
+        builder = MapBuilder(self.__map_name, self.__defend_player_name, self.__attack_player_name)
         self.__map = builder.get_map()
         self.__commander = Commander(self.__map)
         Game.logger.info(f"Command set: {self.__commander}")
@@ -37,7 +34,11 @@ class Game():
     def get_commander(self):
         return self.__commander
 
+    def set_defend_player(self, defend_player_name:str):
+        self.__defend_player_name = Player(defend_player_name)
 
+    def set_attack_player(self, attack_player_name:str):
+        self.__attack_player_name = Player(attack_player_name)
 
 
 
