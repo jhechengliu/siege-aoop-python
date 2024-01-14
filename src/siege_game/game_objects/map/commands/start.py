@@ -9,12 +9,10 @@ class StartGameMapCommand(MapCommand):
     logger = logging.getLogger("StartGameMapCommand")
 
     def __init__(self, map:Map, args:tuple[str]):
-        self.__init__(self, map, args)
-
+        super().__init__(map, args)
     
     def execute(self) -> bool:
         self.get_map().get_game_flow_director().next_state()
-        
     
     def check(self) -> bool:
         if not isinstance(self.get_map().get_game_flow_director().get_state(), StartState):
