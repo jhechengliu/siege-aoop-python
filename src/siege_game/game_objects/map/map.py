@@ -8,7 +8,6 @@ from siege_game.game_objects.game_flow_director import GameFlowDirector
 from collections import deque
 from siege_game.game_objects.pawn.attaker import Attacker
 from siege_game.game_objects.pawn.defender import Defender
-from siege_game.game_objects.player import Player
 from siege_game.game_objects.pawn.shooting_system import ShootingSystem
 import json
 import logging
@@ -31,7 +30,7 @@ class Map:
         __game_flow_director: an object which is the main judge of the game
     """
 
-    def __init__(self, map:dict, map_width:int, map_height:int, defend_player:Player, attack_player:Player, defender_count:int, attacker_count:int):
+    def __init__(self, map:dict, map_width:int, map_height:int, defender_count:int, attacker_count:int):
         """
         Don't use constructor to init this class, use get_instance method instead
 
@@ -50,8 +49,6 @@ class Map:
         Map.logger.warning("<map.py> Use get_instance class method to obtain the instance")
         self.__map = map
         self.__shooting_system = ShootingSystem()
-        self.__defend_player = defend_player
-        self.__attack_player = attack_player
         self.__defenders = deque()
         self.__attackers = deque()
         self.__map_width = map_width
@@ -61,12 +58,6 @@ class Map:
         self.__game_flow_director = GameFlowDirector()
         self.__max_defender_count = defender_count
         self.__max_attacker_count = attacker_count
-
-        # for _ in range(defender_count):
-        #     self.__defenders.append(Defender(self.__defend_player))
-
-        # for _ in range(attacker_count):
-        #     self.__attackers.append(Attacker(self.__attack_player))
     
     def print_map(self):
         Map.logger.info(f"Printing the current map... (Size: {self.__map_width} * {self.__map_height})")
@@ -91,10 +82,10 @@ class Map:
         return self.__max_attacker_count
     
     def add_attacker(self, location:list[float]) -> None:
-        self.__attackers.append(Attacker(self.__attack_player, location, self.__shooting_system))
+        self.__attackers.append(Attacker(location, self.__shooting_system))
 
     def add_defender(self, location:list[float]) -> None:
-        self.__defenders.append(Defender(self.__defend_player, location, self.__shooting_system))
+        self.__defenders.append(Defender(location, self.__shooting_system))
 
     def map_status(self):
         Map.logger.info("--- Map Status ---")

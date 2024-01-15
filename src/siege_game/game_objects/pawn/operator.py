@@ -1,7 +1,6 @@
 import random
 from enum import Enum
 from typing import List
-from siege_game.game_objects.player import Player
 from siege_game.game_objects.pawn.weapon import Weapon, Weapons
 from siege_game.game_objects.pawn.mode import Mode, Modes
 from siege_game.game_objects.pawn.shooting_system import ShootingSystem
@@ -27,9 +26,7 @@ class Operator():
 
     Methods:
     """
-    def __init__(self, boss: Player, location: list[int], shooting_system:ShootingSystem) -> None:
-        self.__boss = boss
-        self.__name: str = boss.get_identity()
+    def __init__(self, location: list[int], shooting_system:ShootingSystem) -> None:
         self.__hp: int = 100
         self.__weapon_holding:Weapons = Weapons.Guns.RIFLE
         self.__mode_in: Modes = Modes.NORMAL

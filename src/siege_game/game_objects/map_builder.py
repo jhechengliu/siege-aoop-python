@@ -1,7 +1,6 @@
 import json
 from siege_game.game_objects.map.map_objects import door, floor, window, soft_wall, wall, entrance, barrier
 from siege_game.game_objects.map import map
-from siege_game.game_objects.player import Player
 import logging
 
 class MapBuilder:
@@ -22,7 +21,7 @@ class MapBuilder:
         __id_to_map_object: chnage the array content from numbers to map objects such as Wall object Floor object etc
     """
     
-    def __init__(self, file_name:str, defend_player:Player, attack_player:Player):
+    def __init__(self, file_name:str):
         """
         Make a builder
 
@@ -38,8 +37,6 @@ class MapBuilder:
         self.__load_map(file_name)
         self.__map = {}
         self.__id_to_map_object(self.__map_json["map"], self.__map_json)
-        self.__defend_player = defend_player
-        self.__attack_player = attack_player
 
     def get_map(self) -> map.Map:
         """
@@ -48,7 +45,7 @@ class MapBuilder:
         Returns:
             (Map) The map object which the MapBuilder builds
         """
-        return map.Map(self.__map, self.__map_width, self.__map_height, self.__defend_player, self.__attack_player, 5, 5)
+        return map.Map(self.__map, self.__map_width, self.__map_height, 5, 5)
 
     def __load_map(self, file_name) -> None:
         """
