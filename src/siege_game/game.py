@@ -20,9 +20,9 @@ class Game():
         Game.logger.info(f"Command set: {self.__commander}")
 
     @classmethod
-    def get_instance(cls, defend_player_name:str, attack_player_name:str):
+    def get_instance(cls):
         if (cls.instance == None):
-            cls.instance = Game(defend_player_name, attack_player_name)
+            cls.instance = Game()
 
         return cls.instance
     

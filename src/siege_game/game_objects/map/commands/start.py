@@ -2,14 +2,15 @@ from typing import Callable
 from siege_game.game_objects.map.commands.map_command import MapCommand
 from siege_game.game_objects.states.state import StartState
 from siege_game.game_objects.map.map import Map
+from siege_game.game_objects.player import Identity
 import logging
 
 class StartGameMapCommand(MapCommand):
     
     logger = logging.getLogger("StartGameMapCommand")
 
-    def __init__(self, map:Map, args:tuple[str]):
-        super().__init__(map, args)
+    def __init__(self, map:Map, args:tuple[str], identity:Identity):
+        super().__init__(map, args, identity)
     
     def execute(self) -> None:
         self.get_map().get_game_flow_director().next_state()

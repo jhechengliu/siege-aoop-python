@@ -11,8 +11,7 @@ class Commander():
     def __init__(self, map:Map):
         self.__map = map
         self.__command_headings = {
-            "start": StartGameMapCommand,
-            "init": InitPlayerSettingUpCommand
+            "start": StartGameMapCommand
         }
     def execute_command(self, command:str, identity:Identity):
         Commander.logger.info("Executing Command")
@@ -27,7 +26,7 @@ class Commander():
         Commander.logger.info(f"Command heading:{command_heading} ({type(command_heading)}), Command args:{command_args} ({type(command_args)})")
 
         if (command_heading in self.__command_headings.keys()):
-            command:MapCommand = self.__command_headings[command_heading](self.__map, command_args)
+            command:MapCommand = self.__command_headings[command_heading](self.__map, command_args, identity)
             if (command.check()):
                 command.execute()
             
