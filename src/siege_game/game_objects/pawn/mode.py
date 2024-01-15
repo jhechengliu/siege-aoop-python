@@ -21,5 +21,5 @@ class Modes(Enum):
     """
     Enum for the different modes of the operator.
     """    
-    NORMAL: Mode = Mode(5, 270)
+    NORMAL: Mode = Mode(5, 360)
     AIM_DOWN_SIGHT: Mode = Mode(10, 45)
