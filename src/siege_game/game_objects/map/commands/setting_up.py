@@ -4,7 +4,7 @@ from siege_game.game_objects.constants.identity import Identity
 import logging
 from siege_game.game_objects.invoker import Invoker
 
-class InitPlayerSettingUpCommand(MapCommand):
+class SetOperatorSettingUpCommand(MapCommand):
     """
     command: setoperator 1.5 2.5 => Set an operator of yours at location x=1.5, y=2.5
     """
@@ -24,16 +24,16 @@ class InitPlayerSettingUpCommand(MapCommand):
 
     def check(self) -> bool:
         if not isinstance(self.get_map().get_game_flow_director().get_state(), SettingUpState):
-            InitPlayerSettingUpCommand.logger.error(f"setoperator command can only be used in setting up state. Current State: {self.get_map().get_game_flow_director().get_state()}")
+            SetOperatorSettingUpCommand.logger.error(f"setoperator command can only be used in setting up state. Current State: {self.get_map().get_game_flow_director().get_state()}")
             return False
         elif (len(self.get_args()) != 2):
-            InitPlayerSettingUpCommand.logger.error("Args len must be 3")
+            SetOperatorSettingUpCommand.logger.error("Args len must be 3")
             return False
         elif (self.get_identity() == Identity.ATTACK and len(self.get_map().get_attackers()) >= self.get_map().get_max_attacker_count()):
-            InitPlayerSettingUpCommand.logger.error("Cant add another Attacker because attacker count reached max limit")
+            SetOperatorSettingUpCommand.logger.error("Cant add another Attacker because attacker count reached max limit")
             return False
         elif (self.get_identity() == Identity.DEFEND and len(self.get_map().get_defenders()) >= self.get_map().get_max_defender_count()):
-            InitPlayerSettingUpCommand.logger.error("Cant add another Defender because defender count reached max limit")
+            SetOperatorSettingUpCommand.logger.error("Cant add another Defender because defender count reached max limit")
             return False
         
         x = self.get_args()[0]
@@ -42,13 +42,13 @@ class InitPlayerSettingUpCommand(MapCommand):
         try:
             float(x)
         except ValueError:
-            InitPlayerSettingUpCommand.logger.error("x must be a number")
+            SetOperatorSettingUpCommand.logger.error("x must be a number")
             return False
         
         try:
             float(y)
         except ValueError:
-            InitPlayerSettingUpCommand.logger.error("y must be a number")
+            SetOperatorSettingUpCommand.logger.error("y must be a number")
             return False
         
         return True
