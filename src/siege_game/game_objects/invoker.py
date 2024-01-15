@@ -31,8 +31,8 @@ class Invoker():
         Initialize the Invoker with an empty list to store commands.
         """
         warnings.warn("Use get_instance class method to obtain the instance", UserWarning)
-        self.__has_attacker = False
-        self.__has_defender = False
+        self.__has_attack_player = False
+        self.__has_defend_player = False
 
         self.__client_A_player = None
         self.__client_B_player = None
@@ -51,33 +51,45 @@ class Invoker():
     def run_terminal(self):
         while (True):
             input_str = input()
+            Invoker.logger.info(f"Received Command \"{input_str}\" from terminal")
+
             input_str_list = input_str.split()
 
             # signin A dctime
             if (input_str_list[0] == "signin"):
-                if (len(input_str_list) == 3):
-                    if (input_str_list[1] == "A" and self.__has_attacker == False):
-                        self.__server_player = Player(input_str_list[2], Identity.ATTACK, )
-                    elif (input_str_list[1] == "D" and self.__has_defender == False):
-                        pass
+                if (self.__server_player == None):
+                    if (len(input_str_list) == 3):
+                        if (input_str_list[1] == "A" and self.__has_attack_player == False):
+                            self.__server_player = Player(input_str_list[2], Identity.ATTACK, self.__game.get_commander())
+                            self.__has_attack_player = True
+                            Invoker.logger.info(f"Server signed in! Identity: Attack")
+                        elif (input_str_list[1] == "D" and self.__has_defend_player == False):
+                            self.__server_player = Player(input_str_list[2], Identity.DEFEND, self.__game.get_commander())
+                            self.__has_defend_player = True
+                            Invoker.logger.info(f"Server signed in! Identity: Defend")
+                        else:
+                            Invoker.logger.error("Type must be capital A (Attacker) or D (Defender) or someone already get the role")
                     else:
-                        Invoker.logger.error("Type must be capital A (Attacker) or D (Defender) or someone already get the role")
+                        Invoker.logger.error("signin args must be 2. Example command \"signin A DCtime\"")
                 else:
-                    Invoker.logger.error("signin args must be 2")
+                    Invoker.logger.error("Server already signin! Use signout to change your identity")
 
             # signout  
             elif (input_str == "signout"):
-                pass
+                if (len(input_str_list) == 1):
+                    if (self.__server_player.get_identity() == Identity.ATTACK):
+                        self.__has_attack_player = False
+                    elif (self.__server_player.get_identity() == Identity.DEFEND):
+                        self.__has_defend_player = False
+
+                    self.__server_player = None
+                    Invoker.logger.info("Server signed out")
+                else:
+                    Invoker.logger.error("signout args must be 0")
 
             else:
                 Invoker.logger.error("You havent sign in yet")
-
-
-                
-
-
-
-            Invoker.logger.info(f"Received Command \"{input_str}\" from terminal")
+            
 
     # def attacker_mouse_callback(self, message):
     #     print("message")

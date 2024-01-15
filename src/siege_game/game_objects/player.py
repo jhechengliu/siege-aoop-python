@@ -33,5 +33,8 @@ class Player():
 
     def execute_command(self, command:str):
         self.__commander.execute_command(command)
+
+    def get_identity(self):
+        return self.__identity
           
 
