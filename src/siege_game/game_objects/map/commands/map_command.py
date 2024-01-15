@@ -11,6 +11,7 @@ class MapCommand(ABC):
         from siege_game.game import Game
         self.__game:Game = game
         self.__args:tuple[str] = args
+        self.__send_player = player
         self.__identity:Identity = player.get_identity()
 
     @abc.abstractmethod
@@ -29,6 +30,9 @@ class MapCommand(ABC):
     
     def get_identity(self):
         return self.__identity
+    
+    def get_send_player(self):
+        return self.__send_player
     
 
     
