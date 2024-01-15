@@ -22,7 +22,7 @@ class InitPlayerSettingUpCommand(MapCommand):
 
     def check(self) -> bool:
         if isinstance(self.get_map().get_game_flow_director().get_state(), SettingUpState):
-            InitPlayerSettingUpCommand.logger.error("Init command can only be used in setting up state")
+            InitPlayerSettingUpCommand.logger.error("setoperator command can only be used in setting up state")
             return False
         elif (len(self.get_args()) != 3):
             InitPlayerSettingUpCommand.logger.error("Args len must be 3")

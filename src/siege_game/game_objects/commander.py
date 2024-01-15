@@ -12,7 +12,8 @@ class Commander():
         from siege_game.game import Game
         self.__game:Game = game
         self.__command_headings = {
-            "start": StartGameMapCommand
+            "start": StartGameMapCommand,
+            "setoperator": InitPlayerSettingUpCommand
         }
     def execute_command(self, command:str, identity:Identity):
         Commander.logger.info("Executing Command")
