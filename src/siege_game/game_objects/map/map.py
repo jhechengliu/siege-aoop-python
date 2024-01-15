@@ -54,8 +54,6 @@ class Map:
         self.__attack_player = attack_player
         self.__defenders = deque()
         self.__attackers = deque()
-        self.__defend_player.set_operator_deque(self.__defenders)
-        self.__attack_player.set_operator_deque(self.__attackers)
         self.__map_width = map_width
         self.__map_height = map_height
         self.__map_data_processor = MapDataProcessor()
