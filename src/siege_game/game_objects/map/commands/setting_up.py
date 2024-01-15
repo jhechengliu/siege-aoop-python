@@ -1,21 +1,22 @@
 from siege_game.game_objects.map.commands.map_command import MapCommand
 from siege_game.game_objects.states.state import SettingUpState
+from siege_game.game_objects.constants.identity import Identity
 import logging
 
 class InitPlayerSettingUpCommand(MapCommand):
     """
-    command: init A 1.5 2.5 => Init Attacker at location x=1.5, y=2.5
+    command: setoperator 1.5 2.5 => Set an operator of yours at location x=1.5, y=2.5
     """
     logger = logging.getLogger("PutPlayerSettingUpCommand")
 
     def execute(self) -> None:
-        operator_type = self.get_args()[0]
-        x = float(self.get_args()[1])
-        y = float(self.get_args()[2])
+        operator_type = self.get_identity()
+        x = float(self.get_args()[0])
+        y = float(self.get_args()[1])
 
-        if (operator_type == "A"):
+        if (operator_type == Identity.ATTACK):
             self.get_map().add_attacker([x, y])
-        elif (operator_type == "D"):
+        elif (operator_type == Identity.DEFEND):
             self.get_map().add_defender([x, y])
 
         self.get_map().map_status()
@@ -24,21 +25,18 @@ class InitPlayerSettingUpCommand(MapCommand):
         if not isinstance(self.get_map().get_game_flow_director().get_state(), SettingUpState):
             InitPlayerSettingUpCommand.logger.error(f"setoperator command can only be used in setting up state. Current State: {self.get_map().get_game_flow_director().get_state()}")
             return False
-        elif (len(self.get_args()) != 3):
+        elif (len(self.get_args()) != 2):
             InitPlayerSettingUpCommand.logger.error("Args len must be 3")
             return False
-        elif (self.get_args()[0] != "A" and self.get_args()[0] != "D"):
-            InitPlayerSettingUpCommand.logger.error("Player type must be Attacker \"A\" or Defender \"D\"")
-            return False
-        elif (self.get_args()[0] == "A" and len(self.get_map().get_attackers()) >= self.get_map().get_max_attacker_count()):
+        elif (self.get_identity() == Identity.ATTACK and len(self.get_map().get_attackers()) >= self.get_map().get_max_attacker_count()):
             InitPlayerSettingUpCommand.logger.error("Cant add another Attacker because attacker count reached max limit")
             return False
-        elif (self.get_args()[0] == "D" and len(self.get_map().get_defenders()) >= self.get_map().get_max_defender_count()):
+        elif (self.get_identity() == Identity.DEFEND and len(self.get_map().get_defenders()) >= self.get_map().get_max_defender_count()):
             InitPlayerSettingUpCommand.logger.error("Cant add another Defender because defender count reached max limit")
             return False
         
-        x = self.get_args()[1]
-        y = self.get_args()[2]
+        x = self.get_args()[0]
+        y = self.get_args()[1]
 
         try:
             float(x)
