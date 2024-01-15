@@ -62,4 +62,11 @@ class FinishSettingUpCommand(MapCommand):
         pass
 
     def check(self) -> bool:
-        pass
+        if not isinstance(self.get_map().get_game_flow_director().get_state(), SettingUpState):
+            FinishSettingUpCommand.logger.error(f"Game isn't in start state. Current State: {self.get_map().get_game_flow_director().get_state()}")
+            return False
+        elif (len(self.get_args()) != 0):
+            FinishSettingUpCommand.logger.error("start command must have no args")
+            return False
+        else:
+            return True
