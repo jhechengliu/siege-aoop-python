@@ -30,6 +30,9 @@ class Game():
 
     def get_commander(self):
         return self.__commander
+    
+    def get_map(self):
+        return self.__map
 
 
 

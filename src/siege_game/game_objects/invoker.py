@@ -31,6 +31,9 @@ class Invoker():
         Initialize the Invoker with an empty list to store commands.
         """
         warnings.warn("Use get_instance class method to obtain the instance", UserWarning)
+        self.__has_attacker = False
+        self.__has_defender = False
+
         self.__client_A_player = None
         self.__client_B_player = None
         self.__server_player = None
@@ -46,13 +49,31 @@ class Invoker():
         return Invoker.__instance
 
     def run_terminal(self):
-        current_identity = Identity.ATTACK
         while (True):
             input_str = input()
-            
+            input_str_list = input_str.split()
+
             # signin A dctime
-            # if (input_str == "signin"):
-            #     if 
+            if (input_str_list[0] == "signin"):
+                if (len(input_str_list) == 3):
+                    if (input_str_list[1] == "A" and self.__has_attacker == False):
+                        self.__server_player = Player(input_str_list[2], Identity.ATTACK, )
+                    elif (input_str_list[1] == "D" and self.__has_defender == False):
+                        pass
+                    else:
+                        Invoker.logger.error("Type must be capital A (Attacker) or D (Defender) or someone already get the role")
+                else:
+                    Invoker.logger.error("signin args must be 2")
+
+            # signout  
+            elif (input_str == "signout"):
+                pass
+
+            else:
+                Invoker.logger.error("You havent sign in yet")
+
+
+                
 
 
 
