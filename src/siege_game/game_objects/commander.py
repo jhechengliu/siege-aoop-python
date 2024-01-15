@@ -14,7 +14,8 @@ class Commander():
         self.__command_headings = {
             "start": StartGameMapCommand,
             "setoperator": InitPlayerSettingUpCommand,
-            "finishsettingup": FinishSettingUpCommand
+            "finishsettingup": FinishSettingUpCommand,
+            "startbattle": StartBattleSettingUpCommand
         }
     def execute_command(self, command:str, player:Player):
         Commander.logger.info("Executing Command")
