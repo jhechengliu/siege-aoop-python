@@ -2,7 +2,7 @@ from siege_game.game_objects.map.map import Map
 from siege_game.game_objects.map.commands.map_command import MapCommand
 from siege_game.game_objects.map.commands.start import StartGameMapCommand
 from siege_game.game_objects.map.commands.setting_up import InitPlayerSettingUpCommand
-from siege_game.game_objects.constants.identity import Identity
+from siege_game.game_objects.player import Player
 import logging
 
 class Commander():
@@ -15,7 +15,7 @@ class Commander():
             "start": StartGameMapCommand,
             "setoperator": InitPlayerSettingUpCommand
         }
-    def execute_command(self, command:str, identity:Identity):
+    def execute_command(self, command:str, player:Player):
         Commander.logger.info("Executing Command")
         command_list = command.split()
         command_heading = command_list[0]
@@ -28,7 +28,7 @@ class Commander():
         Commander.logger.info(f"Command heading:{command_heading} ({type(command_heading)}), Command args:{command_args} ({type(command_args)})")
 
         if (command_heading in self.__command_headings.keys()):
-            command:MapCommand = self.__command_headings[command_heading](self.__game, command_args, identity)
+            command:MapCommand = self.__command_headings[command_heading](self.__game, command_args, player)
             if (command.check()):
                 command.execute()
             
