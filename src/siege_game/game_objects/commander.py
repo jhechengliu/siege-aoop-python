@@ -2,7 +2,7 @@ from siege_game.game_objects.map.map import Map
 from siege_game.game_objects.map.commands.map_command import MapCommand
 from siege_game.game_objects.map.commands.start import StartGameMapCommand
 from siege_game.game_objects.map.commands.setting_up import InitPlayerSettingUpCommand
-from siege_game.game_objects.player import Identity
+from siege_game.game_objects.constants.identity import Identity
 import logging
 
 class Commander():

@@ -3,6 +3,7 @@ from siege_game.game_objects.map.commands.map_command import MapCommand
 from siege_game.game_objects.states.state import StartState
 from siege_game.game_objects.map.map import Map
 import siege_game.game_objects.player as player
+from siege_game.game_objects.constants.identity import Identity
 
 import logging
 
@@ -10,7 +11,7 @@ class StartGameMapCommand(MapCommand):
     
     logger = logging.getLogger("StartGameMapCommand")
 
-    def __init__(self, map:Map, args:tuple[str], identity:player.Identity):
+    def __init__(self, map:Map, args:tuple[str], identity:Identity):
         
         super().__init__(map, args, identity)
     

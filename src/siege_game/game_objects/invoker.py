@@ -1,7 +1,8 @@
 import warnings
 from siege_game.game import Game
 import logging 
-from siege_game.game_objects.player import Identity, Player
+from siege_game.game_objects.player import Player
+from siege_game.game_objects.constants.identity import Identity
 
 class Invoker():
     """
