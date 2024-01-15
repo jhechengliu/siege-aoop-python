@@ -2,11 +2,12 @@ from abc import ABC
 import abc
 from siege_game.game_objects.states.state import State
 from siege_game.game_objects.map.map import Map
-from siege_game.game_objects.player import Identity
+
 import typing
 
 class MapCommand(ABC):
-    def __init__(self, map:Map, args:tuple[str], identity:Identity):
+    def __init__(self, map:Map, args:tuple[str], identity):
+        from siege_game.game_objects.player import Identity
         self.__map:Map = map
         self.__args:tuple[str] = args
         self.__identity:Identity = identity
@@ -25,7 +26,7 @@ class MapCommand(ABC):
     def get_args(self) -> tuple:
         return self.__args
     
-    def get_identity(self) -> Identity:
+    def get_identity(self):
         return self.__identity
     
 
