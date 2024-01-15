@@ -2,6 +2,7 @@ from siege_game.game_objects.map.commands.map_command import MapCommand
 from siege_game.game_objects.states.state import SettingUpState
 from siege_game.game_objects.constants.identity import Identity
 import logging
+from siege_game.game_objects.invoker import Invoker
 
 class InitPlayerSettingUpCommand(MapCommand):
     """
@@ -85,10 +86,16 @@ class StartBattleSettingUpCommand(MapCommand):
     logger = logging.getLogger("StartBattleSettingUp")
 
     def execute(self) -> None:
-        pass
+        self.get_map().get_game_flow_director().next_state()
 
     def check(self) -> bool:
         if (len(self.get_args()) != 0):
             StartBattleSettingUpCommand.logger.error("startbattle command args must be 0")
             return False
+        
+        elif (Invoker.get_instance().get_server_player() != None and not Invoker.get_instance().get_server_player().get_has_finish_setting_up()):
+            StartBattleSettingUpCommand.logger.error("Server player isnt ready")
+            return False
+        
+        return True
         

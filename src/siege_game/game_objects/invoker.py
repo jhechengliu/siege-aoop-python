@@ -48,6 +48,15 @@ class Invoker():
             Invoker.__instance = Invoker()
         
         return Invoker.__instance
+    
+    def get_client_A_player(self):
+        return self.__client_A_player
+    
+    def get_client_B_player(self):
+        return self.__client_B_player
+
+    def get_server_player(self):
+        return self.__server_player
 
     def run_terminal(self):
         while (True):
