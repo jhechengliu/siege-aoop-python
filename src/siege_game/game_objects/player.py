@@ -1,6 +1,6 @@
 import uuid
 from collections import deque
-from siege_game.game_objects.commander import Commander
+import siege_game.game_objects.commander as commander_file
 
 class Identity():
     ATTACK = uuid.uuid4()
@@ -22,14 +22,14 @@ class Player():
         
     """
 
-    def __init__(self, name: str, identity:Identity, commander:Commander):
+    def __init__(self, name: str, identity:Identity, commander):
         """
         The constructor for the Player class.
         """
 
         self.__name = name
         self.__identity:Identity = identity
-        self.__commander:Commander = commander
+        self.__commander:commander_file.Commander = commander
 
     def execute_command(self, command:str):
         self.__commander.execute_command(command)
