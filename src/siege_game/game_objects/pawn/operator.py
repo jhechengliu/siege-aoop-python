@@ -31,8 +31,7 @@ class Operator():
         self.__boss = boss
         self.__name: str = boss.get_identity()
         self.__hp: int = 100
-        self.__inhand: str = None
-        self.__weapon_holding: Weapons = None
+        self.__weapon_holding:Weapons = Weapons.Guns.RIFLE
         self.__mode_in: Modes = Modes.NORMAL
         self.__sight_direction: int = 0
         self.__steps: int = 5

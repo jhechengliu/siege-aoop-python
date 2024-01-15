@@ -18,7 +18,7 @@ class Weapon:
         self.__damage = damage
         self.__required_hands = __required_hands
 
-class Weapons():
+class Weapons(Enum):
     """
     Enum for the different weapons.
     Eg. Weapons.GUNS.RIFLE.value

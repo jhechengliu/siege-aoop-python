@@ -1,4 +1,5 @@
 import uuid
+from collections import deque
 
 class Player():
     """
@@ -11,8 +12,6 @@ class Player():
     Attributes:
         __name (str): The name of the player.
         __identity (Identity): Whether Attacker or Defender.
-        __total_number_of_operators (int): The number of operators the player has.
-        __alive_operators (int): The number of operators the player has that are alive.
 
     Methods:
         
@@ -23,13 +22,16 @@ class Player():
         The constructor for the Player class.
 
         Parameters:
-            name (str): The name of the player.
-            identity (str): Whether Attacker or Defender.
-            number_of_operators (int): The number of operators the player has.
+            __name (str): The name of the player.
+            __identity (str): Whether Attacker or Defender.
         """
 
         self.__name = name
         self.__identity:Identity = None
+        self.__operator_deque = None
+
+    def set_operator_deque(self, operator_deque:deque):
+        self.__operator_deque = operator_deque
 
 class Identity():
     ATTACK = uuid.uuid4()
