@@ -77,7 +77,7 @@ class Invoker():
 
             # signout  
             elif (input_str_list[0] == "signout"):
-                if (len(input_str_list) == 1):
+                if (len(input_str_list) == 1 and self.__server_player != None):
                     if (self.__server_player.get_identity() == Identity.ATTACK):
                         self.__has_attack_player = False
                     elif (self.__server_player.get_identity() == Identity.DEFEND):
@@ -85,6 +85,8 @@ class Invoker():
 
                     self.__server_player = None
                     Invoker.logger.info("Server signed out")
+                elif (self.__server_player == None):
+                    Invoker.logger.error("You can only signout after signin.")
                 else:
                     Invoker.logger.error("signout args must be 0")
 
