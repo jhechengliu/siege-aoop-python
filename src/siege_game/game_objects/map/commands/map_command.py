@@ -7,8 +7,9 @@ from siege_game.game_objects.constants.identity import Identity
 import typing
 
 class MapCommand(ABC):
-    def __init__(self, map:Map, args:tuple[str], identity):
-        self.__map:Map = map
+    def __init__(self, game, args:tuple[str], identity):
+        from siege_game.game import Game
+        self.__game:Game = game
         self.__args:tuple[str] = args
         self.__identity:Identity = identity
 
@@ -20,8 +21,8 @@ class MapCommand(ABC):
     def check(self) -> bool: 
         raise NotImplementedError()
     
-    def get_map(self) -> Map:
-        return self.__map
+    def get_map(self):
+        return self.__game.get_map()
     
     def get_args(self) -> tuple:
         return self.__args
