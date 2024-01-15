@@ -70,3 +70,19 @@ class FinishSettingUpCommand(MapCommand):
             return False
         else:
             return True
+        
+
+class StartBattleSettingUpCommand(MapCommand):
+    """
+    command startbattle => start the battle 
+    """
+    logger = logging.getLogger("StartBattleSettingUp")
+
+    def execute(self) -> None:
+        pass
+
+    def check(self) -> bool:
+        if (len(self.get_args()) != 0):
+            StartBattleSettingUpCommand.logger.error("startbattle command args must be 0")
+            return False
+        

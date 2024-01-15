@@ -28,7 +28,7 @@ class Player():
         self.__is_ready = False
 
     def execute_command(self, command:str):
-        self.__commander.execute_command(command, self.__identity)
+        self.__commander.execute_command(command, self)
 
     def get_identity(self):
         return self.__identity
