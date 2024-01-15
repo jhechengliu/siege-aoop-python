@@ -26,7 +26,6 @@ class Weapons(Enum):
     class Guns(Enum):
         RIFLE: Weapon = Weapon("rifle", 20, 2)
         PISTOL: Weapon = Weapon("pistol", 10, 1)
-        KNIFE: Weapon = Weapon("knife", 100, 1)
 
     class Explosive(Enum):
         GRENADE: Weapon = Weapon("grenade", 70, 1)

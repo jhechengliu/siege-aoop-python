@@ -1,10 +1,5 @@
-import uuid
-from collections import deque
+from siege_game.game_objects.constants.identity import Identity
 import siege_game.game_objects.commander as commander_file
-
-class Identity():
-    ATTACK = uuid.uuid4()
-    DEFEND = uuid.uuid4()
 
 class Player():
     """
