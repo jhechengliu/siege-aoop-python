@@ -68,6 +68,12 @@ class FinishSettingUpCommand(MapCommand):
         elif (len(self.get_args()) != 0):
             FinishSettingUpCommand.logger.error("start command must have no args")
             return False
+        elif (self.get_identity() == Identity.ATTACK and len(self.get_map().get_attackers()) != self.get_map().get_max_attacker_count()):
+            FinishSettingUpCommand.logger.error("Attacker count must be equal to max attacker count")
+            return False
+        elif (self.get_identity() == Identity.DEFEND and len(self.get_map().get_defenders()) != self.get_map().get_max_defender_count()):
+            FinishSettingUpCommand.logger.error("Defender count must be equal to max defender count")
+            return False
         else:
             return True
         

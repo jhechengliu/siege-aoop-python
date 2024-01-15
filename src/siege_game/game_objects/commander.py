@@ -1,7 +1,7 @@
 from siege_game.game_objects.map.map import Map
 from siege_game.game_objects.map.commands.map_command import MapCommand
 from siege_game.game_objects.map.commands.start import StartGameMapCommand
-from siege_game.game_objects.map.commands.setting_up import InitPlayerSettingUpCommand
+from siege_game.game_objects.map.commands.setting_up import InitPlayerSettingUpCommand, FinishSettingUpCommand, StartBattleSettingUpCommand
 from siege_game.game_objects.player import Player
 import logging
 
@@ -13,7 +13,8 @@ class Commander():
         self.__game:Game = game
         self.__command_headings = {
             "start": StartGameMapCommand,
-            "setoperator": InitPlayerSettingUpCommand
+            "setoperator": InitPlayerSettingUpCommand,
+            "finishsettingup": FinishSettingUpCommand
         }
     def execute_command(self, command:str, player:Player):
         Commander.logger.info("Executing Command")
