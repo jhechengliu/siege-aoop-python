@@ -1,12 +1,12 @@
-class Barrier():
-    def __init__(self, location:tuple):
-        self.__location = location
+from siege_game.game_objects.map.map_objects.map_object import MapObject
 
-    def get_location(self) -> tuple:
-        return self.__location
+class Barrier(MapObject):
+    def __init__(self, location:tuple):
+        super().__init__(location)
+        self.set_is_breakable(False)
     
     def __str__(self):
-        return f"Barrier ({self.__location})"
+        return f"Barrier ({self.get_location()})"
     
     def __repr__(self):
-        return f"Barrier ({self.__location})"
+        return f"Barrier ({self.get_location()})"

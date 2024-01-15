@@ -1,25 +1,12 @@
-class Floor():
-    """
-    Its just a floor
+from siege_game.game_objects.map.map_objects.map_object import MapObject
 
-    Attributes:
-        __location (tuple): the location of the floor
-
-    Methods:
-        get_location: the getter of the __location attribute
-    """
+class Floor(MapObject):
     def __init__(self, location:tuple):
-        self.__location = location
-
-    def get_location(self) -> tuple:
-        """
-        Returns: 
-            (tuple) location of the floor 
-        """
-        return self.__location
+        super().__init__(location)
+        self.set_is_breakable(False)
     
     def __str__(self):
-        return f"Floor ({self.__location})"
+        return f"Floor ({self.get_location()})"
     
     def __repr__(self):
-        return f"Floor ({self.__location})"
+        return f"Floor ({self.get_location()})"

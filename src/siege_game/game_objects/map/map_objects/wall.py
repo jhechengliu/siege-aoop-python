@@ -1,26 +1,12 @@
-class Wall():
-    
+from siege_game.game_objects.map.map_objects.map_object import MapObject
+
+class Wall(MapObject):
     def __init__(self, location: tuple) -> None:
-        """
-            Initialize the object with a location attribute.
-
-            Args:
-                location (tuple): A pair of coordinates (x, y) representing the location of the object.
-
-            Attributes:
-                __location (tuple): A private attribute to store the location of the object.
-        """
-        self.__location = location
-
-    def get_location(self) -> tuple:
-        """
-        Returns: 
-            (tuple) location of the wall
-        """
-        return self.__location
+        super().__init__(location)
+        self.set_is_breakable(False)
     
     def __str__(self):
-        return f"Wall ({self.__location})"
+        return f"Wall ({self.get_location()})"
     
     def __repr__(self):
-        return f"Wall ({self.__location})"
+        return f"Wall ({self.get_location()})"

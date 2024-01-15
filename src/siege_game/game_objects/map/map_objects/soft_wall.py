@@ -1,27 +1,19 @@
-class SoftWall():
+from siege_game.game_objects.map.map_objects.map_object import MapObject
+
+class SoftWall(MapObject):
     def __init__(self, location:tuple):
-        """
-            Initialize the object with a location attribute.
+        super().__init__(location)
+        self.set_is_breakable(True)
+        self.__is_broken = False
 
-            Args:
-                location (tuple): A pair of coordinates (x, y) representing the location of the object.
-
-            Attributes:
-                __isbroken (bool): A private attribute to indicate if the object is broken. Default to False.
-                __location (tuple): A private attribute to store the location of the object.
-        """
-        self.__isbroken = False
-        self.__location = location
-
-    def get_location(self) -> tuple:
-        """
-        Returns: 
-            (tuple) location of the soft_wall 
-        """
-        return self.__location
+    def get_is_broken(self) -> bool:
+        return self.__is_broken
     
+    def break_it(self) -> None:
+        self.__is_broken = True
+
     def __str__(self):
-        return f"Soft Wall ({self.__location})"
+        return f"Soft Wall ({self.get_location()})"
     
     def __repr__(self):
-        return f"Soft Wall ({self.__location})"
+        return f"Soft Wall ({self.get_location()})"

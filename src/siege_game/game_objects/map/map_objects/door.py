@@ -1,25 +1,11 @@
-class Door():
-    """
-    Well its a door
+from siege_game.game_objects.map.map_objects.map_object import MapObject
 
-    Attributes:
-        __is_open (boolean): true when door is in open state. False when door is closed.
-        __is_broken (boolean): true when door flew away, false when door is still there.
-        __location (boolean): the location of the door in the map, represented using tuple (y, x)
-
-    Methods:
-        use: open/close the door
-        break_it: break the door
-        get_location: the getter of the door's location
-    """
+class Door(MapObject):
     def __init__(self, location:tuple):
-        """
-        Attributes:
-            location: the location of the newly made door
-        """
-        self.__is_open = False
+        super().__init__(location)
+        self.set_is_breakable(True)
         self.__is_broken = False
-        self.__location = location
+        self.__is_open = False
 
     def use(self) -> None:
         """
@@ -42,17 +28,10 @@ class Door():
         """
         self.__is_broken = True
         self.__is_open = True
-
-    def get_location(self) -> tuple:
-        """
-        Returns: 
-            (tuple) the location of the door object
-        """
-        return self.__location
     
     def __str__(self):
-        return f"Door ({self.__location})"
+        return f"Door ({self.get_location()})"
     
     def __repr__(self):
-        return f"Door ({self.__location})"
+        return f"Door ({self.get_location()})"
     
