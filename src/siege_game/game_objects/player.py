@@ -25,7 +25,7 @@ class Player():
         self.__name = name
         self.__identity:Identity = identity
         self.__commander:commander_file.Commander = commander
-        self.__is_ready = False
+        self.__has_finish_setting_up = False
 
     def execute_command(self, command:str):
         self.__commander.execute_command(command, self)
@@ -33,11 +33,11 @@ class Player():
     def get_identity(self):
         return self.__identity
     
-    def ready(self):
-        self.__is_ready = True
+    def finish_setting_up(self):
+        self.__has_finish_setting_up = True
 
-    def get_is_ready(self):
-        return self.__is_ready
+    def get_has_finish_setting_up(self):
+        return self.__has_finish_setting_up
 
     def __str__(self):
         identity_str = ""
