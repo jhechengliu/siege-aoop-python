@@ -25,12 +25,19 @@ class Player():
         self.__name = name
         self.__identity:Identity = identity
         self.__commander:commander_file.Commander = commander
+        self.__is_ready = False
 
     def execute_command(self, command:str):
         self.__commander.execute_command(command, self.__identity)
 
     def get_identity(self):
         return self.__identity
+    
+    def ready(self):
+        self.__is_ready = True
+
+    def get_is_ready(self):
+        return self.__is_ready
 
     def __str__(self):
         identity_str = ""

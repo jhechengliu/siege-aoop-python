@@ -52,4 +52,14 @@ class InitPlayerSettingUpCommand(MapCommand):
         
         return True
         
-    
+class FinishSettingUpCommand(MapCommand):
+    """
+    command: finishsettingup => Finish setting up
+    """
+    logger = logging.getLogger("FinishSettingUpCommand")
+
+    def execute(self) -> None:
+        pass
+
+    def check(self) -> bool:
+        pass
