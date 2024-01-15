@@ -1,11 +1,6 @@
 from abc import ABC
-from enum import Enum
-import uuid 
+from siege_game.game_objects.constants.side import Side
 
-class StateData():
-    class Side(Enum):
-        DEFEND = uuid.uuid4()
-        ATTACK = uuid.uuid4()
 
 class State(ABC):
     pass
@@ -20,7 +15,7 @@ class SettingUpState(State):
 class BattleState(State):
     
     def __init__(self):
-        self.__side = StateData.Side.ATTACK
+        self.__side = Side.ATTACK
 
     def __repr__(self):
         return f"BattleState"
