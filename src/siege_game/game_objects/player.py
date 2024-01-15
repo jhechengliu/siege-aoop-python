@@ -27,9 +27,25 @@ class Player():
         self.__commander:commander_file.Commander = commander
 
     def execute_command(self, command:str):
-        self.__commander.execute_command(command)
+        self.__commander.execute_command(command, self.__identity)
 
     def get_identity(self):
         return self.__identity
-          
 
+    def __str__(self):
+        identity_str = ""
+        if (self.__identity == Identity.ATTACK):
+            identity_str = "Attack"
+        elif (self.__identity == Identity.DEFEND):
+            identity_str = "Defend"
+
+        return f"Player {self.__name}, Identity: {identity_str}"
+    
+    def __repr__(self):
+        identity_str = ""
+        if (self.__identity == Identity.ATTACK):
+            identity_str = "Attack"
+        elif (self.__identity == Identity.DEFEND):
+            identity_str = "Defend"
+
+        return f"Player {self.__name}, Identity: {identity_str}"

@@ -11,9 +11,8 @@ class StartGameMapCommand(MapCommand):
     
     logger = logging.getLogger("StartGameMapCommand")
 
-    def __init__(self, map:Map, args:tuple[str], identity:Identity):
-        
-        super().__init__(map, args, identity)
+    def __init__(self, game, args:tuple[str], identity:Identity):
+        super().__init__(game, args, identity)
     
     def execute(self) -> None:
         self.get_map().get_game_flow_director().next_state()

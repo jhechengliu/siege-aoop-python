@@ -13,7 +13,7 @@ class Game():
         self.__map = None
         builder = MapBuilder(self.__map_name)
         self.__map = builder.get_map()
-        self.__commander = Commander(self.__map)
+        self.__commander = Commander(self)
         Game.logger.info(f"Command set: {self.__commander}")
 
     @classmethod
