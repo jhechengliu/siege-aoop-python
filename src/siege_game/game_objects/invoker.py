@@ -1,5 +1,4 @@
 import warnings
-from siege_game.game import Game
 import logging 
 from siege_game.game_objects.player import Player
 from siege_game.game_objects.constants.identity import Identity
@@ -26,8 +25,7 @@ class Invoker():
     logger = logging.getLogger("Invoker")
     __instance = None
 
-    def __init__(self, game:Game) -> None:
-
+    def __init__(self, game) -> None:
         """
         Initialize the Invoker with an empty list to store commands.
         """

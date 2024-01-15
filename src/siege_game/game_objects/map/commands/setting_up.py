@@ -87,6 +87,7 @@ class StartBattleSettingUpCommand(MapCommand):
 
     def execute(self) -> None:
         self.get_map().get_game_flow_director().next_state()
+        StartBattleSettingUpCommand.logger.info(f"Battle starts! Current State: {self.get_map().get_game_flow_director().get_state()}")
 
     def check(self) -> bool:
         if (len(self.get_args()) != 0):
