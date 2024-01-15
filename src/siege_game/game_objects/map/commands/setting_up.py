@@ -60,7 +60,7 @@ class FinishSettingUpCommand(MapCommand):
     logger = logging.getLogger("FinishSettingUpCommand")
 
     def execute(self) -> None:
-        pass
+        self.get_send_player().set_has_finish_setting_up(True)
 
     def check(self) -> bool:
         if not isinstance(self.get_map().get_game_flow_director().get_state(), SettingUpState):
@@ -81,7 +81,7 @@ class FinishSettingUpCommand(MapCommand):
 
 class StartBattleSettingUpCommand(MapCommand):
     """
-    command startbattle => start the battle 
+    command: startbattle => start the battle 
     """
     logger = logging.getLogger("StartBattleSettingUp")
 

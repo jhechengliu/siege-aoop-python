@@ -33,8 +33,8 @@ class Player():
     def get_identity(self):
         return self.__identity
     
-    def finish_setting_up(self):
-        self.__has_finish_setting_up = True
+    def set_has_finish_setting_up(self, has_finish_setting_up:bool):
+        self.__has_finish_setting_up = has_finish_setting_up
 
     def get_has_finish_setting_up(self):
         return self.__has_finish_setting_up
