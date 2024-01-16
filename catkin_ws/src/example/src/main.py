@@ -6,13 +6,22 @@ from siege_game.game import Game
 from siege_game.game_objects.invoker import Invoker
 from threading import Thread
 import logging
+from siege_game.game_objects.logger import Logger
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.NOTSET)
+    logger = Logger("main")
 
     game = Game.get_instance()
     invoker = Invoker(game)
+
     rospy.init_node('cube_position_node')
+
+    logger.info("This is info")
+    logger.error("This is error")
+    logger.debug("This is debug")
+    logger.warn("This is warn")
+    logger.fatal("What have you done")
 
     thread1 = Thread(target=game.run, args=())
     thread2 = Thread(target=invoker.run_terminal, args=())
