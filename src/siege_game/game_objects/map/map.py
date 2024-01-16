@@ -1,7 +1,4 @@
-#!/usr/bin/env python3
-# import rospy
-# from std_msgs.msg import UInt8MultiArray
-# from sensor_msgs.msg import Mouse
+
 from siege_game.game_objects.map_data_processor import MapDataProcessor
 from siege_game.game_objects.game_data_publisher import GameDataPublisher
 from siege_game.game_objects.game_flow_director import GameFlowDirector

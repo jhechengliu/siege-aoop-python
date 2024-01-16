@@ -1,3 +1,8 @@
+#!/usr/bin/env python3
+import rospy
+from std_msgs.msg import String
+from sensor_msgs.msg import Mouse
+
 import warnings
 import logging 
 from siege_game.game_objects.player import Player
@@ -37,8 +42,8 @@ class Invoker():
         self.__client_B_player = None
         self.__server_player = None
         self.__game = game
-        # self.client_A_subsriber = rospy.Subscriber('/attacker_mouse_event', UInt8MultiArray, self.attacker_mouse_callback)
-        # self.client_B_mouse_subsriber = rospy.Subscriber('/defender_mouse_event', UInt8MultiArray, self.defender_mouse_callback)
+        self.client_A_subsriber = rospy.Subscriber('/client_A', String, self.client_A_callback)
+        self.client_B_subsriber = rospy.Subscriber('/client_B', String, self.client_B_callback)
 
     @classmethod
     def get_instance():
@@ -119,10 +124,10 @@ class Invoker():
 
             
 
-    # def attacker_mouse_callback(self, message):
-    #     print("message")
-    #     print(type(message))
+    def client_A_callback(self, message):
+        Invoker.logger.info(message)
+        Invoker.logger.info(type(message))
 
-    # def defender_mouse_callback(self, message):
-    #     print("message")
-    #     print(type(message))
+    def client_B_callback(self, message):
+        Invoker.logger.info(message)
+        Invoker.logger.info(type(message))
