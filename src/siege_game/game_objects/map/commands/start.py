@@ -1,4 +1,4 @@
-from typing import Callable
+from typing import Callable, Tuple
 from siege_game.game_objects.map.commands.map_command import MapCommand
 from siege_game.game_objects.states.state import StartState
 from siege_game.game_objects.map.map import Map
@@ -11,7 +11,7 @@ class StartGameMapCommand(MapCommand):
     
     logger = logging.getLogger("StartGameMapCommand")
 
-    def __init__(self, game, args:tuple[str], identity:Identity):
+    def __init__(self, game, args:Tuple[str], identity:Identity):
         super().__init__(game, args, identity)
     
     def execute(self) -> None:
