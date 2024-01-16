@@ -24,5 +24,6 @@ if __name__ == "__main__":
     # thread1.join()
     # thread2.join()
 
-    game.run()
+    while not rospy.is_shutdown():
+        pass
 

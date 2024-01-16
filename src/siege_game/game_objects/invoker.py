@@ -125,9 +125,13 @@ class Invoker():
             
 
     def client_A_callback(self, message):
+        print("hey Client A")
+        print(message)
         Invoker.logger.info(message)
         Invoker.logger.info(type(message))
 
     def client_B_callback(self, message):
+        print("hey Client B")
+        print(message)
         Invoker.logger.info(message)
         Invoker.logger.info(type(message))
