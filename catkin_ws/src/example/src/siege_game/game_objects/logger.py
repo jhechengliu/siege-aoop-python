@@ -2,7 +2,7 @@ import rospy
 
 class Logger():
     def __init__(self, name):
-        self.__name = name
+        self.__name = f"[{name}]"
 
     def info(self, msg, *args, **kwargs):
         rospy.loginfo(f"[{self.__name}]", msg, *args, **kwargs)
