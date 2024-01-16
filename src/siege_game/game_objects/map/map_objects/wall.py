@@ -1,7 +1,8 @@
+from typing import Tuple
 from siege_game.game_objects.map.map_objects.map_object import MapObject
 
 class Wall(MapObject):
-    def __init__(self, location: tuple) -> None:
+    def __init__(self, location: Tuple) -> None:
         super().__init__(location)
         self.set_is_breakable(False)
     

@@ -1,7 +1,8 @@
+from typing import Tuple
 from siege_game.game_objects.map.map_objects.map_object import MapObject
 
 class Barrier(MapObject):
-    def __init__(self, location:tuple):
+    def __init__(self, location:Tuple):
         super().__init__(location)
         self.set_is_breakable(False)
     
