@@ -16,7 +16,7 @@ if __name__ == "__main__":
     game = Game.get_instance()
     invoker = Invoker(game)
 
-    rospy.init_node('cube_position_node')
+    rospy.init_node('cube_position_node', log_level=rospy.DEBUG)
 
     logger.info("This is info")
     logger.error("This is error")
