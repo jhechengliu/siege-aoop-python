@@ -34,7 +34,7 @@ class Invoker():
         """
         Initialize the Invoker with an empty list to store commands.
         """
-        warnings.warn("Use get_instance class method to obtain the instance", UserWarning)
+        Invoker.logger.warning("Use get_instance class method to obtain the instance", UserWarning)
         self.__has_attack_player = False
         self.__has_defend_player = False
 

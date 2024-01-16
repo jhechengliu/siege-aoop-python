@@ -35,4 +35,4 @@ class Commander():
                 command.execute()
             
         else:
-            Commander.logger.warn("Command Heading Not Found. Do you forgot to add headings into the __command_headings?")
+            Commander.logger.warning("Command Heading Not Found. Do you forgot to add headings into the __command_headings?")

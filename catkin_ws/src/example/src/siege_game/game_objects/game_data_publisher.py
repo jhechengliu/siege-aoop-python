@@ -1,5 +1,5 @@
 from siege_game.game_objects.logger import Logger
-import warnings
+
 class GameDataPublisher:
     logger = Logger('GameDataPublisher')
 
@@ -9,4 +9,4 @@ class GameDataPublisher:
         # self.map_message = UInt8MultiArray()
     
     def publish(self):
-        warnings.warn("This method is WIP or broken")
+        GameDataPublisher.logger.warning("This method is WIP or broken")
