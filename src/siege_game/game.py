@@ -28,7 +28,6 @@ class Game():
         return cls.instance
     
     def run(self):
-        rospy.init_node('cube_position_node')
         self.__map.print_map()
         while not rospy.is_shutdown():
             pass
