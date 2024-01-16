@@ -7,22 +7,13 @@ from siege_game.game_objects.invoker import Invoker
 from threading import Thread
 import logging
 
-class ConnectPythonLoggingToROS(logging.Handler):
-
-    MAP = {
-        logging.DEBUG:rospy.logdebug,
-        logging.INFO:rospy.loginfo,
-        logging.WARNING:rospy.logwarn,
-        logging.ERROR:rospy.logerr,
-        logging.CRITICAL:rospy.logfatal
-    }
-
-    def emit(self, record):
-        try:
-            self.MAP[record.levelno]("%s: %s" % (record.name, record.msg))
-        except KeyError:
-            rospy.logerr("unknown log level %s LOG: %s: %s" % (record.levelno, record.name, record.msg))
-
+def fix_logging(level=logging.WARNING):
+    console = logging.StreamHandler()
+    console.setLevel(level)
+    logging.getLogger('').addHandler(console)
+    formatter = logging.Formatter('%(levelname)-8s:%(name)-12s: %(message)s')
+    console.setFormatter(formatter)
+    logging.getLogger('').addHandler(console)
 
 if __name__ == "__main__":
 
@@ -30,13 +21,8 @@ if __name__ == "__main__":
 
     game = Game.get_instance()
     invoker = Invoker(game)
-    #reconnect logging calls which are children of this to the ros log system
-    logging.getLogger('trigger').addHandler(ConnectPythonLoggingToROS())
-    #logs sent to children of trigger with a level >= this will be redirected to ROS
-    logging.getLogger('trigger').setLevel(logging.DEBUG)
-
-    rospy.init_node('triggerbox_host', log_level=rospy.DEBUG)
-    # rospy.init_node('cube_position_node')
+    rospy.init_node('cube_position_node')
+    fix_logging()
 
     thread1 = Thread(target=game.run, args=())
     thread2 = Thread(target=invoker.run_terminal, args=())
