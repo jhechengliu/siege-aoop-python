@@ -20,9 +20,9 @@ class Operator():
     def get_location(self) -> list[float]:
         return self.__location
 
-    def shoot(self, target: 'Operator') -> None:
+    def shoot(self, target_opeartor) -> None:
         self.__shooting_system.aim(self)
-        self.__shooting_system.shoot(target)
+        self.__shooting_system.shoot(target_opeartor)
 
 class SpecialActions(Enum):
     SWITCH_MODE: str = 'switch_mode'
