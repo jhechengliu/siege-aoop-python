@@ -14,7 +14,7 @@ class Operator():
         self.__mode_in: Modes = Modes.NORMAL
         self.__sight_direction: int = 0
         self.__steps: int = 5
-        self.__location: list[float] = location
+        self.__location: list = location
         self.__shooting_system = shooting_system
 
     def get_location(self) -> list[float]:
