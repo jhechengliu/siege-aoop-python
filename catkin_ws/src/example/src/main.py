@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 from siege_game.game import Game
 from siege_game.game_objects.invoker import Invoker
 from threading import Thread
