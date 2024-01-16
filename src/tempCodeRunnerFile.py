@@ -1,0 +1,1 @@
+rospy.init_node('cube_position_node

@@ -1,5 +1,5 @@
-import rospy
-from std_msgs.msg import String
+# import rospy
+# from std_msgs.msg import String
 # from sensor_msgs.msg import Mouse
 
 from siege_game.game_objects.map_builder import MapBuilder
@@ -29,7 +29,8 @@ class Game():
     
     def run(self):
         self.__map.print_map()
-        while not rospy.is_shutdown():
+        # while not rospy.is_shutdown():
+        while True:
             pass
 
     def get_commander(self):
