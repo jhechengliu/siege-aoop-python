@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
-import rospy
-from std_msgs.msg import String
+# import rospy
+# from std_msgs.msg import String
 # from sensor_msgs.msg import Mouse
 
 import warnings
@@ -42,8 +42,8 @@ class Invoker():
         self.__client_B_player = None
         self.__server_player = None
         self.__game = game
-        self.client_A_subsriber = rospy.Subscriber('/client_A', String, self.client_A_callback)
-        self.client_B_subsriber = rospy.Subscriber('/client_B', String, self.client_B_callback)
+        # self.client_A_subsriber = rospy.Subscriber('/client_A', String, self.client_A_callback)
+        # self.client_B_subsriber = rospy.Subscriber('/client_B', String, self.client_B_callback)
 
     @classmethod
     def get_instance():
@@ -62,7 +62,8 @@ class Invoker():
         return self.__server_player
 
     def run_terminal(self):
-        while not rospy.is_shutdown():
+        # while not rospy.is_shutdown():
+        while True:
             input_str = input()
             Invoker.logger.info(f"Received Command \"{input_str}\" from terminal")
 
@@ -124,10 +125,10 @@ class Invoker():
 
             
 
-    def client_A_callback(self, message):
-        Invoker.logger.info(message)
-        Invoker.logger.info(type(message))
+    # def client_A_callback(self, message):
+    #     Invoker.logger.info(message)
+    #     Invoker.logger.info(type(message))
 
-    def client_B_callback(self, message):
-        Invoker.logger.info(message)
-        Invoker.logger.info(type(message))
+    # def client_B_callback(self, message):
+    #     Invoker.logger.info(message)
+    #     Invoker.logger.info(type(message))
