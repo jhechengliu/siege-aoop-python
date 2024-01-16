@@ -1,11 +1,11 @@
 import json
 from siege_game.game_objects.map.map_objects import door, floor, window, soft_wall, wall, entrance, barrier
 from siege_game.game_objects.map import map
-import logging
+from siege_game.game_objects.logger import Logger
 from typing import Dict, List
 
 class MapBuilder:
-    logger = logging.getLogger('MapBuilder')
+    logger = Logger('MapBuilder')
     """
     NOTE: Use get_instance method to get the instance, DONT use constructor 
     A Builder that builds a Map object with its esseitials stuff such as the map,

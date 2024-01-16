@@ -1,12 +1,12 @@
 from siege_game.game_objects.map.commands.map_command import MapCommand
 from siege_game.game_objects.map.commands.battle import Battle
-import logging
+from siege_game.game_objects.logger import Logger
 
 class PlayerMovementBattleCommand(MapCommand):
     """
     command: move A 1.5 2.5 3.5 4.5 => Move Attacker at location x=1.5, y=2.5 to location x=3.5, y=4.5
     """
-    logger = logging.getLogger("PlayerMovementBattleCommand")
+    logger = Logger("PlayerMovementBattleCommand")
 
     def execute(self) -> None:
         pass

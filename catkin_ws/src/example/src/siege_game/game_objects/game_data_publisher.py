@@ -1,7 +1,7 @@
-import logging
+from siege_game.game_objects.logger import Logger
 import warnings
 class GameDataPublisher:
-    logger = logging.getLogger('GameDataPublisher')
+    logger = Logger('GameDataPublisher')
 
     def __init__(self):
         GameDataPublisher.logger.warning("<game_data_publisher.py> Use get_instance class method to obtain the instance")

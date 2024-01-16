@@ -3,10 +3,10 @@ from siege_game.game_objects.map.commands.map_command import MapCommand
 from siege_game.game_objects.map.commands.start import StartGameMapCommand
 from siege_game.game_objects.map.commands.setting_up import SetOperatorSettingUpCommand, FinishSettingUpCommand, StartBattleSettingUpCommand
 from siege_game.game_objects.player import Player
-import logging
+from siege_game.game_objects.logger import Logger
 
 class Commander():
-    logger = logging.getLogger("Commander")
+    logger = Logger("Commander")
 
     def __init__(self, game):
         from siege_game.game import Game

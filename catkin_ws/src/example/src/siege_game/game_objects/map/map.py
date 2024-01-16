@@ -7,10 +7,10 @@ from siege_game.game_objects.pawn.attaker import Attacker
 from siege_game.game_objects.pawn.defender import Defender
 from siege_game.game_objects.pawn.shooting_system import ShootingSystem
 from typing import List
-import logging
+from siege_game.game_objects.logger import Logger
 
 class Map:
-    logger = logging.getLogger('map')
+    logger = Logger('map')
     """
     Map is where the battle situated
 

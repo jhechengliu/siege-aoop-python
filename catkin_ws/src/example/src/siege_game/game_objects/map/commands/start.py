@@ -5,11 +5,11 @@ from siege_game.game_objects.map.map import Map
 import siege_game.game_objects.player as player
 from siege_game.game_objects.constants.identity import Identity
 
-import logging
+from siege_game.game_objects.logger import Logger
 
 class StartGameMapCommand(MapCommand):
     
-    logger = logging.getLogger("StartGameMapCommand")
+    logger = Logger("StartGameMapCommand")
 
     def __init__(self, game, args:Tuple[str], identity:Identity):
         super().__init__(game, args, identity)

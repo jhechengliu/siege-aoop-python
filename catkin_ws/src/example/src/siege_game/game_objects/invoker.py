@@ -4,7 +4,7 @@ from std_msgs.msg import String
 # from sensor_msgs.msg import Mouse
 
 import warnings
-import logging 
+from siege_game.game_objects.logger import Logger
 from siege_game.game_objects.player import Player
 from siege_game.game_objects.constants.identity import Identity
 
@@ -14,7 +14,7 @@ class Invoker():
 
     The Invoker is responsible for managing and executing commands. It acts as an intermediary
     between the client and the actual command objects. It encapsulates the execution of commands,
-    allowing for parameterization, queuing, and logging.
+    allowing for parameterization, queuing, and logger.
 
     Attributes:
         __instance (Invoker): The instance of the Invoker class.
@@ -27,7 +27,7 @@ class Invoker():
         undo(): Undo the last executed command.
         batch_execute(commands): Execute a batch of commands simultaneously.
     """
-    logger = logging.getLogger("Invoker")
+    logger = Logger("Invoker")
     __instance = None
 
     def __init__(self, game) -> None:

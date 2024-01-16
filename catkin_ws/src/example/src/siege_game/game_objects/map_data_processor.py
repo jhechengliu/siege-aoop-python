@@ -1,11 +1,11 @@
-import logging
+from siege_game.game_objects.logger import Logger
 import warnings
 
 class MapDataProcessor:
     """
     This class process the map into two maps for the attacking side and the defending side
     """
-    logger = logging.getLogger('MapDataProcessor')
+    logger = Logger('MapDataProcessor')
 
     def __init__(self):
         MapDataProcessor.logger.warning("<map_data_processor.py> Use get_instance class method to obtain the instance")

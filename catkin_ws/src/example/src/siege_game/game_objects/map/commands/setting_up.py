@@ -1,14 +1,14 @@
 from siege_game.game_objects.map.commands.map_command import MapCommand
 from siege_game.game_objects.states.state import SettingUpState
 from siege_game.game_objects.constants.identity import Identity
-import logging
+from siege_game.game_objects.logger import Logger
 from siege_game.game_objects.invoker import Invoker
 
 class SetOperatorSettingUpCommand(MapCommand):
     """
     command: setoperator 1.5 2.5 => Set an operator of yours at location x=1.5, y=2.5
     """
-    logger = logging.getLogger("PutPlayerSettingUpCommand")
+    logger = Logger("PutPlayerSettingUpCommand")
 
     def execute(self) -> None:
         operator_type = self.get_identity()
@@ -57,7 +57,7 @@ class FinishSettingUpCommand(MapCommand):
     """
     command: finishsettingup => Finish setting up
     """
-    logger = logging.getLogger("FinishSettingUpCommand")
+    logger = Logger("FinishSettingUpCommand")
 
     def execute(self) -> None:
         self.get_send_player().set_has_finish_setting_up(True)
@@ -83,7 +83,7 @@ class StartBattleSettingUpCommand(MapCommand):
     """
     command: startbattle => start the battle 
     """
-    logger = logging.getLogger("StartBattleSettingUp")
+    logger = Logger("StartBattleSettingUp")
 
     def execute(self) -> None:
         self.get_map().get_game_flow_director().next_state()

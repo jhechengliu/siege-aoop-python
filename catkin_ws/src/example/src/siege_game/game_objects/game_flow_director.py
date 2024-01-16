@@ -1,8 +1,8 @@
-import logging
+from siege_game.game_objects.logger import Logger
 from siege_game.game_objects.states.state import State, StartState, BattleState, SettingUpState, EndState
 
 class GameFlowDirector:
-    logger = logging.getLogger('GameFlowDirector')
+    logger = Logger('GameFlowDirector')
 
     def __init__(self):
         GameFlowDirector.logger.warning("<game_flow_director.py> Use get_instance class method to obtain the instance")

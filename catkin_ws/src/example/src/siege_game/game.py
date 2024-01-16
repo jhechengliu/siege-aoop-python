@@ -3,13 +3,13 @@ from std_msgs.msg import String
 # from sensor_msgs.msg import Mouse
 
 from siege_game.game_objects.map_builder import MapBuilder
-import logging
+from siege_game.game_objects.logger import Logger
 from siege_game.game_objects.commander import Commander
 import time
 
 class Game():
     instance = None
-    logger = logging.getLogger("Game")
+    logger = Logger("Game")
 
     def __init__(self):
         self.__map_name = "map_example"
