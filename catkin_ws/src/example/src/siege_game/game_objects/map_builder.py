@@ -2,6 +2,7 @@ import json
 from siege_game.game_objects.map.map_objects import door, floor, window, soft_wall, wall, entrance, barrier
 from siege_game.game_objects.map import map
 import logging
+from typing import Dict, List
 
 class MapBuilder:
     logger = logging.getLogger('MapBuilder')
@@ -66,7 +67,7 @@ class MapBuilder:
             MapBuilder.logger.info(f"Map size loaded {self.__map_width} * {self.__map_height}")
             
 
-    def __id_to_map_object(self, array: list, map: dict) -> None:
+    def __id_to_map_object(self, array: List, map: Dict) -> None:
         """
         Change the list from number to map objects by looking at the map dictionary
 
