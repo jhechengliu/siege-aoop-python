@@ -62,7 +62,7 @@ class Invoker():
         return self.__server_player
 
     def run_terminal(self):
-        while (True):
+        while not rospy.is_shutdown():
             input_str = input()
             Invoker.logger.info(f"Received Command \"{input_str}\" from terminal")
 
