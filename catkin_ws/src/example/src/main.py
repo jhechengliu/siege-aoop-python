@@ -7,14 +7,6 @@ from siege_game.game_objects.invoker import Invoker
 from threading import Thread
 import logging
 
-def fix_logging(level=logging.WARNING):
-    console = logging.StreamHandler()
-    console.setLevel(level)
-    logging.getLogger('').addHandler(console)
-    formatter = logging.Formatter('%(levelname)-8s:%(name)-12s: %(message)s')
-    console.setFormatter(formatter)
-    logging.getLogger('').addHandler(console)
-
 if __name__ == "__main__":
 
     logging.basicConfig(level=logging.NOTSET)
@@ -22,7 +14,6 @@ if __name__ == "__main__":
     game = Game.get_instance()
     invoker = Invoker(game)
     rospy.init_node('cube_position_node')
-    fix_logging()
 
     thread1 = Thread(target=game.run, args=())
     thread2 = Thread(target=invoker.run_terminal, args=())
