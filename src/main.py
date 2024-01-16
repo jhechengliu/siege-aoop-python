@@ -14,13 +14,15 @@ if __name__ == "__main__":
     invoker = Invoker(game)
     rospy.init_node('cube_position_node')
 
-    thread1 = Thread(target=game.run, args=())
-    thread2 = Thread(target=invoker.run_terminal, args=())
+    # thread1 = Thread(target=game.run, args=())
+    # thread2 = Thread(target=invoker.run_terminal, args=())
 
-    thread1.start()
-    thread2.start()
+    # thread1.start()
+    # thread2.start()
 
 
-    thread1.join()
-    thread2.join()
+    # thread1.join()
+    # thread2.join()
+
+    game.run()
 
