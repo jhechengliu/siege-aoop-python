@@ -13,7 +13,7 @@ class Logger():
     def debug(self, msg):
         rospy.logdebug(self.__name + " "  + msg)
 
-    def warn(self, msg):
+    def warning(self, msg):
         rospy.logwarn(self.__name + " "  + msg)
 
     def fatal(self, msg):
