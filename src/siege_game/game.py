@@ -1,6 +1,6 @@
 import rospy
 from std_msgs.msg import String
-from sensor_msgs.msg import Mouse
+# from sensor_msgs.msg import Mouse
 
 from siege_game.game_objects.map_builder import MapBuilder
 import logging
