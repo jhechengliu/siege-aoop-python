@@ -8,7 +8,7 @@ from siege_game.game_objects.pawn.shooting_system import ShootingSystem
 class Operator():
     """
     """
-    def __init__(self, location: list[int], shooting_system:ShootingSystem) -> None:
+    def __init__(self, location: list, shooting_system:ShootingSystem) -> None:
         self.__hp: int = 100
         self.__weapon_holding:Weapons = Weapons.Guns.RIFLE
         self.__mode_in: Modes = Modes.NORMAL
