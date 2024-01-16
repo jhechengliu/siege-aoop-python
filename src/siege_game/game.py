@@ -1,3 +1,8 @@
+#!/usr/bin/env python3
+import rospy
+from std_msgs.msg import String
+from sensor_msgs.msg import Mouse
+
 from siege_game.game_objects.map_builder import MapBuilder
 import logging
 from siege_game.game_objects.commander import Commander
@@ -24,8 +29,9 @@ class Game():
         return cls.instance
     
     def run(self):
+        rospy.init_node('cube_position_node')
         self.__map.print_map()
-        while (True):
+        while not rospy.is_shutdown():
             pass
 
     def get_commander(self):
