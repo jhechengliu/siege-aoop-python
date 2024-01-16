@@ -21,7 +21,7 @@ if __name__ == "__main__":
     logger.info("This is info")
     logger.error("This is error")
     logger.debug("This is debug")
-    logger.warn("This is warn")
+    logger.warning("This is warn")
     logger.fatal("What have you done")
 
     thread1 = Thread(target=game.run, args=())
