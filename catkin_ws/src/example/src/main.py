@@ -9,6 +9,7 @@ import logging
 from siege_game.game_objects.logger import Logger
 
 if __name__ == "__main__":
+
     logging.basicConfig(level=logging.NOTSET)
     logger = Logger("main")
 
