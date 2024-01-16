@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 import rospy
 from std_msgs.msg import String
-from sensor_msgs.msg import Mouse
+# from sensor_msgs.msg import Mouse
 
 import warnings
 import logging 
