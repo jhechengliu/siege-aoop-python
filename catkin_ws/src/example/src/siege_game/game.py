@@ -29,6 +29,8 @@ class Game():
     
     def run(self):
         self.__map.print_map()
+        while not rospy.is_shutdown():
+            pass
 
     def get_commander(self):
         return self.__commander

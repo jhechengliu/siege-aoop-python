@@ -121,17 +121,10 @@ class Invoker():
                 else:
                     self.__server_player.execute_command(input_str)
 
-
-            
-
     def client_A_callback(self, message):
         print("hey Client A")
         print(message)
-        Invoker.logger.info(message.data)
-        Invoker.logger.info(type(message.data))
 
     def client_B_callback(self, message):
         print("hey Client B")
         print(message)
-        Invoker.logger.info(message.data)
-        Invoker.logger.info(type(message.data))
