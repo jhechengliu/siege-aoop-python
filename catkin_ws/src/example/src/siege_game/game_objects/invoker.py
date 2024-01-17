@@ -88,8 +88,8 @@ class Invoker():
 
             elif (input_str_list[0] == "reboot"):
                 if (len(input_str_list) == 1):
-                    self.__game.get_map().__game_data_publisher().boomClientA()
-                    self.__game.get_map().__game_data_publisher().boomClientB()
+                    self.__game.get_map().game_data_publisher().boomClientA()
+                    self.__game.get_map().game_data_publisher().boomClientB()
                     Invoker.logger.fatal(f"Self destruction is activated!")
                     self.__game.force_close()
                     break
