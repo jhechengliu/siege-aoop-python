@@ -7,6 +7,7 @@ import warnings
 from siege_game.game_objects.logger import Logger
 from siege_game.game_objects.player import Player
 from siege_game.game_objects.constants.identity import Identity
+from typing import List
 
 class Invoker():
     """
@@ -35,16 +36,17 @@ class Invoker():
         Initialize the Invoker with an empty list to store commands.
         """
         Invoker.logger.warning("Use get_instance class method to obtain the instance")
-        self.__has_attack_player = False
-        self.__has_defend_player = False
-
         self.__client_A_player = None
         self.__client_B_player = None
-        self.__server_player = None
+        self.__client_A_connected = False
+        self.__client_B_connected = False
         self.__game = game
         self.client_A_subsriber = rospy.Subscriber('/client_A', String, self.client_A_callback)
         self.client_B_subsriber = rospy.Subscriber('/client_B', String, self.client_B_callback)
-        self.signin_subscriber = rospy.Subscriber('/signin', String, self.signin_callback)
+        self.connect_subscriber = rospy.Subscriber('/connect', String, self.connect_callback)
+
+        self.__server_connect_publisher = rospy.Publisher('/server_connect', String, queue_size=10)
+        self.__server_connect_message = String()
 
     @classmethod
     def get_instance():
@@ -59,9 +61,6 @@ class Invoker():
     def get_client_B_player(self):
         return self.__client_B_player
 
-    def get_server_player(self):
-        return self.__server_player
-
     def run_terminal(self):
         while not rospy.is_shutdown():
             input_str = input()
@@ -69,58 +68,15 @@ class Invoker():
 
             input_str_list = input_str.split()
 
-            # signin A dctime
-            if (input_str_list[0] == "signin"):
-                if (self.__server_player == None):
-                    if (len(input_str_list) == 3):
-                        if (input_str_list[1] == "A" and self.__has_attack_player == False):
-                            self.__server_player = Player(input_str_list[2], Identity.ATTACK, self.__game.get_commander())
-                            self.__has_attack_player = True
-                            Invoker.logger.info(f"Server signed in! Identity: Attack")
-                        elif (input_str_list[1] == "D" and self.__has_defend_player == False):
-                            self.__server_player = Player(input_str_list[2], Identity.DEFEND, self.__game.get_commander())
-                            self.__has_defend_player = True
-                            Invoker.logger.info(f"Server signed in! Identity: Defend")
-                        else:
-                            Invoker.logger.error("Type must be capital A (Attacker) or D (Defender) or someone already get the role")
-                    else:
-                        Invoker.logger.error("signin args must be 2. Example command \"signin A DCtime\"")
-                else:
-                    Invoker.logger.error("Server already signin! Use signout to change your identity")
-
-            # signout  
-            elif (input_str_list[0] == "signout"):
-                if (len(input_str_list) == 1 and self.__server_player != None):
-                    if (self.__server_player.get_identity() == Identity.ATTACK):
-                        self.__has_attack_player = False
-                    elif (self.__server_player.get_identity() == Identity.DEFEND):
-                        self.__has_defend_player = False
-
-                    self.__server_player = None
-                    Invoker.logger.info("Server signed out")
-                elif (self.__server_player == None):
-                    Invoker.logger.error("You can only signout after signin.")
-                else:
-                    Invoker.logger.error("signout args must be 0")
-
             # status
-            elif (input_str_list[0] == "status"):
+            if (input_str_list[0] == "status"):
                 if (len(input_str_list) == 1):
                     Invoker.logger.info("--- Server Status ---")
                     Invoker.logger.info(f"ClientA:{self.__client_A_player}")
                     Invoker.logger.info(f"ClientB:{self.__client_B_player}")
-                    Invoker.logger.info(f"Server:{self.__server_player}")
-                    Invoker.logger.info(f"has_attack_player:{self.__has_attack_player}")
-                    Invoker.logger.info(f"has_defend_player:{self.__has_defend_player}")
                     Invoker.logger.info(f"--------------------")
                 else:
                     Invoker.logger.error("status args must be 0")
-
-            else:
-                if (self.__server_player == None):
-                    Invoker.logger.error("You havent sign in yet. Signin to affect the game")
-                else:
-                    self.__server_player.execute_command(input_str)
 
     def client_A_callback(self, message):
         message_str = message.data
@@ -130,12 +86,55 @@ class Invoker():
         message_str = message.data
         Invoker.logger.info(f"client B received: {message_str}")
 
-    def signin_callback(self, message):
+    def connect_callback(self, message):
         message_str = message.data
-        Invoker.logger.info(f"signin callback received: {message_str}")
+        Invoker.logger.info(f"connect callback received: {message_str}")
         message_str_list = message_str.split()
         
         if len(message_str_list) == 1:
             Invoker.logger.error(f"id: {message_str_list[0]} send a empty command")
+            self.publish_server_connect(message_str_list[0], "empty_command_error")
+        
+        elif len(message_str_list) >= 2:
+            id = message_str_list[0]
+            heading = message_str_list[1]
+            args = message_str_list[2:]
+            self.publish_server_connect(id, self.connect_execute(heading, args))
+            
+
+    def connect_execute(self, heading:str, args:List) -> str:
+        """
+        connect command all response:
+        args_must_be_0
+        client_A
+        client_B
+        full
+        fatal_error
+        """
+        if (heading == "connect"):
+            if (len(args) != 0):
+                Invoker.logger.error("connect command args must be 0")
+                return "args_must_be_0"
+            else:
+                if (self.__client_A_connected == False):
+                    self.__client_A_connected = True
+                    return "client_A"
+                
+                elif (self.__client_A_connected == True and self.__client_B_connected == False):
+                    self.__client_B_connected = True
+                    return "client_B"
+                
+                elif (self.__client_A_connected == True and self.__client_B_connected == True):
+                    return "full"
+                
+                else:
+                    Invoker.logger.fatal("Something went wrong at checking clients are used or not")
+                    return "fatal_error"
+                
+    def publish_server_connect(self, id, msg):
+        full_msg = f"{id} {msg}"
+        self.__server_connect_message.data = full_msg
+        Invoker.logger.info(f"Sending data to server signin channel: {full_msg}")
+        self.__server_connect_publisher.publish(self.__server_connect_message)
 
 
