@@ -7,7 +7,7 @@ import warnings
 from siege_game.game_objects.logger import Logger
 from siege_game.game_objects.player import Player
 from siege_game.game_objects.constants.identity import Identity
-from typing import List
+from typing import List, Callable
 
 class Invoker():
     """
@@ -45,8 +45,12 @@ class Invoker():
         self.client_B_subsriber = rospy.Subscriber('/client_B', String, self.client_B_callback)
         self.connect_subscriber = rospy.Subscriber('/connect', String, self.connect_callback)
 
+        self.__server_client_A_publisher = rospy.Publisher('/server_client_A', String, queue_size=10)
+        self.__server_client_B_publisher = rospy.Publisher('/server_client_B', String, queue_size=10)
         self.__server_connect_publisher = rospy.Publisher('/server_connect', String, queue_size=10)
         self.__server_connect_message = String()
+        self.__server_client_A_message = String()
+        self.__server_client_B_message = String()
 
     @classmethod
     def get_instance():
@@ -82,11 +86,78 @@ class Invoker():
 
     def client_A_callback(self, message):
         message_str = message.data
-        Invoker.logger.info(f"client A received: {message_str}")
+
+        id = message_str[0]
+        heading = message_str[1]
+        args = message_str[2:]
+        
+        self.__client_get_message_info('A', id, heading, args)
+
+        """
+        signin A dctime:
+        success
+        args_len_error
+        already_signin
+        identity_error
+        """
+
+        if heading == "signin":
+            self.__sign_in_process(args, 'A', self.publish_client_A_server, self.__client_A_player)
 
     def client_B_callback(self, message):
         message_str = message.data
-        Invoker.logger.info(f"client B received: {message_str}")
+        
+        id = message_str[0]
+        heading = message_str[1]
+        args = message_str[2:]
+        
+        self.__client_get_message_info('B', id, heading, args)
+
+        """
+        signin A dctime:
+        success
+        args_len_error
+        already_signin
+        identity_error
+        """
+
+        if heading == "signin":
+            self.__sign_in_process(args, 'A', self.publish_client_A_server, self.__client_A_player)
+            
+    def __client_get_message_info(self, A_or_B:str, id, heading, args):
+        Invoker.logger.info(f"client {A_or_B} callback received message:")
+        Invoker.logger.info("================")
+        Invoker.logger.info(f"id: {id}")
+        Invoker.logger.info(f"heading: {heading}")
+        Invoker.logger.info(f"args: {args}")
+        Invoker.logger.info("================")
+
+    def __sign_in_process(self, args:List, A_or_B:str, publish_function:Callable, client_player):
+        if len(args) == 2:
+                if (client_player != None):
+                    Invoker.logger.error(f"Client {A_or_B} already signed in")
+                    publish_function(id, "already_signin")
+                    return
+                
+                elif (client_player == None):
+                    identity = None
+
+                    if (args[0] == 'A'):
+                        identity = Identity.ATTACK
+                    elif (args[0] == 'D'):
+                        identity = Identity.DEFEND
+                    else:
+                        Invoker.logger.error("Identity must be 'A' (Attacker) or 'D' (Defender)")
+                        publish_function(id, "identity_error")
+
+                    client_player = Player(args[1], identity, self.__game.get_commander())
+                    Invoker.logger.debug(f"Success! Client {A_or_B} Player: {client_player}")
+                    publish_function(id, "success")
+
+                    
+        else:
+            Invoker.logger.error("signin commands args not equal to 2")
+            publish_function(id, "args_len_error")
 
     def connect_callback(self, message):
         message_str = message.data
@@ -103,7 +174,6 @@ class Invoker():
             args = message_str_list[2:]
             self.publish_server_connect(id, self.connect_execute(heading, args))
             
-
     def connect_execute(self, heading:str, args:List) -> str:
         """
         connect command all response:
@@ -136,7 +206,20 @@ class Invoker():
     def publish_server_connect(self, id, msg):
         full_msg = f"{id} {msg}"
         self.__server_connect_message.data = full_msg
-        Invoker.logger.info(f"Sending data to server signin channel: {full_msg}")
+        Invoker.logger.info(f"Sending data to server connect channel: {full_msg}")
         self.__server_connect_publisher.publish(self.__server_connect_message)
+
+    def publish_client_A_server(self, id, msg):
+        full_msg = f"{id} {msg}"
+        self.__server_client_A_message.data = full_msg
+        Invoker.logger.info(f"Sending data to server client A channel: {full_msg}")
+        self.__server_client_A_publisher.publish(self.__server_client_A_message)
+
+    def publish_client_B_server(self, id, msg):
+        full_msg = f"{id} {msg}"
+        self.__server_client_B_message.data = full_msg
+        Invoker.logger.info(f"Sending data to server client B channel: {full_msg}")
+        self.__server_client_B_publisher.publish(self.__server_client_B_message)
+        
 
 
