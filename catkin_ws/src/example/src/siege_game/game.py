@@ -12,7 +12,7 @@ class MySubscriberListener(rospy.SubscribeListener):
         super(MySubscriberListener, self).__init__()
 
     def peer_unsubscribe(self, topic_name, num_peers):
-        rospy.loginfo("Un-Subscribed")
+        print("BRUH")
 
 class Game():
     instance = None
@@ -33,6 +33,8 @@ class Game():
             data_class=Int32,
             subscriber_listener=self.__my_listener,
             queue_size=10)
+        
+        self.__int32data = Int32()
 
     @classmethod
     def get_instance(cls):
@@ -43,9 +45,10 @@ class Game():
     
     def run(self):
         counter = 0
+        self.__int32data.data = counter
         self.__map.print_map()
         while not rospy.is_shutdown():
-            self.__my_publisher.publish(counter)
+            self.__my_publisher.publish(self.__int32data)
             rospy.sleep(0.1)
             counter += 1
 
