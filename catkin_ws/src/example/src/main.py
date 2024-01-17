@@ -8,6 +8,10 @@ from threading import Thread
 import logging
 from siege_game.game_objects.logger import Logger
 
+class DetectUnsubscribe(rospy.SubscribeListener):
+    def peer_unsubscribe(self, topic_name, numPeers):
+        logger.debug(f"numPeers: {numPeers}, disconnect topic name: {topic_name}")
+
 if __name__ == "__main__":
     rospy.init_node('cube_position_node', log_level=rospy.DEBUG)
     logging.basicConfig(level=logging.NOTSET)
@@ -15,8 +19,8 @@ if __name__ == "__main__":
 
     game = Game.get_instance()
     invoker = Invoker(game)
-
-    rospy.init_node('cube_position_node', log_level=rospy.DEBUG)
+    
+    pub_detect = rospy.Publisher('detect', String, queue_size=50, subscriber_listener=DetectUnsubscribe())
 
     logger.info("This is info")
     logger.error("This is error")

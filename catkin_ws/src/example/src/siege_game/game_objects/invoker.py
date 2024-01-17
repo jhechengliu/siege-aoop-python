@@ -52,8 +52,7 @@ class Invoker():
         self.__server_client_A_message = String()
         self.__server_client_B_message = String()
 
-        self.__listener = rospy.SubscribeListener()
-        self.__listener.peer_unsubscribe = self.disconnect_callback
+
 
     @classmethod
     def get_instance():
