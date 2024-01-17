@@ -133,10 +133,10 @@ class Invoker():
         """
 
         if heading == "signin":
-            self.__sign_in_process(args, 'A', self.publish_client_A_server, self.__client_A_player)
+            self.__sign_in_process(id, args, 'A', self.publish_client_A_server, self.__client_A_player)
 
         elif heading == "signout":
-            self.__sign_out_process(args, 'A', self)
+            self.__sign_out_process(id, args, 'B', self.publish_client_B_server, self.__client_B_player)
 
         else:
             if self.__client_A_player == None:
