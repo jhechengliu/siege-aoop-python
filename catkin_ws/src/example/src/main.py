@@ -33,5 +33,11 @@ if __name__ == "__main__":
         thread1.join()
         thread2.join()
 
+        del game
+        del invoker
+        del thread1
+        del thread2
+        del logger
+
     
 
