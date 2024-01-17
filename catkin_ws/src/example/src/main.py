@@ -14,6 +14,7 @@ if __name__ == "__main__":
         rospy.init_node('cube_position_node', log_level=rospy.DEBUG)
         logging.basicConfig(level=logging.NOTSET)
         logger = Logger("main")
+        logger.debug("Start server...")
 
         game = Game.get_instance()
         invoker = Invoker(game)
