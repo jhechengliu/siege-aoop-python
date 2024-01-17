@@ -52,6 +52,9 @@ class Invoker():
         self.__server_client_A_message = String()
         self.__server_client_B_message = String()
 
+        self.__listener = rospy.SubscribeListener()
+        self.__listener.peer_unsubscribe = self.disconnect_callback
+
     @classmethod
     def get_instance():
         if Invoker.__instance == None:
@@ -146,8 +149,6 @@ class Invoker():
                 Invoker.logger.debug(f"Returns: \"{reply}\" back to client")
                 self.publish_client_A_server(id, reply)
 
-
-
     def client_B_callback(self, message):
         message_str_list = message.data.split()
         command = " ".join(message_str_list[1:])
@@ -206,7 +207,9 @@ class Invoker():
                 reply = self.__client_B_player.execute_command(command)
                 Invoker.logger.debug(f"Returns: \"{reply}\" back to client")
                 self.publish_client_B_server(id, reply)
-        
+
+    def disconnect_callback(self, message):
+        Invoker.logger.debug("Somebody closes the connection")
             
     def __client_get_message_info(self, A_or_B:str, id, heading, args):
         Invoker.logger.info(f"client {A_or_B} callback received message:")
@@ -280,8 +283,6 @@ class Invoker():
                 Invoker.logger.debug(f"Client {A_or_B} signed out")
                 publish_function(id, "success")
                 return
-
-
 
     def connect_callback(self, message):
         message_str = message.data
