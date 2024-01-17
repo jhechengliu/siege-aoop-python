@@ -28,11 +28,11 @@ class GameDataPublisher:
         self.__server_signin_publisher = rospy.Publisher('/server_signin', String, queue_size=10)
         self.__server_signin_message = String()
 
-        self.__server_detect_client_A = rospy.Publisher('/server_detect_client_A', String, queue_size=50, subscriber_listener=ServerDetectClientAListener())
+        self.__server_detect_client_A = rospy.Publisher('/server_detect_client_A', String, queue_size=50, subscriber_listener=ServerDetectClientAListener(self))
         self.__server_detect_client_A_data = String()
         self.__server_detect_client_A_data.data = "safe"
 
-        self.__server_detect_client_B = rospy.Publisher('/server_detect_client_B', String, queue_size=50, subscriber_listener=ServerDetectClientAListener())
+        self.__server_detect_client_B = rospy.Publisher('/server_detect_client_B', String, queue_size=50, subscriber_listener=ServerDetectClientAListener(self))
         self.__server_detect_client_B_data = String()
         self.__server_detect_client_B_data.data = "safe"
     
