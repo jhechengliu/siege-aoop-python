@@ -35,7 +35,7 @@ class Game():
     
     def run(self):
         self.__map.print_map()
-        while not rospy.is_shutdown() or self.__force_close:
+        while (not rospy.is_shutdown()) or (not self.__force_close):
             self.__map.get_game_data_publisher().publishDetectClientA()
             self.__map.get_game_data_publisher().publishDetectClientB()
             Game.logger.info("RUNNING")
