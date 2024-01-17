@@ -47,6 +47,8 @@ class GameDataPublisher:
         GameDataPublisher.logger.fatal("Client A BOOM")
 
     def publishDetectClientA(self):
+        print(self.__server_detect_client_A_data)
+        print(self.__server_detect_client_A_data.data)
         self.__server_detect_client_A.publish(self.__server_detect_client_A_data)
 
     def boomClientB(self):
