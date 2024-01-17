@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 import rospy
-from std_msgs.msg import String
+from std_msgs.msg import String, Int32
 
 from siege_game.game import Game
 from siege_game.game_objects.invoker import Invoker
@@ -8,9 +8,12 @@ from threading import Thread
 import logging
 from siege_game.game_objects.logger import Logger
 
-class DetectUnsubscribe(rospy.SubscribeListener):
-    def peer_unsubscribe(self, topic_name, numPeers):
-        logger.debug(f"numPeers: {numPeers}, disconnect topic name: {topic_name}")
+class MySubscriberListener(rospy.SubscribeListener):
+    def __init__(self):
+        super(MySubscriberListener, self).__init__()
+
+    def peer_unsubscribe(self, topic_name, num_peers):
+        rospy.loginfo("Un-Subscribed")
 
 if __name__ == "__main__":
     rospy.init_node('cube_position_node', log_level=rospy.DEBUG)
@@ -19,8 +22,13 @@ if __name__ == "__main__":
 
     game = Game.get_instance()
     invoker = Invoker(game)
-    
-    pub_detect = rospy.Publisher('detect', String, queue_size=50, subscriber_listener=DetectUnsubscribe())
+
+    my_listener = MySubscriberListener()
+    my_publisher = rospy.Publisher(
+        name='~test',
+        data_class=Int32,
+        subscriber_listener=my_listener,
+        queue_size=10)
 
     logger.info("This is info")
     logger.error("This is error")

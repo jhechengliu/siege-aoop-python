@@ -27,10 +27,13 @@ class Game():
 
         return cls.instance
     
-    def run(self):
+    def run(self, my_publisher):
+        counter = 0
         self.__map.print_map()
         while not rospy.is_shutdown():
-            pass
+            my_publisher.publish(counter)
+            rospy.sleep(0.1)
+            counter += 1
 
     def get_commander(self):
         return self.__commander

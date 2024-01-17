@@ -207,8 +207,6 @@ class Invoker():
                 Invoker.logger.debug(f"Returns: \"{reply}\" back to client")
                 self.publish_client_B_server(id, reply)
 
-    def disconnect_callback(self, message):
-        Invoker.logger.debug("Somebody closes the connection")
             
     def __client_get_message_info(self, A_or_B:str, id, heading, args):
         Invoker.logger.info(f"client {A_or_B} callback received message:")
