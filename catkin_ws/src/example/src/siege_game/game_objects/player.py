@@ -27,8 +27,8 @@ class Player():
         self.__commander:commander_file.Commander = commander
         self.__has_finish_setting_up = False
 
-    def execute_command(self, command:str):
-        self.__commander.execute_command(command, self)
+    def execute_command(self, command:str) -> str:
+        return self.__commander.execute_command(command, self)
 
     def get_identity(self):
         return self.__identity

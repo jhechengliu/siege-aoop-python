@@ -85,10 +85,20 @@ class Invoker():
                     Invoker.logger.error("status args must be 0")
 
     def client_A_callback(self, message):
+        """
+        global error:
+        empty_command_error
+        not_signed_in_error
+
+        command_not_found_error
+        command_denied_error
+        """
         message_str_list = message.data.split()
+        command = " ".join(message_str_list[1:])
         id = None
         heading = None
         args = None
+        
 
         if len(message_str_list) == 0:
             Invoker.logger.error(f"Client A received a blank message! Hmm")
@@ -96,6 +106,7 @@ class Invoker():
         
         elif len(message_str_list) == 1:
             Invoker.logger.error(f"id: {message_str_list[0]} send a empty command")
+            Invoker.logger.debug(f"Returns: \"empty_command_error\" back to client")
             self.publish_server_connect(message_str_list[0], "empty_command_error")
             return
         
@@ -125,8 +136,21 @@ class Invoker():
         elif heading == "signout":
             self.__sign_out_process(args, 'A', self)
 
+        else:
+            if self.__client_A_player == None:
+                Invoker.logger.error("Client A need to sign in in order to use other commands to affect the game")
+                self.publish_client_A_server(id, "not_signed_in_error")
+                Invoker.logger.debug(f"Returns: \"not_signed_in_error\" back to client")
+            else:
+                reply = self.__client_A_player.execute_command(command)
+                Invoker.logger.debug(f"Returns: \"{reply}\" back to client")
+                self.publish_client_A_server(id, reply)
+
+
+
     def client_B_callback(self, message):
         message_str_list = message.data.split()
+        command = " ".join(message_str_list[1:])
         id = None
         heading = None
         args = None
@@ -138,6 +162,7 @@ class Invoker():
         elif len(message_str_list) == 1:
             Invoker.logger.error(f"id: {message_str_list[0]} send a empty command")
             self.publish_server_connect(message_str_list[0], "empty_command_error")
+            Invoker.logger.debug(f"Returns: \"empty_command_error\" back to client")
             return
         
         elif len(message_str_list) == 2:
@@ -160,17 +185,27 @@ class Invoker():
         identity_error
         identity_used
         """
-
-        if heading == "signin":
-            self.__sign_in_process(id, args, 'B', self.publish_client_B_server, self.__client_B_player)
-        elif heading == "signout":
-            self.__sign_out_process(id, args, 'B', self.publish_client_B_server, self.__client_B_player)
         """
         command: signout
         success
         already_signout
         args_len_error
         """
+
+        if heading == "signin":
+            self.__sign_in_process(id, args, 'B', self.publish_client_B_server, self.__client_B_player)
+        elif heading == "signout":
+            self.__sign_out_process(id, args, 'B', self.publish_client_B_server, self.__client_B_player)
+
+        else:
+            if self.__client_B_player == None:
+                Invoker.logger.error("Client B need to sign in in order to use other commands to affect the game")
+                self.publish_client_B_server(id, "not_signed_in_error")
+                Invoker.logger.debug(f"Returns: \"not_signed_in_error\" back to client")
+            else:
+                reply = self.__client_B_player.execute_command(command)
+                Invoker.logger.debug(f"Returns: \"{reply}\" back to client")
+                self.publish_client_B_server(id, reply)
         
             
     def __client_get_message_info(self, A_or_B:str, id, heading, args):

@@ -20,9 +20,9 @@ class StartGameMapCommand(MapCommand):
     def check(self) -> bool:
         if not isinstance(self.get_map().get_game_flow_director().get_state(), StartState):
             StartGameMapCommand.logger.error(f"Game isn't in start state. Current State: {self.get_map().get_game_flow_director().get_state()}")
-            return False
+            return "not_in_start_state_error"
         elif (len(self.get_args()) != 0):
             StartGameMapCommand.logger.error("start command must have no args")
-            return False
+            return "args_len_error"
         else:
-            return True
+            return None

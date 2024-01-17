@@ -14,12 +14,12 @@ class PlayerMovementBattleCommand(MapCommand):
     def check(self) -> bool:
         if isinstance(self.get_map().get_game_flow_director().get_state(), Battle):
             PlayerMovementBattleCommand.logger.error("move command can only be used in battle state")
-            return False
+            return "not_in_battle_state_error"
         elif (len(self.get_args()) != 5):
             PlayerMovementBattleCommand.logger.error("Args len must be 5")
-            return False
+            return "args_len_error"
         elif (self.get_args()[0] != "A" and self.get_args()[0] != "D"):
             PlayerMovementBattleCommand.logger.error("Player type must be Attacker \"A\" or Defender \"D\"")
-            return False
+            return "identity_type_error"
 
-        return True
+        return None

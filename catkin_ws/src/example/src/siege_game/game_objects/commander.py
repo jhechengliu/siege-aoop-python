@@ -17,7 +17,7 @@ class Commander():
             "finishsettingup": FinishSettingUpCommand,
             "startbattle": StartBattleSettingUpCommand
         }
-    def execute_command(self, command:str, player:Player):
+    def execute_command(self, command:str, player:Player) -> str:
         Commander.logger.info("Executing Command")
         command_list = command.split()
         command_heading = command_list[0]
@@ -31,8 +31,15 @@ class Commander():
 
         if (command_heading in self.__command_headings.keys()):
             command:MapCommand = self.__command_headings[command_heading](self.__game, command_args, player)
-            if (command.check()):
+            if (command.check() == None):
                 command.execute()
+                Commander.logger.debug("Command Successfully Executed")
+                return "success"
+
+            else:
+                Commander.logger.error("Command Execute denied")
+                return command.check()
             
         else:
             Commander.logger.warning("Command Heading Not Found. Do you forgot to add headings into the __command_headings?")
+            return "command_not_found_error"

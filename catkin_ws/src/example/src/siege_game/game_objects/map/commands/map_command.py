@@ -20,7 +20,7 @@ class MapCommand(ABC):
         raise NotImplementedError()
     
     @abc.abstractmethod
-    def check(self) -> bool: 
+    def check(self) -> str: 
         raise NotImplementedError()
     
     def get_map(self):
