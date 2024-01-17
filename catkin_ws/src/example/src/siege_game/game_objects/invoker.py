@@ -36,8 +36,8 @@ class Invoker():
         Initialize the Invoker with an empty list to store commands.
         """
         Invoker.logger.warning("Use get_instance class method to obtain the instance")
-        self.__client_A_player = None
-        self.__client_B_player = None
+        self.__client_A_player:Player = None
+        self.__client_B_player:Player = None
         self.__client_A_connected = False
         self.__client_B_connected = False
         self.__game = game
@@ -85,11 +85,29 @@ class Invoker():
                     Invoker.logger.error("status args must be 0")
 
     def client_A_callback(self, message):
-        message_str = message.data
+        message_str_list = message.data.split()
+        id = None
+        heading = None
+        args = None
 
-        id = message_str[0]
-        heading = message_str[1]
-        args = message_str[2:]
+        if len(message_str_list) == 0:
+            Invoker.logger.error(f"Client A received a blank message! Hmm")
+            return
+        
+        elif len(message_str_list) == 1:
+            Invoker.logger.error(f"id: {message_str_list[0]} send a empty command")
+            self.publish_server_connect(message_str_list[0], "empty_command_error")
+            return
+        
+        elif len(message_str_list) == 2:
+            id = message_str_list[0]
+            heading = message_str_list[1]
+            args = []
+
+        elif len(message_str_list) >= 3:
+            id = message_str_list[0]
+            heading = message_str_list[1]
+            args = message_str_list[2:]
         
         self.__client_get_message_info('A', id, heading, args)
 
@@ -104,12 +122,33 @@ class Invoker():
         if heading == "signin":
             self.__sign_in_process(args, 'A', self.publish_client_A_server, self.__client_A_player)
 
+        elif heading == "signout":
+            self.__sign_out_process(args, 'A', self)
+
     def client_B_callback(self, message):
-        message_str = message.data
+        message_str_list = message.data.split()
+        id = None
+        heading = None
+        args = None
+
+        if len(message_str_list) == 0:
+            Invoker.logger.error(f"Client B received a blank message! Hmm")
+            return
         
-        id = message_str[0]
-        heading = message_str[1]
-        args = message_str[2:]
+        elif len(message_str_list) == 1:
+            Invoker.logger.error(f"id: {message_str_list[0]} send a empty command")
+            self.publish_server_connect(message_str_list[0], "empty_command_error")
+            return
+        
+        elif len(message_str_list) == 2:
+            id = message_str_list[0]
+            heading = message_str_list[1]
+            args = []
+
+        elif len(message_str_list) >= 3:
+            id = message_str_list[0]
+            heading = message_str_list[1]
+            args = message_str_list[2:]
         
         self.__client_get_message_info('B', id, heading, args)
 
@@ -119,10 +158,20 @@ class Invoker():
         args_len_error
         already_signin
         identity_error
+        identity_used
         """
 
         if heading == "signin":
-            self.__sign_in_process(args, 'A', self.publish_client_A_server, self.__client_A_player)
+            self.__sign_in_process(id, args, 'B', self.publish_client_B_server, self.__client_B_player)
+        elif heading == "signout":
+            self.__sign_out_process(id, args, 'B', self.publish_client_B_server, self.__client_B_player)
+        """
+        command: signout
+        success
+        already_signout
+        args_len_error
+        """
+        
             
     def __client_get_message_info(self, A_or_B:str, id, heading, args):
         Invoker.logger.info(f"client {A_or_B} callback received message:")
@@ -132,7 +181,7 @@ class Invoker():
         Invoker.logger.info(f"args: {args}")
         Invoker.logger.info("================")
 
-    def __sign_in_process(self, args:List, A_or_B:str, publish_function:Callable, client_player):
+    def __sign_in_process(self, id, args:List, A_or_B:str, publish_function:Callable, client_player):
         if len(args) == 2:
                 if (client_player != None):
                     Invoker.logger.error(f"Client {A_or_B} already signed in")
@@ -143,8 +192,28 @@ class Invoker():
                     identity = None
 
                     if (args[0] == 'A'):
+                        if (A_or_B == 'A' and self.__client_B_player != None and self.__client_B_player.get_identity() == Identity.ATTACK):
+                            Invoker.logger.error("Attacker is occupied")
+                            publish_function(id, "identity_used")
+                            return
+                        
+                        elif (A_or_B == 'B' and self.__client_A_player != None and self.__client_A_player.get_identity() == Identity.ATTACK):
+                            Invoker.logger.error("Attacker is occupied")
+                            publish_function(id, "identity_used")
+                            return
+                        
                         identity = Identity.ATTACK
                     elif (args[0] == 'D'):
+                        if (A_or_B == 'A' and self.__client_B_player != None and self.__client_B_player.get_identity() == Identity.DEFEND):
+                            Invoker.logger.error("Defender is occupied")
+                            publish_function(id, "identity_used")
+                            return
+                        
+                        if (A_or_B == 'B' and self.__client_A_player != None and self.__client_A_player.get_identity() == Identity.DEFEND):
+                            Invoker.logger.error("Defender is occupied")
+                            publish_function(id, "identity_used")
+                            return
+                        
                         identity = Identity.DEFEND
                     else:
                         Invoker.logger.error("Identity must be 'A' (Attacker) or 'D' (Defender)")
@@ -158,6 +227,26 @@ class Invoker():
         else:
             Invoker.logger.error("signin commands args not equal to 2")
             publish_function(id, "args_len_error")
+
+    def __sign_out_process(self, id, args:List, A_or_B:str, publish_function:Callable, client_player):
+        if (len(args) != 0):
+            Invoker.logger.error("signout Args len must be 0")
+            publish_function(id, "args_len_error")
+            return
+
+        elif (len(args) == 0):
+            if (client_player == None):
+                Invoker.logger.error("already signed out")
+                publish_function(id, "already_signout")
+                return
+            
+            elif (client_player != None):
+                client_player = None
+                Invoker.logger.debug(f"Client {A_or_B} signed out")
+                publish_function(id, "success")
+                return
+
+
 
     def connect_callback(self, message):
         message_str = message.data
