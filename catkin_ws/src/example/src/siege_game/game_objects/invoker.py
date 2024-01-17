@@ -226,6 +226,12 @@ class Invoker():
         Invoker.logger.info(f"args: {args}")
         Invoker.logger.info("================")
 
+    def make_client_A_player(self, name, identity, commander):
+        self.__client_A_player = Player(name, identity, commander)
+
+    def make_client_B_player(self, name, identity, commander):
+        self.__client_B_player = Player(name, identity, commander)
+
     def __sign_in_process(self, id, args:List, A_or_B:str, publish_function:Callable, client_player):
         if len(args) == 2:
                 if (client_player != None):
@@ -264,7 +270,11 @@ class Invoker():
                         Invoker.logger.error("Identity must be 'A' (Attacker) or 'D' (Defender)")
                         publish_function(id, "identity_error")
 
-                    client_player = Player(args[1], identity, self.__game.get_commander())
+                    if (A_or_B == 'A'):
+                        self.make_client_A_player(args[1], identity, self.__game.get_commander())
+                    elif (A_or_B == 'B'):
+                        self.make_client_B_player(args[1], identity, self.__game.get_commander())
+
                     Invoker.logger.debug(f"Success! Client {A_or_B} Player: {client_player}")
                     publish_function(id, "success")
 
