@@ -44,6 +44,7 @@ class Invoker():
         self.__game = game
         self.client_A_subsriber = rospy.Subscriber('/client_A', String, self.client_A_callback)
         self.client_B_subsriber = rospy.Subscriber('/client_B', String, self.client_B_callback)
+        self.signin_subscriber = rospy.Subscriber('/signin', String, self.signin_callback)
 
     @classmethod
     def get_instance():
@@ -122,9 +123,19 @@ class Invoker():
                     self.__server_player.execute_command(input_str)
 
     def client_A_callback(self, message):
-        print("hey Client A")
-        print(message)
+        message_str = message.data
+        Invoker.logger.info(f"client A received: {message_str}")
 
     def client_B_callback(self, message):
-        print("hey Client B")
-        print(message)
+        message_str = message.data
+        Invoker.logger.info(f"client B received: {message_str}")
+
+    def signin_callback(self, message):
+        message_str = message.data
+        Invoker.logger.info(f"signin callback received: {message_str}")
+        message_str_list = message_str.split()
+        
+        if len(message_str_list) == 1:
+            Invoker.logger.error(f"id: {message_str_list[0]} send a empty command")
+
+
