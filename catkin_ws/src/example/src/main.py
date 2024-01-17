@@ -36,7 +36,7 @@ if __name__ == "__main__":
     logger.warning("This is warn")
     logger.fatal("What have you done")
 
-    thread1 = Thread(target=game.run, args=())
+    thread1 = Thread(target=game.run, args=(my_publisher))
     thread2 = Thread(target=invoker.run_terminal, args=())
 
     thread1.start()
