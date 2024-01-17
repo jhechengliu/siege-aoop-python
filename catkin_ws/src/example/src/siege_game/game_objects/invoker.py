@@ -71,10 +71,12 @@ class Invoker():
             # status
             if (input_str_list[0] == "status"):
                 if (len(input_str_list) == 1):
-                    Invoker.logger.info("--- Server Status ---")
-                    Invoker.logger.info(f"ClientA:{self.__client_A_player}")
-                    Invoker.logger.info(f"ClientB:{self.__client_B_player}")
-                    Invoker.logger.info(f"--------------------")
+                    Invoker.logger.debug("----- Server Status -----")
+                    Invoker.logger.debug(f"Client A Player Object:{self.__client_A_player}")
+                    Invoker.logger.debug(f"Client B Player Object:{self.__client_B_player}")
+                    Invoker.logger.debug(f"Client A Connected: {self.__client_A_connected}")
+                    Invoker.logger.debug(f"Client B Connected: {self.__client_B_connected}")
+                    Invoker.logger.debug(f"------------------------")
                 else:
                     Invoker.logger.error("status args must be 0")
 
