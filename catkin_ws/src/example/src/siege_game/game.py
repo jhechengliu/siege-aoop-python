@@ -7,13 +7,6 @@ from siege_game.game_objects.logger import Logger
 from siege_game.game_objects.commander import Commander
 import time
 
-class MySubscriberListener(rospy.SubscribeListener):
-    def __init__(self):
-        super(MySubscriberListener, self).__init__()
-
-    def peer_unsubscribe(self, topic_name, num_peers):
-        print("BRUH")
-
 class Game():
     instance = None
     logger = Logger("Game")
@@ -27,15 +20,6 @@ class Game():
         self.__commander = Commander(self)
         Game.logger.info(f"Command set: {self.__commander}")
 
-        self.__my_listener = MySubscriberListener()
-        self.__my_publisher = rospy.Publisher(
-            name='~test',
-            data_class=Int32,
-            subscriber_listener=self.__my_listener,
-            queue_size=10)
-        
-        self.__int32data = Int32()
-
     @classmethod
     def get_instance(cls):
         if (cls.instance == None):
@@ -44,13 +28,9 @@ class Game():
         return cls.instance
     
     def run(self):
-        counter = 0
-        self.__int32data.data = counter
         self.__map.print_map()
         while not rospy.is_shutdown():
-            self.__my_publisher.publish(self.__int32data)
-            rospy.sleep(0.1)
-            counter += 1
+            pass
 
     def get_commander(self):
         return self.__commander
