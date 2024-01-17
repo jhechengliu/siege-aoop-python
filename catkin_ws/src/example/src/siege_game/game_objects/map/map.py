@@ -66,6 +66,9 @@ class Map:
     def get_game_flow_director(self) -> GameFlowDirector:
         return self.__game_flow_director
     
+    def get_game_data_publisher(self) -> GameDataPublisher:
+        return self.__game_data_publisher
+    
     def get_defenders(self) -> deque:
         return self.__defenders
     

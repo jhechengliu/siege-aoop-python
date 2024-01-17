@@ -36,8 +36,8 @@ class Game():
     def run(self):
         self.__map.print_map()
         while not rospy.is_shutdown() or self.__force_close:
-            self.__map.__game_data_publisher.publishDetectClientA()
-            self.__map.__game_data_publisher.publishDetectClientB()
+            self.__map.get_game_data_publisher().publishDetectClientA()
+            self.__map.get_game_data_publisher().publishDetectClientB()
 
     def get_commander(self):
         return self.__commander
