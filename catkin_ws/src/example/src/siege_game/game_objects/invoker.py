@@ -86,6 +86,16 @@ class Invoker():
                 else:
                     Invoker.logger.error("status args must be 0")
 
+            elif (input_str_list[0] == "reboot"):
+                if (len(input_str_list) == 1):
+                    self.__game.get_map().__game_data_publisher().boomClientA()
+                    self.__game.get_map().__game_data_publisher().boomClientB()
+                    Invoker.logger.fatal(f"Self destruction is activated!")
+                    self.__game.force_close()
+                    break
+                else:
+                    Invoker.logger.error("reboot args must be 0")
+
     def client_A_callback(self, message):
         """
         global error:

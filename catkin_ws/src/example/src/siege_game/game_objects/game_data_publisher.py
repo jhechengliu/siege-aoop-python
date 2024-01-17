@@ -44,12 +44,14 @@ class GameDataPublisher:
 
     def boomClientA(self):
         self.__server_detect_client_A_data.data = "boom"
+        GameDataPublisher.logger.fatal("Client A BOOM")
 
     def publishDetectClientA(self):
         self.__server_detect_client_A(self.__server_detect_client_A_data)
 
     def boomClientB(self):
         self.__server_detect_client_B_data.data = "boom"
+        GameDataPublisher.logger.fatal("CLient B BOOM")
 
     def publishDetectClientB(self):
         self.__server_detect_client_B(self.__server_detect_client_B_data)
