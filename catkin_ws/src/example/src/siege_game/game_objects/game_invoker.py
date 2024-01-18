@@ -106,7 +106,7 @@ class GameInvoker():
         """
 
         if heading == "signin":
-            self.__sign_in_process(id, args, 'A', self.publish_client_A_server, self.publish_client_B_server, self.__client_A_player)
+            self.__sign_in_process(id, args, 'A', self.publish_client_A_server, self.publish_client_B_server_actively, self.__client_A_player)
 
         elif heading == "signout":
             self.__sign_out_process(id, args, 'A', self.publish_client_A_server, self.__client_A_player)
@@ -166,7 +166,7 @@ class GameInvoker():
         """
 
         if heading == "signin":
-            self.__sign_in_process(id, args, 'B', self.publish_client_B_server, self.publish_client_A_server, self.__client_B_player)
+            self.__sign_in_process(id, args, 'B', self.publish_client_B_server, self.publish_client_A_server_actively, self.__client_B_player)
         elif heading == "signout":
             self.__sign_out_process(id, args, 'B', self.publish_client_B_server, self.__client_B_player)
 
@@ -194,7 +194,7 @@ class GameInvoker():
     def make_client_B_player(self, name, identity, commander):
         self.__client_B_player = Player(name, identity, commander)
 
-    def __sign_in_process(self, id, args:List, A_or_B:str, publish_function:Callable, opponent_publish_function:Callable, client_player):
+    def __sign_in_process(self, id, args:List, A_or_B:str, publish_function:Callable, opponent_active_publish_function:Callable, client_player):
         if len(args) == 2:
                 if (client_player != None):
                     self.__logger.error(f"Client {A_or_B} already signed in")
@@ -248,6 +248,7 @@ class GameInvoker():
                         if (self.__client_B_player == None):
                             self.__logger.info("Client B isnt ready yet")
                             publish_function(id, f"success_{opponent_name}_{opponent_identity}")
+                            opponent_active_publish_function(get_str_identity(identity))
                         else:
                             self.__logger.info("Client B is ready")
                             if (self.__client_B_player.get_identity() == Identity.ATTACK):
@@ -258,7 +259,7 @@ class GameInvoker():
 
                             publish_function(id, f"success_{opponent_name}_{opponent_identity}")
                             get_str_identity = lambda identity : "attacker_occupied" if identity == Identity.ATTACK else ("defender_occupied" if identity == Identity.DEFEND else "None")
-                            opponent_publish_function(get_str_identity(identity))
+                            opponent_active_publish_function(get_str_identity(identity))
                         self.__logger.debug(f"Success! Client {A_or_B} Player: {self.__client_A_player}")
 
                     elif (A_or_B == 'B'):
@@ -266,6 +267,7 @@ class GameInvoker():
                         if (self.__client_A_player == None):
                             self.__logger.info("Client A isnt ready yet")
                             publish_function(id, f"success_{opponent_name}_{opponent_identity}")
+                            opponent_active_publish_function(get_str_identity(identity))
                         else:
                             self.__logger.info("Client A is ready")
                             if (self.__client_A_player.get_identity() == Identity.ATTACK):
@@ -276,7 +278,7 @@ class GameInvoker():
 
                             publish_function(id, f"success_{opponent_name}_{opponent_identity}")
                             get_str_identity = lambda identity : "attacker_occupied" if identity == Identity.ATTACK else ("defender_occupied" if identity == Identity.DEFEND else "None")
-                            opponent_publish_function(get_str_identity(identity))
+                            opponent_active_publish_function(get_str_identity(identity))
                         self.__logger.debug(f"Success! Client {A_or_B} Player: {self.__client_B_player}")
 
                     
@@ -309,6 +311,11 @@ class GameInvoker():
         self.__server_client_A_message.data = full_msg
         self.__logger.info(f"Sending data to server client A channel: {full_msg}")
         self.__server_client_A_publisher.publish(self.__server_client_A_message)
+    
+    def publish_client_A_server_actively(self, msg):
+        self.__server_client_A_message.data = msg
+        self.__logger.info(f"Sending active data to server client A channel: {msg}")
+        self.__server_client_A_publisher.publish(self.__server_client_A_message)
 
     def publish_client_B_server(self, id, msg):
         full_msg = f"{id} {msg}"
@@ -316,4 +323,8 @@ class GameInvoker():
         self.__logger.info(f"Sending data to server client B channel: {full_msg}")
         self.__server_client_B_publisher.publish(self.__server_client_B_message)
 
+    def publish_client_B_server_actively(self, msg):
+        self.__server_client_B_message.data = msg
+        self.__logger.info(f"Sending active data to server client B channel: {msg}")
+        self.__server_client_B_publisher.publish(self.__server_client_B_message)
             
