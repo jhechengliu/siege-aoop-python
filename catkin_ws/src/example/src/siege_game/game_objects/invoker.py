@@ -54,7 +54,7 @@ class Invoker():
   
     def run(self):
         while (not rospy.is_shutdown()) and (not self.__force_close):
-            # self.__map.get_game_data_publisher().publishDetectClientA()
+            # self.__map.get_game_data_publisher().publishDetectCl  ientA()
             # self.__map.get_game_data_publisher().publishDetectClientB()
             # rospy.sleep(1.)
             pass
@@ -80,10 +80,18 @@ class Invoker():
                 elif (len(input_str_list) == 2):
                     if (input_str_list[1] in self.__game_invokers.keys()):
                         self.__game_invokers[input_str_list[1]].print_status()
-                    elif (input_str_list[1] >= 0 and input_str_list[1] < len(keys_list)):
-                        self.__game_invokers[keys_list[input_str_list[1]]].print_status()
                     else:
-                        Invoker.logger.error(f"Game ID: {input_str_list[1]} not found")
+                        try:
+                            int(input_str_list[1])
+                        except ValueError:
+                            Invoker.logger.error(f"Game ID/Index: {input_str_list[1]} not found")
+                        else:
+                            if (input_str_list[1] >= 0 and input_str_list[1] < len(keys_list)):
+                                self.__game_invokers[keys_list[input_str_list[1]]].print_status()
+                            else:
+                                Invoker.logger.error(f"Game ID/Index: {input_str_list[1]} not found")
+
+                        
                 else:
                     Invoker.logger.error("status args must be 0")
 
