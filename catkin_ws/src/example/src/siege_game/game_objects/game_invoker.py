@@ -106,10 +106,10 @@ class GameInvoker():
         """
 
         if heading == "signin":
-            self.__sign_in_process(id, args, 'A', self.publish_client_A_server, self.__client_A_player)
+            self.__sign_in_process(id, args, 'A', self.publish_client_A_server, self.publish_client_B_server, self.__client_A_player)
 
         elif heading == "signout":
-            self.__sign_out_process(id, args, 'B', self.publish_client_B_server, self.__client_B_player)
+            self.__sign_out_process(id, args, 'A', self.publish_client_A_server, self.__client_A_player)
 
         else:
             if self.__client_A_player == None:
@@ -166,7 +166,7 @@ class GameInvoker():
         """
 
         if heading == "signin":
-            self.__sign_in_process(id, args, 'B', self.publish_client_B_server, self.__client_B_player)
+            self.__sign_in_process(id, args, 'B', self.publish_client_B_server, self.publish_client_A_server, self.__client_B_player)
         elif heading == "signout":
             self.__sign_out_process(id, args, 'B', self.publish_client_B_server, self.__client_B_player)
 
@@ -194,7 +194,7 @@ class GameInvoker():
     def make_client_B_player(self, name, identity, commander):
         self.__client_B_player = Player(name, identity, commander)
 
-    def __sign_in_process(self, id, args:List, A_or_B:str, publish_function:Callable, client_player):
+    def __sign_in_process(self, id, args:List, A_or_B:str, publish_function:Callable, opponent_publish_function:Callable, client_player):
         if len(args) == 2:
                 if (client_player != None):
                     self.__logger.error(f"Client {A_or_B} already signed in")
@@ -231,6 +231,7 @@ class GameInvoker():
                     else:
                         self.__logger.error("Identity must be 'A' (Attacker) or 'D' (Defender)")
                         publish_function(id, "identity_error")
+                        return
 
                     if (A_or_B == 'A'):
                         self.make_client_A_player(args[1], identity, self.__game.get_commander())
@@ -238,7 +239,39 @@ class GameInvoker():
                         self.make_client_B_player(args[1], identity, self.__game.get_commander())
 
                     self.__logger.debug(f"Success! Client {A_or_B} Player: {client_player}")
-                    publish_function(id, "success")
+
+                    opponent_identity = "none"
+                    opponent_name = "none"
+
+                    if (A_or_B == 'A'):
+                        if (self.__client_B_player == None):
+                            publish_function(id, f"success_{opponent_name}_{opponent_identity}")
+                        else:
+                            if (self.__client_B_player.get_identity == Identity.ATTACK):
+                                opponent_identity = "attacker"
+                            elif (self.__client_B_player.get_identity == Identity.DEFEND):
+                                opponent_identity = "defender"
+                            opponent_name = self.__client_B_player.get_name()
+
+                            publish_function(id, f"success_{opponent_name}_{opponent_identity}")
+                            get_str_identity = lambda identity : "attacker_occupied" if identity == Identity.ATTACK else ("defender_occupied" if identity == Identity.DEFEND else "None")
+                            opponent_publish_function(get_str_identity(identity))
+
+                    elif (A_or_B == 'B'):
+                        if (self.__client_A_player == None):
+                            publish_function(id, f"success_{opponent_name}_{opponent_identity}")
+                        else:
+                            if (self.__client_A_player.get_identity == Identity.ATTACK):
+                                opponent_identity = "attacker"
+                            elif (self.__client_A_player.get_identity == Identity.DEFEND):
+                                opponent_identity = "defender"
+                            opponent_name = self.__client_A_player.get_name()
+
+                            publish_function(id, f"success_{opponent_name}_{opponent_identity}")
+                            get_str_identity = lambda identity : "attacker_occupied" if identity == Identity.ATTACK else ("defender_occupied" if identity == Identity.DEFEND else "None")
+                            opponent_publish_function(get_str_identity(identity))
+
+                    
 
                     
         else:

@@ -38,6 +38,9 @@ class Player():
 
     def get_has_finish_setting_up(self):
         return self.__has_finish_setting_up
+    
+    def get_name(self):
+        return self.__name
 
     def __str__(self):
         identity_str = ""
