@@ -22,24 +22,14 @@ class Game():
         self.__commander = Commander(self)
         Game.logger.info(f"Command set: {self.__commander}")
 
-        self.__force_close = False
-    
-    def run(self):
-        self.__map.print_map()
-        while (not rospy.is_shutdown()) and (not self.__force_close):
-            # self.__map.get_game_data_publisher().publishDetectClientA()
-            # self.__map.get_game_data_publisher().publishDetectClientB()
-            # rospy.sleep(1.)
-            pass
+  
+        
 
     def get_commander(self):
         return self.__commander
     
     def get_map(self):
         return self.__map
-    
-    def force_close(self):
-        self.__force_close = True
 
 
 
