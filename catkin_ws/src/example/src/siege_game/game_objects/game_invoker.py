@@ -247,9 +247,9 @@ class GameInvoker():
                         if (self.__client_B_player == None):
                             publish_function(id, f"success_{opponent_name}_{opponent_identity}")
                         else:
-                            if (self.__client_B_player.get_identity == Identity.ATTACK):
+                            if (self.__client_B_player.get_identity() == Identity.ATTACK):
                                 opponent_identity = "attacker"
-                            elif (self.__client_B_player.get_identity == Identity.DEFEND):
+                            elif (self.__client_B_player.get_identity() == Identity.DEFEND):
                                 opponent_identity = "defender"
                             opponent_name = self.__client_B_player.get_name()
 
@@ -261,9 +261,9 @@ class GameInvoker():
                         if (self.__client_A_player == None):
                             publish_function(id, f"success_{opponent_name}_{opponent_identity}")
                         else:
-                            if (self.__client_A_player.get_identity == Identity.ATTACK):
+                            if (self.__client_A_player.get_identity() == Identity.ATTACK):
                                 opponent_identity = "attacker"
-                            elif (self.__client_A_player.get_identity == Identity.DEFEND):
+                            elif (self.__client_A_player.get_identity() == Identity.DEFEND):
                                 opponent_identity = "defender"
                             opponent_name = self.__client_A_player.get_name()
 
