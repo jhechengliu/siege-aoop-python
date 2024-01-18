@@ -244,7 +244,7 @@ class GameInvoker():
                     opponent_name = "none"
 
                     if (A_or_B == 'A'):
-                        self.__logger.info(f"Checking Opponent Client B player name and identity {self.__client_B_player.get_name()}, {self.__client_B_player.get_identity()}")
+                        self.__logger.info(f"Checking Opponent Client B player name and identity: {self.__client_B_player}")
                         if (self.__client_B_player == None):
                             publish_function(id, f"success_{opponent_name}_{opponent_identity}")
                         else:
@@ -260,7 +260,7 @@ class GameInvoker():
                         self.__logger.debug(f"Success! Client {A_or_B} Player: {self.__client_A_player}")
 
                     elif (A_or_B == 'B'):
-                        self.__logger.info(f"Checking Opponent Client A player name and identity {self.__client_A_player.get_name()}, {self.__client_A_player.get_identity()}")
+                        self.__logger.info(f"Checking Opponent Client A player name and identity {self.__client_A_player}")
                         if (self.__client_A_player == None):
                             publish_function(id, f"success_{opponent_name}_{opponent_identity}")
                         else:
