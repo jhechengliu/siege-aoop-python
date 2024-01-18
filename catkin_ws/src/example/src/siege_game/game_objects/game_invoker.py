@@ -276,7 +276,6 @@ class GameInvoker():
                             opponent_name = self.__client_A_player.get_name()
 
                             publish_function(id, f"success_{opponent_name}_{opponent_identity}")
-                            get_str_identity = lambda identity : "attacker_occupied" if identity == Identity.ATTACK else ("defender_occupied" if identity == Identity.DEFEND else "None")
                             opponent_active_publish_function(get_str_identity(identity, args[1]))
                         self.__logger.debug(f"Success! Client {A_or_B} Player: {self.__client_B_player}")
 
