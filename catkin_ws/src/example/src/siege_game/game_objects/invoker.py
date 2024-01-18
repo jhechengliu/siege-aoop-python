@@ -132,9 +132,10 @@ class Invoker():
                 
                 elif (unfull_game_invoker.get_client_A_connected() == True and unfull_game_invoker.get_client_B_connected() == False):
                     unfull_game_invoker.set_client_B_connected(True)
+                    return_str = "client_B_" + self.__unfull_game_id
                     self.__unfull_game_id = shortuuid.uuid()
                     self.get_new_unfull_game(self.__unfull_game_id)
-                    return "client_B_" + self.__unfull_game_id
+                    return return_str
                 
                 elif (unfull_game_invoker.get_client_A_connected() == True and unfull_game_invoker.get_client_B_connected() == True):
                     self.__unfull_game_id = shortuuid.uuid()
