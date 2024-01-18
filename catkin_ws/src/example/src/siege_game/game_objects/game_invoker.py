@@ -24,11 +24,11 @@ class GameInvoker():
         self.__game_id = game_id
         self.__logger = Logger("GameInvoker_" + self.__game_id)
 
-        self.__client_A_subsriber = rospy.Subscriber('/client_A' + self.__game_id, String, self.client_A_callback)
-        self.__client_B_subsriber = rospy.Subscriber('/client_B' + self.__game_id, String, self.client_B_callback)
+        self.__client_A_subsriber = rospy.Subscriber('/client_A_' + self.__game_id, String, self.client_A_callback)
+        self.__client_B_subsriber = rospy.Subscriber('/client_B_' + self.__game_id, String, self.client_B_callback)
 
-        self.__server_client_A_publisher = rospy.Publisher('/server_client_A' + self.__game_id, String, queue_size=10)
-        self.__server_client_B_publisher = rospy.Publisher('/server_client_B' + self.__game_id, String, queue_size=10)
+        self.__server_client_A_publisher = rospy.Publisher('/server_client_A_' + self.__game_id, String, queue_size=10)
+        self.__server_client_B_publisher = rospy.Publisher('/server_client_B_' + self.__game_id, String, queue_size=10)
 
         self.__server_client_A_message = String()
         self.__server_client_B_message = String()
