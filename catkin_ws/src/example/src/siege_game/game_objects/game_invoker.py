@@ -246,8 +246,10 @@ class GameInvoker():
                     if (A_or_B == 'A'):
                         self.__logger.info(f"Checking Opponent Client B player name and identity: {self.__client_B_player}")
                         if (self.__client_B_player == None):
+                            self.__logger.info("Client B isnt ready yet")
                             publish_function(id, f"success_{opponent_name}_{opponent_identity}")
                         else:
+                            self.__logger.info("Client B is ready")
                             if (self.__client_B_player.get_identity() == Identity.ATTACK):
                                 opponent_identity = "attacker"
                             elif (self.__client_B_player.get_identity() == Identity.DEFEND):
@@ -262,8 +264,10 @@ class GameInvoker():
                     elif (A_or_B == 'B'):
                         self.__logger.info(f"Checking Opponent Client A player name and identity {self.__client_A_player}")
                         if (self.__client_A_player == None):
+                            self.__logger.info("Client A isnt ready yet")
                             publish_function(id, f"success_{opponent_name}_{opponent_identity}")
                         else:
+                            self.__logger.info("Client A is ready")
                             if (self.__client_A_player.get_identity() == Identity.ATTACK):
                                 opponent_identity = "attacker"
                             elif (self.__client_A_player.get_identity() == Identity.DEFEND):
