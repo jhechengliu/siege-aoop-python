@@ -34,15 +34,15 @@ class Invoker():
 
     @classmethod
     def get_instance(cls):
-        if cls.__instance == None:
-            cls.__instance = Invoker()
+        if Invoker.__instance == None:
+            Invoker.__instance = Invoker()
         
-        return cls.__instance
+        return Invoker.__instance
     
     @classmethod
     def remove_instance(cls):
-        cls.__instance.__force_close = True
-        del cls.__instance
+        Invoker.__instance.__force_close = True
+        del Invoker.__instance
 
     def get_new_unfull_game(self, game_id):
         self.__game_invokers[game_id] = GameInvoker(game_id)
