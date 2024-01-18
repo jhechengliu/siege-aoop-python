@@ -37,7 +37,7 @@ class MapBuilder:
         self.__map_height = 0
         self.__load_map(file_name)
         self.__map = {}
-        self.__id_to_map_object(self.__map_json["map"], self.__map_json)
+        self.__id_to_map_object(self.__map_json["map"], self.__map_json['mapping'])
 
     def get_map(self) -> map.Map:
         """
@@ -67,7 +67,7 @@ class MapBuilder:
             MapBuilder.logger.info(f"Map size loaded {self.__map_width} * {self.__map_height}")
             
 
-    def __id_to_map_object(self, array: List, map: Dict) -> None:
+    def __id_to_map_object(self, array: List, map: List) -> None:
         """
         Change the list from number to map objects by looking at the map dictionary
 
@@ -95,7 +95,7 @@ class MapBuilder:
                 location = (x, y)
                 
                 try:
-                    object_type = map[str(array[y][x])]
+                    object_type = map[array[y][x]]
                 except KeyError:
                     raise NoSuchJsonObjectTypeError()
                 
