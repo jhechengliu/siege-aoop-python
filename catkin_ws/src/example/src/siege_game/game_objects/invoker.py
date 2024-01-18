@@ -13,7 +13,6 @@ import shortuuid
 
 class Invoker():
     logger = Logger("Invoker")
-    instance = None
 
     def __init__(self) -> None:
         """
@@ -34,7 +33,10 @@ class Invoker():
 
     @classmethod
     def get_instance(cls):
-        if Invoker.instance == None:
+        try:
+            if Invoker.instance == None:
+                Invoker.instance = Invoker()
+        except:
             Invoker.instance = Invoker()
         
         return Invoker.instance
@@ -42,7 +44,7 @@ class Invoker():
     @classmethod
     def remove_instance(cls):
         Invoker.instance.__force_close = True
-        Invoker.instance = None
+        del Invoker.instance
 
     def get_new_unfull_game(self, game_id):
         self.__game_invokers[game_id] = GameInvoker(game_id)
