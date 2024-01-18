@@ -23,7 +23,7 @@ class Invoker():
 
         self.__game_invokers = {}
         self.__unfull_game_id = shortuuid.uuid()
-        self.__game_invokers[self.__unfull_game_id]:GameInvoker = GameInvoker(self.__unfull_game_id)
+        self.get_new_unfull_game(self.__unfull_game_id)
 
         self.connect_subscriber = rospy.Subscriber('/connect', String, self.connect_callback)
 
@@ -68,15 +68,20 @@ class Invoker():
 
             # status
             if (input_str_list[0] == "status"):
+                keys_list = list(self.__game_invokers.keys())
                 if (len(input_str_list) == 1):
                     Invoker.logger.debug("----- Server Status-----")
                     Invoker.logger.debug("Running Games:")
-                    for game_invoker_id in self.__game_invokers.keys():
-                        Invoker.logger.debug(f"{game_invoker_id}")
+                    for index in range(len(keys_list)):
+                        Invoker.logger.debug(f"Key Index: {index}, Key: {keys_list[index]}")
+                    Invoker.logger.debug("Current unfull game:")
+                    Invoker.logger.debug(f"Key: {self.__unfull_game_id}")
                     Invoker.logger.debug("-------------------------")
                 elif (len(input_str_list) == 2):
                     if (input_str_list[1] in self.__game_invokers.keys()):
                         self.__game_invokers[input_str_list[1]].print_status()
+                    elif (input_str_list[1] >= 0 and input_str_list[1] < len(keys_list)):
+                        self.__game_invokers[keys_list[input_str_list[1]]].print_status()
                     else:
                         Invoker.logger.error(f"Game ID: {input_str_list[1]} not found")
                 else:
