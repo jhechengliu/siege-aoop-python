@@ -2,7 +2,6 @@ from siege_game.game_objects.map.commands.map_command import MapCommand
 from siege_game.game_objects.states.state import SettingUpState
 from siege_game.game_objects.constants.identity import Identity
 from siege_game.game_objects.logger import Logger
-from siege_game.game_objects.invoker import Invoker
 
 class SetOperatorSettingUpCommand(MapCommand):
     """
@@ -77,26 +76,5 @@ class FinishSettingUpCommand(MapCommand):
             return "defender_not_equal_max_count"
         else:
             return None
-        
 
-class StartBattleSettingUpCommand(MapCommand):
-    """
-    command: startbattle => start the battle 
-    """
-    logger = Logger("StartBattleSettingUp")
-
-    def execute(self) -> None:
-        self.get_map().get_game_flow_director().next_state()
-        StartBattleSettingUpCommand.logger.info(f"Battle starts! Current State: {self.get_map().get_game_flow_director().get_state()}")
-
-    def check(self) -> bool:
-        if (len(self.get_args()) != 0):
-            StartBattleSettingUpCommand.logger.error("startbattle command args must be 0")
-            return "args_len_error"
-        
-        elif (Invoker.get_instance().get_server_player() != None and not Invoker.get_instance().get_server_player().get_has_finish_setting_up()):
-            StartBattleSettingUpCommand.logger.error("Server player isnt ready")
-            return "server_player_not_ready"
-        
-        return None
         
