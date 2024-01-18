@@ -72,13 +72,13 @@ class Invoker():
                 if (len(input_str_list) == 1):
                     Invoker.logger.debug("----- Server Status-----")
                     Invoker.logger.debug("Running Games:")
-                    for game_invoker_id in self.__game_invokers.keys:
+                    for game_invoker_id in self.__game_invokers.keys():
                         Invoker.logger.debug(f"{game_invoker_id}")
                     Invoker.logger.debug()
                     Invoker.logger.debug("")
                     Invoker.logger.debug()
                 elif (len(input_str_list) == 2):
-                    if (input_str_list[1] in self.__game_invokers.keys):
+                    if (input_str_list[1] in self.__game_invokers.keys()):
                         self.__game_invokers[input_str_list[1]].print_status()
                     else:
                         Invoker.logger.error(f"Game ID: {input_str_list[1]} not found")
