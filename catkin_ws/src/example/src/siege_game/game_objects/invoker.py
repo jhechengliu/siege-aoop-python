@@ -84,12 +84,12 @@ class Invoker():
                         try:
                             int(input_str_list[1])
                         except ValueError:
-                            Invoker.logger.error(f"Game ID/Index: {input_str_list[1]} not found")
+                            Invoker.logger.error(f"Game ID: {input_str_list[1]} not found")
                         else:
-                            if (input_str_list[1] >= 0 and input_str_list[1] < len(keys_list)):
-                                self.__game_invokers[keys_list[input_str_list[1]]].print_status()
+                            if (int(input_str_list[1]) >= 0 and int(input_str_list[1]) < len(keys_list)):
+                                self.__game_invokers[keys_list[int(input_str_list[1])]].print_status()
                             else:
-                                Invoker.logger.error(f"Game ID/Index: {input_str_list[1]} not found")
+                                Invoker.logger.error(f"Game Index: {int(input_str_list[1])} not found")
 
                         
                 else:
