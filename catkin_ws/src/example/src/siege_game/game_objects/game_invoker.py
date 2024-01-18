@@ -238,12 +238,13 @@ class GameInvoker():
                     elif (A_or_B == 'B'):
                         self.make_client_B_player(args[1], identity, self.__game.get_commander())
 
-                    self.__logger.debug(f"Success! Client {A_or_B} Player: {client_player}")
+                    
 
                     opponent_identity = "none"
                     opponent_name = "none"
 
                     if (A_or_B == 'A'):
+                        self.__logger.info(f"Checking Opponent Client B player name and identity {self.__client_B_player.get_name()}, {self.__client_B_player.get_identity()}")
                         if (self.__client_B_player == None):
                             publish_function(id, f"success_{opponent_name}_{opponent_identity}")
                         else:
@@ -256,8 +257,10 @@ class GameInvoker():
                             publish_function(id, f"success_{opponent_name}_{opponent_identity}")
                             get_str_identity = lambda identity : "attacker_occupied" if identity == Identity.ATTACK else ("defender_occupied" if identity == Identity.DEFEND else "None")
                             opponent_publish_function(get_str_identity(identity))
+                        self.__logger.debug(f"Success! Client {A_or_B} Player: {self.__client_A_player}")
 
                     elif (A_or_B == 'B'):
+                        self.__logger.info(f"Checking Opponent Client A player name and identity {self.__client_A_player.get_name()}, {self.__client_A_player.get_identity()}")
                         if (self.__client_A_player == None):
                             publish_function(id, f"success_{opponent_name}_{opponent_identity}")
                         else:
@@ -270,6 +273,7 @@ class GameInvoker():
                             publish_function(id, f"success_{opponent_name}_{opponent_identity}")
                             get_str_identity = lambda identity : "attacker_occupied" if identity == Identity.ATTACK else ("defender_occupied" if identity == Identity.DEFEND else "None")
                             opponent_publish_function(get_str_identity(identity))
+                        self.__logger.debug(f"Success! Client {A_or_B} Player: {self.__client_B_player}")
 
                     
 
