@@ -55,12 +55,16 @@ class Invoker():
 
 
     @classmethod
-    def get_instance():
-        if Invoker.__instance == None:
-            Invoker.__instance = Invoker()
+    def get_instance(cls):
+        if cls.__instance == None:
+            cls.__instance = Invoker()
         
-        return Invoker.__instance
+        return cls.__instance
     
+    @classmethod
+    def remove_instance(cls):
+        del cls.__instance
+        
     def get_client_A_player(self):
         return self.__client_A_player
     

@@ -16,8 +16,8 @@ if __name__ == "__main__":
         logger = Logger("main")
         logger.debug("Start server...")
 
-        game = Game.get_instance()
-        invoker = Invoker(game)
+        game = Game()
+        invoker = Invoker.get_instance()
 
         logger.info("This is info")
         logger.error("This is error")
@@ -39,6 +39,7 @@ if __name__ == "__main__":
         del thread1
         del thread2
         del logger
+        Invoker.remove_instance()
 
     
 

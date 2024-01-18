@@ -23,15 +23,6 @@ class Game():
         Game.logger.info(f"Command set: {self.__commander}")
 
         self.__force_close = False
-
-        
-
-    @classmethod
-    def get_instance(cls):
-        if (cls.instance == None):
-            cls.instance = Game()
-
-        return cls.instance
     
     def run(self):
         self.__map.print_map()
