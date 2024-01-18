@@ -16,7 +16,7 @@ if __name__ == "__main__":
         logger = Logger("main")
         logger.debug("Start server...")
 
-        invoker = Invoker.get_instance()
+        invoker = Invoker()
 
         logger.info("This is info")
         logger.error("This is error")
@@ -37,7 +37,6 @@ if __name__ == "__main__":
         del thread1
         del thread2
         del logger
-        Invoker.remove_instance()
 
     
 

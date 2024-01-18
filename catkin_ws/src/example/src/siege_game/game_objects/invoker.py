@@ -31,21 +31,6 @@ class Invoker():
         
         self.__force_close = False
 
-    @classmethod
-    def get_instance(cls):
-        try:
-            if Invoker.instance == None:
-                Invoker.instance = Invoker()
-        except:
-            Invoker.instance = Invoker()
-        
-        return Invoker.instance
-    
-    @classmethod
-    def remove_instance(cls):
-        Invoker.instance.__force_close = True
-        del Invoker.instance
-
     def get_new_unfull_game(self, game_id):
         self.__game_invokers[game_id] = GameInvoker(game_id)
         Invoker.logger.debug(f"New Game Invoker id: {game_id} added")
