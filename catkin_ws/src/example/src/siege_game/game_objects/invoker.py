@@ -66,7 +66,6 @@ class Invoker():
 
             input_str_list = input_str.split()
 
-            # TODO: Multiple games added this wont work
             # status
             if (input_str_list[0] == "status"):
                 if (len(input_str_list) == 1):
@@ -74,9 +73,7 @@ class Invoker():
                     Invoker.logger.debug("Running Games:")
                     for game_invoker_id in self.__game_invokers.keys():
                         Invoker.logger.debug(f"{game_invoker_id}")
-                    Invoker.logger.debug()
-                    Invoker.logger.debug("")
-                    Invoker.logger.debug()
+                    Invoker.logger.debug("-------------------------")
                 elif (len(input_str_list) == 2):
                     if (input_str_list[1] in self.__game_invokers.keys()):
                         self.__game_invokers[input_str_list[1]].print_status()
