@@ -4,7 +4,7 @@ from siege_game.game_objects.logger import Logger
 
 class PlayerMovementBattleCommand(MapCommand):
     """
-    command: move A 1.5 2.5 3.5 4.5 => Move Attacker at location x=1.5, y=2.5 to location x=3.5, y=4.5
+    command: move 3 3.5 4.5 => Try to move Attacker's 3rd operator to location x=3.5, y=4.5
     """
     logger = Logger("PlayerMovementBattleCommand")
 

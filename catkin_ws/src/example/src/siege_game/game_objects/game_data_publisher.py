@@ -35,6 +35,9 @@ class GameDataPublisher:
         self.__server_detect_client_B = rospy.Publisher('/server_detect_client_B', String, queue_size=50, subscriber_listener=ServerDetectClientAListener(self))
         self.__server_detect_client_B_data = String()
         self.__server_detect_client_B_data.data = "safe"
+
+        ## publisher for update map
+        ## __server_update_map_publisher
     
     def publish_server_signin(self, id, msg):
         full_msg = f"{id} {msg}"

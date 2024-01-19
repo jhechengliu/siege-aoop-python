@@ -9,6 +9,7 @@ from siege_game.game_objects.player import Player
 from siege_game.game_objects.constants.identity import Identity
 from typing import List, Callable
 from siege_game.game import Game
+import pytest
 
 class GameInvoker():
 
@@ -278,10 +279,7 @@ class GameInvoker():
                             publish_function(id, f"success_{opponent_name}_{opponent_identity}")
                             opponent_active_publish_function(get_str_identity(identity, args[1]))
                         self.__logger.debug(f"Success! Client {A_or_B} Player: {self.__client_B_player}")
-
-                    
-
-                    
+          
         else:
             self.__logger.error("signin commands args not equal to 2")
             publish_function(id, "args_len_error")
