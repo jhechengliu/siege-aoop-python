@@ -1,5 +1,5 @@
 import pytest
-from siege_game.game_objects import map
+from siege_game.game_objects.map_builder import MapBuilder
 from siege_game.game_objects.pawn import attacker, defender, operator, shooting_system, walking_system, sight_checker, shooting_system, walking_system
 from siege_game.game_objects import map_data_processor, game_data_publisher, game_flow_director
 from siege_game.game import Game
@@ -8,7 +8,7 @@ from collections import deque
 
 testing_game = Game()
 
-testing_map = map.Map("map_example")
+testing_map = MapBuilder("map_example")
 # testing_game.map.get_sight_checker(xxx)
 for i in range (0, 5):
     attackers = testing_game.get_map().add_attacker(i, i)
