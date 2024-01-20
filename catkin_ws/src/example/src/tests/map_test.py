@@ -11,8 +11,8 @@ testing_game = Game()
 testing_map = MapBuilder("map_example")
 # testing_game.map.get_sight_checker(xxx)
 for i in range (0, 5):
-    attackers = testing_game.get_map().add_attacker(i, i)
-    defenders = testing_game.get_map().add_defender(i, i)
+    attackers = testing_game.get_map().add_attacker([i, i])
+    defenders = testing_game.get_map().add_defender([i, i])
 
 def test_map_data_type():
 
