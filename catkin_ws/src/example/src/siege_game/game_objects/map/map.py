@@ -62,7 +62,7 @@ class Map:
         self.__
 
     def getters(self):
-        def get___map_data() -> dict:
+        def get_map_data() -> dict:
             return self.__map_data
         
         def get_shooting_system() -> ShootingSystem:
