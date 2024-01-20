@@ -105,4 +105,4 @@ class Map:
         return self.__map_height
     
     def get_map_object(self, location:List[int]):
-        return self.__map[(location[0], location[1])]
+        return self.__map_data[(location[0], location[1])]

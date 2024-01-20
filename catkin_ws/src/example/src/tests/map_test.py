@@ -23,14 +23,14 @@ def test_map_data_type():
     assert type(testing_game.get_map().get_sight_checker()) == sight_checker.SightChecker
     assert type(testing_game.get_map().get_map_data_processor()) == map_data_processor.MapDataProcessor
     assert type(testing_game.get_map().get_game_data_publisher()) == game_data_publisher.GameDataPublisher
-    assert type(testing_game.get_map().getters().get_game_flow_director()) == game_flow_director.GameFlowDirector
-    assert type(testing_game.get_map().getters().get_max_defender_count()) == int
-    assert type(testing_game.get_map().getters().get_max_attacker_count()) == int
-    assert type(testing_game.get_map().getters().get_attackers()) == deque
-    assert type(testing_game.get_map().getters().get_defenders()) == deque
-    assert type(testing_game.get_map().getters().get_deffender(0)) == defender.Defender
-    assert type(testing_game.get_map().getters().get_attacker(0)) == attacker.Attacker
-    assert type(testing_game.get_map().getters().get_map_object([0,0])) == type
+    assert type(testing_game.get_map().get_game_flow_director()) == game_flow_director.GameFlowDirector
+    assert type(testing_game.get_map().get_max_defender_count()) == int
+    assert type(testing_game.get_map().get_max_attacker_count()) == int
+    assert type(testing_game.get_map().get_attackers()) == deque
+    assert type(testing_game.get_map().get_defenders()) == deque
+    assert type(testing_game.get_map().get_deffender(0)) == defender.Defender
+    assert type(testing_game.get_map().get_attacker(0)) == attacker.Attacker
+    assert type(testing_game.get_map().get_map_object([0,0])) == type
 
 def test_map_data_value():
     assert type((testing_game.get_map()).get_map_data()) == type(testing_map.get_map_data())
