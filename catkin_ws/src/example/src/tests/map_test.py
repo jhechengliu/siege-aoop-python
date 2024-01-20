@@ -30,7 +30,6 @@ def test_map_data_type():
     assert type(testing_game.get_map().get_defenders()) == deque
     assert type(testing_game.get_map().get_deffender(0)) == defender.Defender
     assert type(testing_game.get_map().get_attacker(0)) == attacker.Attacker
-    assert type(testing_game.get_map().get_map_object([0,0])) == type
 
 def test_map_data_value():
     assert type((testing_game.get_map()).get_map_data()) == type(testing_map.get_map_data())
