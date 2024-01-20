@@ -1,5 +1,5 @@
 import pytest
-from siege_game.game import Game
+from src.siege_game.game import Game
 
 class TestGame():
     def setup_method(self):
