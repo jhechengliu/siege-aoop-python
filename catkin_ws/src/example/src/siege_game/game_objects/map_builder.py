@@ -10,27 +10,11 @@ class MapBuilder:
     NOTE: Use get_instance method to get the instance, DONT use constructor 
     A Builder that builds a Map object with its esseitials stuff such as the map,
     the players on it, the data flow and game flow of it.
-
-    Attributes:
-        __map_json (dictionary): stores the json file map design and the label on it
-
-    Methods:
-        get_instance: use this to get the instance of this class because there can only be 
-        one MapBuilder at the same time
-
-        __load_map: well, load a map and put the data into the __map_json attribute
-        __id_to_map_object: chnage the array content from numbers to map objects such as Wall object Floor object etc
     """
     
     def __init__(self, file_name:str):
         """
         Make a builder
-
-        Attributes:
-            file_name (string): the json file's name (without '.json') in the Assets/Data Folder
-
-        Returns:
-            (MapBuilder) A new MapBuilder Class
         """ 
         self.__map_json = None
         self.__map_width = 0

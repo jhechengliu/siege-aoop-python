@@ -3,7 +3,7 @@ from siege_game.game_objects.map_data_processor import MapDataProcessor
 from siege_game.game_objects.game_data_publisher import GameDataPublisher
 from siege_game.game_objects.game_flow_director import GameFlowDirector
 from collections import deque
-from siege_game.game_objects.pawn.attaker import Attacker
+from catkin_ws.src.example.src.siege_game.game_objects.pawn.attacker import Attacker
 from siege_game.game_objects.pawn.defender import Defender
 from siege_game.game_objects.pawn.shooting_system import ShootingSystem
 from siege_game.game_objects.pawn.walking_system import WalkingSystem
@@ -14,12 +14,12 @@ from siege_game.game_objects.logger import Logger
 class Map:
     logger = Logger('map')
 
-    def __init__(self, map:dict, map_width:int, map_height:int, defender_count:int, attacker_count:int):
+    def __init__(self, map_data:dict, map_width:int, map_height:int, defender_count:int, attacker_count:int):
         """
         Don't use constructor to init this class, use get_instance method instead
         """
         Map.logger.warning("<map.py> Use get_instance class method to obtain the instance")
-        self.__map = map
+        self.__map_data = map_data
         self.__shooting_system = ShootingSystem()
         self.__walking_system = WalkingSystem()
         self.__sight_checker = SightChecker()
@@ -53,7 +53,7 @@ class Map:
         Map.logger.info("--- End of Map Status ---")
 
     def get_map_object(self, location:List[int]):
-        return self.__map[(location[0], location[1])]
+        return self.__map_data[(location[0], location[1])]
     
     def call_shooting_system(self, attacker_operator_index:int, defender_operator_index:int) -> None:
         # use the index to get the operator
@@ -62,50 +62,50 @@ class Map:
         self.__
 
     def getters(self):
-        def get_map(self) -> dict:
-            return self.__map
+        def get___map_data() -> dict:
+            return self.__map_data
         
-        def get_shooting_system(self) -> ShootingSystem:
+        def get_shooting_system() -> ShootingSystem:
             return self.__shooting_system
         
-        def get_walking_system(self) -> WalkingSystem:
+        def get_walking_system() -> WalkingSystem:
             return self.__walking_system
         
-        def get_sight_checker(self) -> SightChecker:
+        def get_sight_checker() -> SightChecker:
             return self.__sight_checker
         
-        def get_map_data_processor(self) -> MapDataProcessor:
+        def get_map_data_processor() -> MapDataProcessor:
             return self.__map_data_processor
         
-        def get_game_data_publisher(self) -> GameDataPublisher:
+        def get_game_data_publisher() -> GameDataPublisher:
             return self.__game_data_publisher
         
-        def get_game_flow_director(self) -> GameFlowDirector:
+        def get_game_flow_director() -> GameFlowDirector:
             return self.__game_flow_director
         
-        def get_max_defender_count(self) -> int:
+        def get_max_defender_count() -> int:
             return self.__max_defender_count
         
-        def get_max_attacker_count(self) -> int:
+        def get_max_attacker_count() -> int:
             return self.__max_attacker_count
         
-        def get_defenders(self) -> deque:
+        def get_defenders() -> deque:
             return self.__defenders
         
-        def get_attackers(self) -> deque:
+        def get_attackers() -> deque:
             return self.__attackers
         
-        def get_deffender(self, index:int) -> Defender:
+        def get_deffender(index:int) -> Defender:
             return self.__defenders[index]
         
-        def get_attacker(self, index:int) -> Attacker:
+        def get_attacker(index:int) -> Attacker:
             return self.__attackers[index]
         
-        def get_map_width(self) -> int:
+        def get_map_width() -> int:
             return self.__map_width
         
-        def get_map_height(self) -> int:
+        def get_map_height() -> int:
             return self.__map_height
         
-        def get_map_object(self, location:List[int]):
+        def get_map_object(location:List[int]):
             return self.__map[(location[0], location[1])]
