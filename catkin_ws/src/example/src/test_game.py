@@ -1,5 +1,6 @@
+#!/usr/bin/env python3
 import pytest
-from src.siege_game.game import Game
+from siege_game.game import Game
 
 class TestGame():
     def setup_method(self):
