@@ -42,7 +42,7 @@ class MapBuilder:
         Returns:
             (None)
         """
-        with open('/home/jeremy/siege-aoop-python/Assets/Data/' + file_name + '.json', 'r') as json_file:
+        with open('/home/rsa/siege-aoop-python/Assets/Data/' + file_name + '.json', 'r') as json_file:
             # Load the JSON content into a Python dictionary
             self.__map_json = json.load(json_file)
             MapBuilder.logger.info("Raw map file loaded")
