@@ -20,7 +20,7 @@ class MapBuilder:
         self.__map_width = 0
         self.__map_height = 0
         self.__load_map(file_name)
-        self.__map = {}
+        self.__map_data = {}
         self.__id_to_map_object(self.__map_json["map"], self.__map_json['mapping'])
 
     def get_map(self) -> map.Map:
@@ -30,7 +30,7 @@ class MapBuilder:
         Returns:
             (Map) The map object which the MapBuilder builds
         """
-        return map.Map(self.__map, self.__map_width, self.__map_height, 5, 5)
+        return map.Map(self.__map_data, self.__map_width, self.__map_height, 5, 5)
 
     def __load_map(self, file_name) -> None:
         """
@@ -51,7 +51,7 @@ class MapBuilder:
             MapBuilder.logger.info(f"Map size loaded {self.__map_width} * {self.__map_height}")
             
 
-    def __id_to_map_object(self, array: List, map: List) -> None:
+    def __id_to_map_object(self, array: List, map_data: List) -> None:
         """
         Change the list from number to map objects by looking at the map dictionary
 
@@ -79,24 +79,24 @@ class MapBuilder:
                 location = (x, y)
                 
                 try:
-                    object_type = map[array[y][x]]
+                    object_type = map_data[array[y][x]]
                 except KeyError:
                     raise NoSuchJsonObjectTypeError()
                 
                 if (object_type == "wall"): 
-                    self.__map[location] = wall.Wall(location)
+                    self.__map_data[location] = wall.Wall(location)
                 elif (object_type == "floor"):
-                    self.__map[location] = floor.Floor(location)
+                    self.__map_data[location] = floor.Floor(location)
                 elif (object_type == "softWall"):
-                    self.__map[location] = soft_wall.SoftWall(location)
+                    self.__map_data[location] = soft_wall.SoftWall(location)
                 elif (object_type == "window"):
-                    self.__map[location] = window.Window(location)
+                    self.__map_data[location] = window.Window(location)
                 elif (object_type == "door"):
-                    self.__map[location] = door.Door(location)
+                    self.__map_data[location] = door.Door(location)
                 elif (object_type == "entrance"):
-                    self.__map[location] = entrance.Entrance(location)
+                    self.__map_data[location] = entrance.Entrance(location)
                 elif (object_type == "barrier"):
-                    self.__map[location] = barrier.Barrier(location)
+                    self.__map_data[location] = barrier.Barrier(location)
                 else:
                     raise NoSuchJsonObjectTypeError()
 
