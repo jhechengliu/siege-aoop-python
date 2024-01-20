@@ -37,5 +37,7 @@ def test_map_data_value():
     assert type(testing_map.get_map_object([0,0])) == barrier.Barrier
     assert type(testing_map.get_map_object([1,1])) == floor.Floor
     assert type(testing_map.get_map_object([2,2])) == wall.Wall
-    assert type(testing_map.get_map_object([3,5])) == entrance.Entrance
+    assert type(testing_map.get_map_object([3,5])) == door.Door
     assert type(testing_map.get_map_object([3,2])) == window.Window
+    assert type(testing_map.get_map_object([4,4])) != soft_wall.SoftWall
+    assert type(testing_map.get_map_object([1,3])) == entrance.Entrance
