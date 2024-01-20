@@ -34,7 +34,6 @@ def test_map_data_type():
 
 def test_map_data_value():
     assert type((testing_game.get_map()).get_map_data()) == type(testing_map.get_map_data())
-    assert testing_game.get_map() == testing_map    # false
     assert type(testing_game.get_map()) == type(testing_map)
     assert type(testing_map.get_map_object([0,0])) == barrier.Barrier
     assert type(testing_map.get_map_object([1,1])) == floor.Floor

@@ -55,60 +55,9 @@ class Map:
     def get_map_object(self, location:List[int]):
         return self.__map_data[(location[0], location[1])]
     
-    def call_shooting_system(self, attacker_operator_index:int, defender_operator_index:int) -> None:
-        # use the index to get the operator
-        attacker_operator = self.__attackers[attacker_operator_index]
-        defender_operator = self.__defenders[defender_operator_index]
-        self.__
-
-    def getters(self):
-        def get_map_data() -> dict:
-            return self.__map_data
-        
-        def get_shooting_system() -> ShootingSystem:
-            return self.__shooting_system
-        
-        def get_walking_system() -> WalkingSystem:
-            return self.__walking_system
-        
-        def get_sight_checker() -> SightChecker:
-            return self.__sight_checker
-        
-        def get_map_data_processor() -> MapDataProcessor:
-            return self.__map_data_processor
-        
-        def get_game_data_publisher() -> GameDataPublisher:
-            return self.__game_data_publisher
-        
-        def get_game_flow_director() -> GameFlowDirector:
-            return self.__game_flow_director
-        
-        def get_max_defender_count() -> int:
-            return self.__max_defender_count
-        
-        def get_max_attacker_count() -> int:
-            return self.__max_attacker_count
-        
-        def get_defenders() -> deque:
-            return self.__defenders
-        
-        def get_attackers() -> deque:
-            return self.__attackers
-        
-        def get_deffender(index:int) -> Defender:
-            return self.__defenders[index]
-        
-        def get_attacker(index:int) -> Attacker:
-            return self.__attackers[index]
-        
-        def get_map_width() -> int:
-            return self.__map_width
-        
-        def get_map_height() -> int:
-            return self.__map_height
-        
-        def get_map_object(location:List[int]):
-            return self.__map[(location[0], location[1])]
+    def call_shooting_system(self, from_operator:list, to_operator:list) -> None:
+        # [A,3], [D,2]
+        pass
         
     def get_map_data(self) -> dict:
         return self.__map_data
