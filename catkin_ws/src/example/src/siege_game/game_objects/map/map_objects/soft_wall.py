@@ -5,6 +5,7 @@ class SoftWall(MapObject):
     def __init__(self, location:Tuple):
         super().__init__(location)
         self.set_is_breakable(True)
+        self.set_is_transparent(False)
         self.__is_broken = False
 
     def get_is_broken(self) -> bool:
@@ -12,6 +13,7 @@ class SoftWall(MapObject):
     
     def break_it(self) -> None:
         self.__is_broken = True
+        self.__is_transparent = True
 
     def __str__(self):
         return f"Soft Wall ({self.get_location()})"

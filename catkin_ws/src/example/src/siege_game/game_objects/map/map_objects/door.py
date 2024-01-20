@@ -4,6 +4,7 @@ class Door(MapObject):
     def __init__(self, location:tuple):
         super().__init__(location)
         self.set_is_breakable(True)
+        self.set_is_tranceparent(False)
         self.__is_broken = False
         self.__is_open = False
 
@@ -16,6 +17,7 @@ class Door(MapObject):
         """
         if (self.__is_broken == False):
             self.__is_open = not self.__is_open
+            self.__is_transparent = not self.__is_transparent
         else:
             self.__is_open = True
 
@@ -28,6 +30,7 @@ class Door(MapObject):
         """
         self.__is_broken = True
         self.__is_open = True
+        self.__is_transparent = True
     
     def __str__(self):
         return f"Door ({self.get_location()})"

@@ -5,6 +5,7 @@ class Barrier(MapObject):
     def __init__(self, location:Tuple):
         super().__init__(location)
         self.set_is_breakable(False)
+        self.set_is_transparent(False)
     
     def __str__(self):
         return f"Barrier ({self.get_location()})"

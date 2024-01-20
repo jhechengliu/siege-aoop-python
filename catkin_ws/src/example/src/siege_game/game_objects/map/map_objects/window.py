@@ -4,6 +4,7 @@ class Window(MapObject):
     def __init__(self, location:tuple):
         super().__init__(location)
         self.set_is_breakable(True)
+        self.set_is_transparent(True)
         self.__is_broken = False
 
     def get_is_broken(self) -> bool:
