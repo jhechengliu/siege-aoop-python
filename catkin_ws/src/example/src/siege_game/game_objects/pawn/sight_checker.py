@@ -16,7 +16,7 @@ class SightChecker:
 
         for i in range(0, 1000):
             point = point[0] + delta_x, point[1] + delta_y
-            if (self.__map_data[point].get_is_transparent() == False):
+            if ((self.__map_data[point]).get_is_transparent() == False):
                 return False
         
         return True
