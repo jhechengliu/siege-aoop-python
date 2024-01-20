@@ -1,4 +1,5 @@
 from typing import List
+import math
 from siege_game.game_objects.logger import Logger
 from siege_game.game_objects.map.map_objects import floor, wall, door, window, soft_wall, entrance, barrier, barrier
 
