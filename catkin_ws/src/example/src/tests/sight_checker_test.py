@@ -1,6 +1,5 @@
 import pytest
 from siege_game.game_objects.pawn.sight_checker import SightChecker
-from siege_game.game_objects.map import Map
 from siege_game.game_objects.map_builder import MapBuilder
 from siege_game.game import Game
 from collections import deque
