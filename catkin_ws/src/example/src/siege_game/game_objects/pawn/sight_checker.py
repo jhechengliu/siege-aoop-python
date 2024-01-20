@@ -3,8 +3,8 @@ from siege_game.game_objects.logger import Logger
 from siege_game.game_objects.map.map_objects import floor, wall, door, window, soft_wall, entrance, barrier, barrier
 
 class SightChecker:
-    def __init__(self, map_data:dict) -> None:
-        self.__map_data = map_data
+    def __init__(self) -> None:
+        self.__map_data = None
 
     def check_sight(self, map_data:dict, location_a:List[float], location_b:List[float]) -> bool:
         self.__map_data = map_data
