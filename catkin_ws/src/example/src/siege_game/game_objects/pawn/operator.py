@@ -4,12 +4,11 @@ from typing import List
 from siege_game.game_objects.pawn.weapon import Weapon, Weapons
 from siege_game.game_objects.pawn.mode import Mode, Modes
 from siege_game.game_objects.pawn.shooting_system import ShootingSystem
-from siege_game.game_objects.pawn.walking_system import WalkingSystem
 
 class Operator():
     """
     """
-    def __init__(self, location: List[float], shooting_system:ShootingSystem, walking_system: WalkingSystem) -> None:
+    def __init__(self, location: List[float], shooting_system:ShootingSystem) -> None:
         self.__hp: int = 100
         self.__weapon_holding:Weapons = Weapons.Guns.RIFLE
         self.__mode_in: Modes = Modes.NORMAL
@@ -17,7 +16,6 @@ class Operator():
         self.__steps: int = 5
         self.__location: List[float] = location
         self.__shooting_system = shooting_system
-        self.__walking_system = walking_system
 
     def get_location(self) -> List[float]:
         return self.__location

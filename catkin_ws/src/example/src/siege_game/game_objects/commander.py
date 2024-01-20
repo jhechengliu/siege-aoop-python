@@ -6,6 +6,10 @@ from siege_game.game_objects.player import Player
 from siege_game.game_objects.logger import Logger
 
 class Commander():
+    """
+    Commander breaks down the command and execute the command.
+    """
+    
     logger = Logger("Commander")
 
     def __init__(self, game):
@@ -17,7 +21,7 @@ class Commander():
             "finishsettingup": FinishSettingUpCommand,
         }
     def execute_command(self, command:str, player:Player) -> str:
-        Commander.logger.info("Executing Command")
+        Commander.logger.info(f"{type(self)}: Executing Command")
         command_list = command.split()
         command_heading = command_list[0]
         command_args = None
@@ -30,14 +34,14 @@ class Commander():
 
         if (command_heading in self.__command_headings.keys()):
             command:MapCommand = self.__command_headings[command_heading](self.__game, command_args, player)
-            if (command.check() == None):
-                command.execute()
-                Commander.logger.debug("Command Successfully Executed")
-                return "success"
-
+            
+            commend_check_result = command.check()
+            if (commend_check_result == None):
+                Commander.logger.debug(f"{type(self)}: Command Successfully Executed")
+                return command.execute()
             else:
-                Commander.logger.error("Command Execute denied")
-                return command.check()
+                Commander.logger.error(f"{type(self)}: Command Execute denied: {commend_check_result}")
+                return commend_check_result
             
         else:
             Commander.logger.warning("Command Heading Not Found. Do you forgot to add headings into the __command_headings?")

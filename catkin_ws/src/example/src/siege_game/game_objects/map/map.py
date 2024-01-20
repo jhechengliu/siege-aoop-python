@@ -6,7 +6,6 @@ from collections import deque
 from siege_game.game_objects.pawn.attacker import Attacker
 from siege_game.game_objects.pawn.defender import Defender
 from siege_game.game_objects.pawn.shooting_system import ShootingSystem
-from siege_game.game_objects.pawn.walking_system import WalkingSystem
 from siege_game.game_objects.pawn.sight_checker import SightChecker
 from typing import List
 from siege_game.game_objects.logger import Logger
@@ -21,7 +20,6 @@ class Map:
         Map.logger.warning("<map.py> Use get_instance class method to obtain the instance")
         self.__map_data = map_data
         self.__shooting_system = ShootingSystem()
-        self.__walking_system = WalkingSystem()
         self.__sight_checker = SightChecker()
         self.__defenders = deque()
         self.__attackers = deque()
@@ -41,10 +39,10 @@ class Map:
             print()
    
     def add_attacker(self, location:List[float]) -> None:
-        self.__attackers.append(Attacker(location, self.__shooting_system, self.__walking_system))
+        self.__attackers.append(Attacker(location, self.__shooting_system))
 
     def add_defender(self, location:List[float]) -> None:
-        self.__defenders.append(Defender(location, self.__shooting_system, self.__walking_system))
+        self.__defenders.append(Defender(location, self.__shooting_system))
 
     def map_status(self):
         Map.logger.info("--- Map Status ---")
@@ -64,9 +62,6 @@ class Map:
     
     def get_shooting_system(self) -> ShootingSystem:
         return self.__shooting_system
-    
-    def get_walking_system(self) -> WalkingSystem:
-        return self.__walking_system
     
     def get_sight_checker(self) -> SightChecker:
         return self.__sight_checker

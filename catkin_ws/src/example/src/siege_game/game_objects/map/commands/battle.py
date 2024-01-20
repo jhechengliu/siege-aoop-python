@@ -12,7 +12,7 @@ class PlayerMovementBattleCommand(MapCommand):
         pass
     
     def check(self) -> bool:
-        if isinstance(self.get_map().get_game_flow_director().get_state(), Battle):
+        if not isinstance(self.get_map().get_game_flow_director().get_state(), Battle):
             PlayerMovementBattleCommand.logger.error("move command can only be used in battle state")
             return "not_in_battle_state_error"
         elif (len(self.get_args()) != 5):
@@ -21,5 +21,18 @@ class PlayerMovementBattleCommand(MapCommand):
         elif (self.get_args()[0] != "A" and self.get_args()[0] != "D"):
             PlayerMovementBattleCommand.logger.error("Player type must be Attacker \"A\" or Defender \"D\"")
             return "identity_type_error"
+
+        return None
+    
+class PlayerCheckSightCommand(MapCommand):
+    logger = Logger("PlayerCheckSightCommand")
+
+    def execute(self) -> None:
+        pass
+
+    def check(self) -> bool:
+        if not isinstance(self.get_map().get_game_flow_director().get_state(), Battle):
+            PlayerCheckSightCommand.logger.error("check_sight command can only be used in battle state")
+            return "not_in_battle_state_error"
 
         return None

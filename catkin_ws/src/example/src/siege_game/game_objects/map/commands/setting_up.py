@@ -19,7 +19,10 @@ class SetOperatorSettingUpCommand(MapCommand):
         elif (operator_type == Identity.DEFEND):
             self.get_map().add_defender([x, y])
 
+        self.logger.info(f"{type(self)}: Operator {operator_type} added at location x={x}, y={y}")
         self.get_map().map_status()
+
+        return "success"
 
     def check(self) -> bool:
         if not isinstance(self.get_map().get_game_flow_director().get_state(), SettingUpState):

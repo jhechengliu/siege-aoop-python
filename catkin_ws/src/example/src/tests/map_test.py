@@ -1,7 +1,7 @@
 import pytest
 from siege_game.game_objects.map_builder import MapBuilder
 from siege_game.game_objects.map.map_objects import floor, wall, door, window, soft_wall, entrance, barrier
-from siege_game.game_objects.pawn import attacker, defender, operator, shooting_system, walking_system, sight_checker, shooting_system, walking_system
+from siege_game.game_objects.pawn import attacker, defender, operator, shooting_system, sight_checker, shooting_system
 from siege_game.game_objects import map_data_processor, game_data_publisher, game_flow_director
 from siege_game.game import Game
 from collections import deque
@@ -19,7 +19,6 @@ def test_map_data_type():
 
     assert type(testing_game.get_map().get_map_data()) == dict
     assert type(testing_game.get_map().get_shooting_system()) == shooting_system.ShootingSystem
-    assert type(testing_game.get_map().get_walking_system()) == walking_system.WalkingSystem
     assert type(testing_game.get_map().get_sight_checker()) == sight_checker.SightChecker
     assert type(testing_game.get_map().get_map_data_processor()) == map_data_processor.MapDataProcessor
     assert type(testing_game.get_map().get_game_data_publisher()) == game_data_publisher.GameDataPublisher

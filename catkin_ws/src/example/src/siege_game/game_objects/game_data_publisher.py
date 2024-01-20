@@ -62,4 +62,3 @@ class GameDataPublisher:
         self.__server_detect_client_B.publish(self.__server_detect_client_B_data)
 
     
-
