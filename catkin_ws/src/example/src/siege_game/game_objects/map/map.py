@@ -3,7 +3,7 @@ from siege_game.game_objects.map_data_processor import MapDataProcessor
 from siege_game.game_objects.game_data_publisher import GameDataPublisher
 from siege_game.game_objects.game_flow_director import GameFlowDirector
 from collections import deque
-from catkin_ws.src.example.src.siege_game.game_objects.pawn.attacker import Attacker
+from siege_game.game_objects.pawn.attacker import Attacker
 from siege_game.game_objects.pawn.defender import Defender
 from siege_game.game_objects.pawn.shooting_system import ShootingSystem
 from siege_game.game_objects.pawn.walking_system import WalkingSystem

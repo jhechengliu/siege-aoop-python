@@ -17,8 +17,8 @@ class MapObject(ABC):
     def get_is_breakable(self) -> Tuple:
         return self.__is_breakable
     
-    def set_is_tranceparent(self, is_transparent:bool) -> None:
+    def set_is_transparent(self, is_transparent:bool) -> None:
         self.__is_transparent = is_transparent
 
-    def get_is_tranceparent(self) -> bool:
+    def get_is_transparent(self) -> bool:
         return self.__is_transparent
