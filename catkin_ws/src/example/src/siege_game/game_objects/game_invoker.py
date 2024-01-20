@@ -113,7 +113,7 @@ class GameInvoker():
             self.__sign_out_process(id, args, 'A', self.publish_client_A_server, self.__client_A_player)
 
         else:
-            self.__game_invoker_client_A_player_execute_command(command)
+            self.__game_invoker_client_A_player_execute_command(id, command)
 
     def client_B_callback(self, message):
         message_str_list = message.data.split()
@@ -166,8 +166,8 @@ class GameInvoker():
 
         else:
             # after signed in, use player to call commander and execute command
-            self.__game_invoker_client_B_player_execute_command(command)
-
+            self.__game_invoker_client_B_player_execute_command(id, command)
+            
     def __client_get_message_info(self, A_or_B:str, id, heading, args):
         self.__logger.info(f"client {A_or_B} callback received message:")
         self.__logger.info("================")
@@ -311,7 +311,7 @@ class GameInvoker():
         self.__logger.info(f"Sending active data to server client B channel: {msg}")
         self.__server_client_B_publisher.publish(self.__server_client_B_message)
 
-    def __game_invoker_client_A_player_execute_command(self, command):
+    def __game_invoker_client_A_player_execute_command(self, id, command):
         if self.__client_A_player == None:
             self.__logger.error("Client A need to sign in in order to use other commands to affect the game")
             self.publish_client_A_server(id, "not_signed_in_error")
@@ -320,9 +320,9 @@ class GameInvoker():
             reply = self.__client_A_player.execute_command(command)
             self.__logger.debug(f"Returns: \"{reply}\" back to client")
             self.publish_client_A_server(id, reply)
-                     
 
-    def __game_invoker_client_B_player_execute_command(self, command):
+
+    def __game_invoker_client_B_player_execute_command(self, id, command):
         if self.__client_B_player == None:
             self.__logger.error("Client B need to sign in in order to use other commands to affect the game")
             self.publish_client_B_server(id, "not_signed_in_error")

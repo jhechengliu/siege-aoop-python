@@ -27,7 +27,7 @@ def test_map_data_type():
     assert type(testing_game.get_map().get_max_attacker_count()) == int
     assert type(testing_game.get_map().get_attackers()) == deque
     assert type(testing_game.get_map().get_defenders()) == deque
-    assert type(testing_game.get_map().get_deffender(0)) == defender.Defender
+    assert type(testing_game.get_map().get_defender(0)) == defender.Defender
     assert type(testing_game.get_map().get_attacker(0)) == attacker.Attacker
 
 def test_map_data_value():

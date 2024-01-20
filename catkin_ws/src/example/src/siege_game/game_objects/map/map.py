@@ -87,7 +87,7 @@ class Map:
     def get_attackers(self) -> deque:
         return self.__attackers
     
-    def get_deffender(self, index:int) -> Defender:
+    def get_defender(self, index:int) -> Defender:
         return self.__defenders[index]
     
     def get_attacker(self, index:int) -> Attacker:

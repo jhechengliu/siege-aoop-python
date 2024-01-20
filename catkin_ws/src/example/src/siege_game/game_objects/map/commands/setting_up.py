@@ -1,3 +1,4 @@
+from typing import Tuple, Callable
 from siege_game.game_objects.map.commands.map_command import MapCommand
 from siege_game.game_objects.states.state import SettingUpState
 from siege_game.game_objects.constants.identity import Identity
@@ -60,9 +61,14 @@ class FinishSettingUpCommand(MapCommand):
     command: finishsettingup => Finish setting up
     """
     logger = Logger("FinishSettingUpCommand")
+    
+    def __init__(self, game, args:Tuple[str], identity:Identity):
+        super().__init__(game, args, identity)
 
     def execute(self) -> None:
+        self.logger.info(f"{type(self)}: Setting up finished")
         self.get_send_player().set_has_finish_setting_up(True)
+        return "success"
 
     def check(self) -> bool:
         if not isinstance(self.get_map().get_game_flow_director().get_state(), SettingUpState):

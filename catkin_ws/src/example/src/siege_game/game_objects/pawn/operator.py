@@ -1,6 +1,6 @@
 import random
 from enum import Enum
-from typing import List
+from typing import List, Tuple
 from siege_game.game_objects.pawn.weapon import Weapon, Weapons
 from siege_game.game_objects.pawn.mode import Mode, Modes
 from siege_game.game_objects.pawn.shooting_system import ShootingSystem
@@ -20,9 +20,8 @@ class Operator():
     def get_location(self) -> List[float]:
         return self.__location
 
-    def shoot(self, target_opeartor) -> None:
-        self.__shooting_system.aim(self)
-        self.__shooting_system.shoot(target_opeartor)
+    def set_location(self, location: List[float]) -> None:
+        self.__location = location
 
 class SpecialActions(Enum):
     SWITCH_MODE: str = 'switch_mode'
