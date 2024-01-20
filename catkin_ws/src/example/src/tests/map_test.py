@@ -16,12 +16,12 @@ for i in range (0, 5):
 
 def test_map_data_type():
 
-    assert type(testing_game.get_map().getters().get_map_data()) == dict
-    assert type(testing_game.get_map().getters().get_shooting_system()) == shooting_system.ShootingSystem
-    assert type(testing_game.get_map().getters().get_walking_system()) == walking_system.WalkingSystem
-    assert type(testing_game.get_map().getters().get_sight_checker()) == sight_checker.SightChecker
-    assert type(testing_game.get_map().getters().get_map_data_processor()) == map_data_processor.MapDataProcessor
-    assert type(testing_game.get_map().getters().get_testing_game_data_publisher()) == game_data_publisher.GameDataPublisher
+    assert type(testing_game.get_map().get_map_data()) == dict
+    assert type(testing_game.get_map().get_shooting_system()) == shooting_system.ShootingSystem
+    assert type(testing_game.get_map().get_walking_system()) == walking_system.WalkingSystem
+    assert type(testing_game.get_map().get_sight_checker()) == sight_checker.SightChecker
+    assert type(testing_game.get_map().get_map_data_processor()) == map_data_processor.MapDataProcessor
+    assert type(testing_game.get_map().get_testing_game_data_publisher()) == game_data_publisher.GameDataPublisher
     assert type(testing_game.get_map().getters().get_game_flow_director()) == game_flow_director.GameFlowDirector
     assert type(testing_game.get_map().getters().get_max_defender_count()) == int
     assert type(testing_game.get_map().getters().get_max_attacker_count()) == int
@@ -32,7 +32,7 @@ def test_map_data_type():
     assert type(testing_game.get_map().getters().get_map_object([0,0])) == type
 
 def test_map_data_value():
-    assert testing_game.get_map().getters().get_map_data() == testing_map.getters().get_map_data()
+    assert testing_game.get_map().get_map_data() == testing_map.get_map_data()
     assert testing_game.get_map() == testing_map
     assert type(testing_game.get_map()) == type(testing_map)
     assert testing_map.get_map_object([0,0]) == "barrier"
