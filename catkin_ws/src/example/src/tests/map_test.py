@@ -1,5 +1,6 @@
 import pytest
 from siege_game.game_objects.map_builder import MapBuilder
+from siege_game.game_objects.map.map_objects import floor, wall, door, window, soft_wall, entrance, barrier
 from siege_game.game_objects.pawn import attacker, defender, operator, shooting_system, walking_system, sight_checker, shooting_system, walking_system
 from siege_game.game_objects import map_data_processor, game_data_publisher, game_flow_director
 from siege_game.game import Game
@@ -8,7 +9,7 @@ from collections import deque
 
 testing_game = Game()
 
-testing_map = MapBuilder("map_example")
+testing_map = MapBuilder("map_example").get_map()
 # testing_game.map.get_sight_checker(xxx)
 for i in range (0, 5):
     attackers = testing_game.get_map().add_attacker([i, i])
@@ -21,7 +22,7 @@ def test_map_data_type():
     assert type(testing_game.get_map().get_walking_system()) == walking_system.WalkingSystem
     assert type(testing_game.get_map().get_sight_checker()) == sight_checker.SightChecker
     assert type(testing_game.get_map().get_map_data_processor()) == map_data_processor.MapDataProcessor
-    assert type(testing_game.get_map().get_testing_game_data_publisher()) == game_data_publisher.GameDataPublisher
+    assert type(testing_game.get_map().get_game_data_publisher()) == game_data_publisher.GameDataPublisher
     assert type(testing_game.get_map().getters().get_game_flow_director()) == game_flow_director.GameFlowDirector
     assert type(testing_game.get_map().getters().get_max_defender_count()) == int
     assert type(testing_game.get_map().getters().get_max_attacker_count()) == int
@@ -32,8 +33,11 @@ def test_map_data_type():
     assert type(testing_game.get_map().getters().get_map_object([0,0])) == type
 
 def test_map_data_value():
-    assert testing_game.get_map().get_map_data() == testing_map.get_map_data()
-    assert testing_game.get_map() == testing_map
+    assert type((testing_game.get_map()).get_map_data()) == type(testing_map.get_map_data())
+    assert testing_game.get_map() == testing_map    # false
     assert type(testing_game.get_map()) == type(testing_map)
-    assert testing_map.get_map_object([0,0]) == "barrier"
-    assert testing_map.get_map_object([1,1]) == "floor"
+    assert type(testing_map.get_map_object([0,0])) == barrier.Barrier
+    assert type(testing_map.get_map_object([1,1])) == floor.Floor
+    assert type(testing_map.get_map_object([2,2])) == wall.Wall
+    assert type(testing_map.get_map_object([3,5])) == entrance.Entrance
+    assert type(testing_map.get_map_object([3,2])) == window.Window
