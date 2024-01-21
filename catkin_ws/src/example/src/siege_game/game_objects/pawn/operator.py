@@ -35,6 +35,15 @@ class Operator():
     
     def is_alive(self) -> bool:
         return self.__alive
+    
+    def die(self) -> None:
+        self.__alive = False
+
+    def set_stemina(self, stemina: float) -> None:
+        self.__stemina = stemina
+
+    def get_stemina(self) -> float:
+        return self.__stemina
 
 class SpecialActions(Enum):
     SWITCH_MODE: str = 'switch_mode'

@@ -17,17 +17,27 @@ class PlayerMovementBattleCommand(MapCommand):
         # calulate if movable, true/false
         if (self.get_send_player().get_identity() == Identity.ATTACK):
             # pointing same address, not copy
-            operator:Operator = self.get_map().get_attacker(self.get_args[0]).set_location([self.get_args[1], self.get_args[2]])
+            operator:Operator = self.get_map().get_attacker(self.get_args[0])
         elif (self.get_send_player().get_identity() == Identity.DEFEND):
-            operator:Operator = self.get_map().get_defender(self.get_args[0]).set_location([self.get_args[1], self.get_args[2]])
+            operator:Operator = self.get_map().get_defender(self.get_args[0])
 
-        # check_sight(map_data:dict, location_a:List[float], location_b:List[float]) -> bool:
-        if (self.get_map().get_sight_checker().check_sight(self.get_map().get_map_data(), operator.get_location(), [self.get_args[1](), self.get_args[2]()]) ):
-            operator.set_location([self.get_args[1], self.get_args[2]])
-            return "success" #success_stenima
-        else:
+        if not (self.get_map().get_sight_checker().check_sight(self.get_map().get_map_data(), operator.get_location(), [self.get_args[1](), self.get_args[2]()]) ):
             return "fail_block"
-            # use dash (-) to connect heading
+            
+        # check if go through window, if so, minus 1 more stemina. if stemina < 0, return fail_stemina (early return)
+        distance:float = self.get_map().get_sight_checker().calculate_distance(operator.get_location(), [self.get_args[1], self.get_args[2]])
+        stemina_cost:float = distance
+        if (self.get_map().get_sight_checker().check_if_go_through_window(self.get_map().get_map_data(), operator.get_location(), [self.get_args[1], self.get_args[2]])):
+            stemina_cost += 1
+        if (operator.get_stemina() - stemina_cost < 0):
+            return "fail_stemina"
+        
+        # check_sight(map_data:dict, location_a:List[float], location_b:List[float]) -> bool:
+        
+        operator.set_location([self.get_args[1], self.get_args[2]])
+        operator.set_stemina(operator.get_stemina() - stemina_cost)
+        PlayerCheckSightCommand.logger.info(f"{type(self)}: {operator.get_identity()}'s {operator.get_index()}th operator moved to {operator.get_location()}, stemina left: {operator.get_stemina()}")
+        return "success" #success_stenima
     
     def check(self) -> bool:
         if not isinstance(self.get_map().get_game_flow_director().get_state(), BattleState):
@@ -171,7 +181,8 @@ class BattleFlowCommander(MapCommand):
             identity = chosen_operator.get_identity()
             msg = f"{BattleFlowCommander.static_counter / 2}_turn"
         
-        BattleFlowCommander.static_counter += 1
+        BattleFlowCommander.static_counter += 1 if BattleFlowCommander.static_counter < len(self.__battle_sequence_list) else 0
+        # tenary operator, if true, return 1, else return 0
 
         if (identity == Identity.ATTACK):
             BattleFlowCommander.logger.info(f"{type(self)}: Attacker's {BattleFlowCommander.static_counter}th operator's turn")
