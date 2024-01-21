@@ -12,10 +12,11 @@ class MapBuilder:
     the players on it, the data flow and game flow of it.
     """
     
-    def __init__(self, file_name:str):
+    def __init__(self, file_name:str, game_id:str):
         """
         Make a builder
         """ 
+        self.__game_id = game_id
         self.__map_json = None
         self.__map_width = 0
         self.__map_height = 0
@@ -31,7 +32,7 @@ class MapBuilder:
             (Map) The map object which the MapBuilder builds
         """
         # map init: self, map_data:dict, map_width:int, map_height:int, defender_count:int, attacker_count:int
-        return map.Map(self.__map_data, self.__map_width, self.__map_height, 2, 2)
+        return map.Map(self.__map_data, self.__map_width, self.__map_height, 2, 2, self.__game_id)
 
     def __load_map(self, file_name) -> None:
         """

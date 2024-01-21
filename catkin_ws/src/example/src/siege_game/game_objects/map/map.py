@@ -13,11 +13,12 @@ from siege_game.game_objects.logger import Logger
 class Map:
     logger = Logger('map')
 
-    def __init__(self, map_data:dict, map_width:int, map_height:int, max_attacker_count:int, max_defender_count:int):
+    def __init__(self, map_data:dict, map_width:int, map_height:int, max_attacker_count:int, max_defender_count:int, game_id:str):
         """
         Don't use constructor to init this class, use get_instance method instead
         """
         Map.logger.warning("<map.py> Use get_instance class method to obtain the instance")
+        self.__game_id = game_id
         self.__map_data = map_data
         self.__shooting_system = ShootingSystem()
         self.__sight_checker = SightChecker()
@@ -26,7 +27,7 @@ class Map:
         self.__map_width = map_width
         self.__map_height = map_height
         self.__map_data_processor = MapDataProcessor()
-        self.__game_data_publisher = GameDataPublisher()
+        self.__game_data_publisher = GameDataPublisher(self.__game_id)
         self.__game_flow_director = GameFlowDirector()
         self.__max_defender_count = max_defender_count
         self.__max_attacker_count = max_attacker_count

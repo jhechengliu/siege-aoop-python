@@ -11,24 +11,26 @@ class Game():
     instance = None
     logger = Logger("Game")
 
-    def __init__(self):
+    def __init__(self, game_id:str):
         self.__map_name = "map_example"
         self.__commander = None
         self.__map = None
-        builder = MapBuilder(self.__map_name)
+        self.__game_id = game_id
+        builder = MapBuilder(self.__map_name, self.__game_id)
         self.__map = builder.get_map()
         self.__commander = Commander(self)
         Game.logger.info(f"Command set: {self.__commander}")
 
   
-        
+    def get_instance():
+        if Game.instance == None:
+            Game.instance = Game()
+        return Game.instance
 
     def get_commander(self):
         return self.__commander
     
     def get_map(self):
         return self.__map
-
-
 
 

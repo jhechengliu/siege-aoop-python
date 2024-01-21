@@ -23,7 +23,7 @@ class ServerDetectClientAListener(rospy.SubscribeListener):
 class GameDataPublisher:
     logger = Logger('GameDataPublisher')
 
-    def __init__(self):
+    def __init__(self, game_id:str):
         GameDataPublisher.logger.warning("<game_data_publisher.py> Use get_instance class method to obtain the instance")
         self.__server_signin_publisher = rospy.Publisher('/server_signin', String, queue_size=10)
         self.__server_signin_message = String()
@@ -36,8 +36,8 @@ class GameDataPublisher:
         self.__server_detect_client_B_data = String()
         self.__server_detect_client_B_data.data = "safe"
 
-        self.__server_client_A_publisher = rospy.Publisher('/server_client_A_' + self.__game_id, String, queue_size=10)
-        self.__server_client_B_publisher = rospy.Publisher('/server_client_B_' + self.__game_id, String, queue_size=10)
+        self.__server_client_A_publisher = rospy.Publisher('/server_client_A_' + game_id, String, queue_size=10)
+        self.__server_client_B_publisher = rospy.Publisher('/server_client_B_' + game_id, String, queue_size=10)
         self.__server_client_A_message = String()
         self.__server_client_B_message = String()
     
