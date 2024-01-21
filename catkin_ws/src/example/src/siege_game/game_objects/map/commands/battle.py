@@ -251,7 +251,7 @@ class ReadyBattleBattleCommand(MapCommand):
             self.get_map().set_defender_ready_battle(True)
         
         if (self.get_map().get_attacker_ready_battle() and self.get_map().get_defender_ready_battle()):
-            if (self.get_game().get_client_A_player().get_identity() == Identity.ATTACK):
+            if (self.get_game().get_client_A_player() != None and self.get_game().get_client_A_player().get_identity() == Identity.ATTACK):
                 self.get_map().get_game_data_publisher().publish_client_A_server_actively("turn_0")
             else:
                 self.get_map().get_game_data_publisher().publish_client_B_server_actively("turn_0")
