@@ -11,9 +11,8 @@ class Game():
     instance = None
     logger = Logger("Game")
 
-    def __init__(self, game_id:str, game):
-        self.__client_A_player = game.get_client_A_player()
-        self.__client_B_player = game.get_client_B_player()
+    def __init__(self, game_id:str, game_invoker):
+        self.__game_invoker = game_invoker
         self.__map_name = "map_example"
         self.__commander = None
         self.__map = None
@@ -24,10 +23,10 @@ class Game():
         Game.logger.info(f"Command set: {self.__commander}")
 
     def get_client_A_player(self):
-        return self.__client_A_player
+        return self.__game_invoker.get_client_A_player()
 
     def get_client_B_player(self):
-        return self.__client_B_player
+        return self.__game_invoker.get_client_B_player()
   
     def get_instance():
         if Game.instance == None:
