@@ -247,6 +247,8 @@ class GameInvoker():
                             publish_function(id, f"success_{opponent_name}_{opponent_identity}")
                             opponent_active_publish_function(get_str_identity(identity, args[1]))
                         self.__logger.debug(f"Success! Client {A_or_B} Player: {self.__client_A_player}")
+                        self.__check_players_and_send_start_setting()
+
 
                     elif (A_or_B == 'B'):
                         self.__logger.info(f"Checking Opponent Client A player name and identity {self.__client_A_player}")
