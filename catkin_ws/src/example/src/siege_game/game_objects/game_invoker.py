@@ -41,18 +41,6 @@ class GameInvoker():
         self.__logger.debug(f"Client B Connected: {self.__client_B_connected}")
         self.__logger.debug(f"-------------------------------------------")
 
-    def run(self):
-        if (self.get_client_A_player() != None and self.get_client_B_player() != None):
-            if self.get_client_A_player().get_ready_battle() and self.get_client_B_player().get_ready_battle():
-                self.get_client_A_player().set_ready_battle(False)
-                self.get_client_B_player().set_ready_battle(False)
-                if (self.get_client_A_player().get_identity() == Identity.ATTACK):
-                    self.__logger.debug(f"{type(self)}: in run() call publish_client_A_server_actively(\"turn_0\")")
-                    self.publish_client_A_server_actively("turn_0")
-                else:
-                    self.__logger.debug(f"{type(self)}: in run() call publish_client_B_server_actively(\"turn_0\")")
-                    self.publish_client_B_server_actively("turn_0")
-
     def get_client_A_player(self):
         return self.__client_A_player
     

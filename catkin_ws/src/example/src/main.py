@@ -26,17 +26,13 @@ if __name__ == "__main__":
 
         thread1 = Thread(target=invoker.run, args=())
         thread2 = Thread(target=invoker.run_terminal, args=())
-        thread3 = Thread(target=invoker.always_run, args=())
         thread1.start()
         thread2.start()
-        thread3.start()
 
         thread1.join()
         thread2.join()
-        thread3.join()
 
         del invoker
         del thread1
         del thread2
-        del thread3
         del logger
