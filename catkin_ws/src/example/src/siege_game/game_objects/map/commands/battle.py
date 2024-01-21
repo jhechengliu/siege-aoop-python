@@ -136,13 +136,15 @@ class MapUpdateBattleCommand(MapCommand):
             map_operator_data["location"] = operator.get_location()
             map_operator_data["identity"] = "attacker"
             operators.append(map_operator_data)
+        MapUpdateBattleCommand.logger.debug(f"{type(self)}: Attacker's data: {operators}")
         for i in range (0, len(self.get_map().get_defenders())):
             operator = self.get_map().get_defender(i)
             map_operator_data["index"] = i
             map_operator_data["location"] = operator.get_location()
             map_operator_data["identity"] = "defender"
             operators.append(map_operator_data)
-        
+        MapUpdateBattleCommand.logger.debug(f"{type(self)}: Defender's data: {operators}")
+
         msg:dict = {"player": operators}
         msg = json.dumps(msg).replace(" ", "")
         MapUpdateBattleCommand.logger.info(f"{type(self)}: JSON formmated string to be sent: {msg}")
@@ -173,7 +175,7 @@ class BattleFlowBattleCommander(MapCommand):
     static_counter:int = 0
 
     def execute(self) -> str:
-        self.__battle_sequence_list = self.get_map().get_game_flow_director().create_sequence_list ( self.get_map().get_attackers(), self.get_map().get_defenders() ) # list of Operator
+        self.__battle_sequence_list = self.get_map().get_game_flow_director().create_battle_sequence_list ( self.get_map().get_attackers(), self.get_map().get_defenders() ) # list of Operator
         chosen_operator:Operator = self.__battle_sequence_list[BattleFlowBattleCommander.static_counter]
         identity:Identity = chosen_operator.get_identity() # do determine which publisher to call
         msg:str = ""
