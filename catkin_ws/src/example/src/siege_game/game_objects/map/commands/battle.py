@@ -125,7 +125,7 @@ class MapUpdateBattleCommand(MapCommand):
     """
     command: h:mapupdate, no args => send map data to client
     """
-    logger = Logger("MapUpdateCommand")
+    logger = Logger("MapUpdateBattleCommand")
 
     def execute(self) -> str:
         operators:List = []
@@ -139,6 +139,7 @@ class MapUpdateBattleCommand(MapCommand):
         MapUpdateBattleCommand.logger.debug(f"{type(self)}: Attacker's data: {operators}")
         for i in range (0, len(self.get_map().get_defenders())):
             operator = self.get_map().get_defender(i)
+            map_operator_data:dict = {}
             map_operator_data["index"] = i
             map_operator_data["location"] = operator.get_location()
             map_operator_data["identity"] = "defender"
