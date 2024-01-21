@@ -263,8 +263,5 @@ class ReadyBattleBattleCommand(MapCommand):
         if not isinstance(self.get_map().get_game_flow_director().get_state(), BattleState):
             ReadyBattleBattleCommand.logger.error(f"{type(self)}: readybattle command can only be used in setting up state")
             return "not_in_setting_up_state_error"
-        elif (len(self.get_args()) != 1):
-            ReadyBattleBattleCommand.logger.error(f"{type(self)}: readybattle has one args")
-            return "args_len_error"
         
         return None
