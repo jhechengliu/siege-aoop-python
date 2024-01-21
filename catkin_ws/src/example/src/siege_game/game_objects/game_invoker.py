@@ -160,6 +160,7 @@ class GameInvoker():
 
         if heading == "signin":
             self.__sign_in_process(id, args, 'B', self.publish_client_B_server, self.publish_client_A_server_actively, self.__client_B_player)
+            self.__check_players_and_send_start_setting()
         elif heading == "signout":
             self.__sign_out_process(id, args, 'B', self.publish_client_B_server, self.__client_B_player)
 
@@ -330,7 +331,7 @@ class GameInvoker():
             self.__logger.debug(f"Returns: \"{reply}\" back to client")
             self.publish_client_B_server(id, reply)
 
-    def check_players_and_send_start_setting(self):
+    def __check_players_and_send_start_setting(self):
         if self.__client_A_player is not None and self.__client_B_player is not None:
             rospy.sleep(5)
             self.publish_client_A_server("start_setting")
