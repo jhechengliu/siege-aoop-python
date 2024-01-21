@@ -44,8 +44,11 @@ class Invoker():
             # self.__map.get_game_data_publisher().publishDetectClientA()
             # self.__map.get_game_data_publisher().publishDetectClientB()
             # rospy.sleep(1.)
-            for game_invoker in self.__game_invokers.values():
-                game_invoker.run()
+            try:
+                for game_invoker in self.__game_invokers.values():
+                    game_invoker.run()
+            except RuntimeError:
+                Invoker.logger.error("Invoker run(), RuntimeError")
             pass
 
 

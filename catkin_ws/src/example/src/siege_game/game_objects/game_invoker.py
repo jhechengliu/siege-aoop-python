@@ -47,11 +47,11 @@ class GameInvoker():
                 self.get_client_A_player().set_ready_battle(False)
                 self.get_client_B_player().set_ready_battle(False)
                 if (self.get_client_A_player().get_identity() == Identity.ATTACK):
-                    self.__logger.debug(f"{type(self)}: in run() call publish_client_A_server_actively(\"0_turn\")")
-                    self.publish_client_A_server_actively("0_turn")
+                    self.__logger.debug(f"{type(self)}: in run() call publish_client_A_server_actively(\"turn_0\")")
+                    self.publish_client_A_server_actively("turn_0")
                 else:
-                    self.__logger.debug(f"{type(self)}: in run() call publish_client_B_server_actively(\"0_turn\")")
-                    self.publish_client_B_server_actively("0_turn")
+                    self.__logger.debug(f"{type(self)}: in run() call publish_client_B_server_actively(\"turn_0\")")
+                    self.publish_client_B_server_actively("turn_0")
 
     def get_client_A_player(self):
         return self.__client_A_player

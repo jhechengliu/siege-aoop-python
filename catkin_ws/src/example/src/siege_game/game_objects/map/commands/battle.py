@@ -185,7 +185,7 @@ class BattleFlowBattleCommander(MapCommand):
             BattleFlowBattleCommander.static_counter += 1
             chosen_operator = self.__battle_sequence_list[BattleFlowBattleCommander.static_counter]
             identity = chosen_operator.get_identity()
-            msg = f"{str(BattleFlowBattleCommander.static_counter // 2)}_turn"
+            msg = f"turn_{str(BattleFlowBattleCommander.static_counter // 2)}"
         
         BattleFlowBattleCommander.static_counter += 1 if BattleFlowBattleCommander.static_counter < len(self.__battle_sequence_list) else 0
         # tenary operator, if true, return 1, else return 0
