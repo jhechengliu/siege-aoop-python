@@ -17,7 +17,7 @@ class SetOperatorSettingUpCommand(MapCommand):
 
         if (operator_type == Identity.ATTACK):
             self.get_map().add_attacker([x, y])
-            coda = str(self.get_map().get_max_attacker_count - len(self.get_map().get_attackers()))
+            coda = str(self.get_map().get_max_attacker_count() - len(self.get_map().get_attackers()))
         elif (operator_type == Identity.DEFEND):
             self.get_map().add_defender([x, y])
             coda = str(self.get_map().get_max_defender_count() - len(self.get_map().get_defenders()))

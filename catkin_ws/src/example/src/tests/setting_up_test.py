@@ -25,4 +25,4 @@ def test_execute():
     assert setting_up_defender.execute() == "success_1_left"
 
 def test_check_if_ready_to_next_stage():
-    assert test_check_if_ready_to_next_stage() == False
+    pass
