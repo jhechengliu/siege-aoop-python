@@ -30,7 +30,8 @@ class MapBuilder:
         Returns:
             (Map) The map object which the MapBuilder builds
         """
-        return map.Map(self.__map_data, self.__map_width, self.__map_height, 5, 5)
+        # map init: self, map_data:dict, map_width:int, map_height:int, defender_count:int, attacker_count:int
+        return map.Map(self.__map_data, self.__map_width, self.__map_height, 2, 2)
 
     def __load_map(self, file_name) -> None:
         """

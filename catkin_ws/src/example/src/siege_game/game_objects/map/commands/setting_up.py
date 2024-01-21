@@ -21,9 +21,15 @@ class SetOperatorSettingUpCommand(MapCommand):
             self.get_map().add_defender([x, y])
 
         self.logger.info(f"{type(self)}: Operator {operator_type} added at location x={x}, y={y}")
-        self.get_map().map_status()
+        # self.get_map().map_status()
+        self.check_if_ready_to_next_stage()
 
         return f"success" #success_n_left
+    
+    def check_if_ready_to_next_stage(self) -> bool:
+        if (len(self.get_map().get_attackers()) == self.get_map().get_max_attacker_count() and len(self.get_map().get_defenders()) == self.get_map().get_max_defender_count()):
+            self.get_map().get_game_data_publisher().publish_client_A_server_actively("start_battle")
+            self.get_map().get_game_data_publisher().publish_client_B_server_actively("start_battle")
 
     def check(self) -> bool:
         if not isinstance(self.get_map().get_game_flow_director().get_state(), SettingUpState):
@@ -55,7 +61,10 @@ class SetOperatorSettingUpCommand(MapCommand):
             return "y_not_number_error"
         
         return None
-        
+
+# if aftr setoperator, 0 left, check if ready to next stage/scene. use setoperatorsettingupcommander
+# call game.new def, check game, use gamedatapublisher to send
+
 class FinishSettingUpCommand(MapCommand):
     """
     command: finishsettingup => Finish setting up
@@ -86,4 +95,4 @@ class FinishSettingUpCommand(MapCommand):
         else:
             return None
 
-# class to send map data to client actively via GameDataPublisher in game.map        
+        

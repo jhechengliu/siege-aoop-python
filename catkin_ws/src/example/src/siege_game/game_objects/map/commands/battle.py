@@ -42,7 +42,7 @@ class PlayerMovementBattleCommand(MapCommand):
 class PlayerCheckSightCommand(MapCommand):
     """
     will be call when: client selected an operator, use this operator as reference, and check if other operators are in sight
-    command: check_sight 3 => check if Attacker's 3rd operator can see any defender's operator
+    command: checksight 3 => check if Attacker's 3rd operator can see any defender's operator
     """
     logger = Logger("PlayerCheckSightCommand")
 
@@ -57,14 +57,16 @@ class PlayerCheckSightCommand(MapCommand):
             opponents:deque = self.get_map().get_attackers()
 
         # check_sight(map_data:dict, location_a:List[float], location_b:List[float]) -> bool:
-        msg = {}
-        for i, opponent in enumerate(opponents):
-            if (self.get_map().get_sight_checker().check_sight(self.get_map().get_map_data(), operator.get_location(), opponent.get_location())):
-                msg[str(i)] = 1
-            else:
-                msg[str(i)] = 0
+        # msg = {}
+        # for i, opponent in enumerate(opponents):
+        #     if (self.get_map().get_sight_checker().check_sight(self.get_map().get_map_data(), operator.get_location(), opponent.get_location())):
+        #         msg[str(i)] = 1
+        #     else:
+        #         msg[str(i)] = 0
 
-        return "success_" + json.dumps(msg) #convert from dictionary to json-formatted string
+        # return "success_" + json.dumps(msg) #convert from dictionary to json-formatted string
+            # success_{json}
+            # {"in_sight": [0,1]}
 
 
     def check(self) -> bool:
