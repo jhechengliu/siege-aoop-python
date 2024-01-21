@@ -74,7 +74,7 @@ class PlayerCheckSightBattleCommand(MapCommand):
                 in_sight_list.append(i)
 
         msg:dict = {"in_sight": in_sight_list}
-        return "success_" + json.dumps(msg) #convert from dictionary to json-formatted string
+        return "success_" + json.dumps(msg).strip() #convert from dictionary to json-formatted string
 
 
     def check(self) -> bool:
@@ -144,7 +144,7 @@ class MapUpdateBattleCommand(MapCommand):
             operators.append(map_operator_data)
         
         msg:dict = {"player": operators}
-        msg = json.dumps(msg)
+        msg = json.dumps(msg).strip()
         MapUpdateBattleCommand.logger.info(f"{type(self)}: JSON formmated string to be sent: {msg}")
         return f"success_" + msg
 
