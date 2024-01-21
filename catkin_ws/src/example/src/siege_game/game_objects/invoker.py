@@ -38,7 +38,11 @@ class Invoker():
     def del_game(self, game_id):
         del self.__game_invokers[game_id]
         Invoker.logger.debug(f"del Game Invoker id: {game_id}")
-  
+        
+    def always_run(self):
+        while (not rospy.is_shutdown()) and (not self.__force_close):
+            pass
+
     def run(self):
         while (not rospy.is_shutdown()) and (not self.__force_close):
             # self.__map.get_game_data_publisher().publishDetectClientA()
