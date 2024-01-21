@@ -37,6 +37,3 @@ if __name__ == "__main__":
         del thread1
         del thread2
         del logger
-
-    
-

@@ -1,16 +1,15 @@
 from siege_game.game_objects.pawn.mode import Modes
+from siege_game.game_objects.pawn.operator import Operator
 import random
 
 class ShootingSystem:
-    """
-    
-    """
     
     def __init__(self) -> None:
-        """
-        Initialize a new shooting system.
-        """
-        self.__accuracy: float = 1.0
-        self.__damage: float = 1.0
+        self.__from_operator = None
+        self.__to_operator = None
 
-    
+    def shoot(self, from_operator:Operator, to_operator:Operator) -> None:
+        self.__from_operator = from_operator
+        self.__to_operator = to_operator
+        # cal damage
+        pass

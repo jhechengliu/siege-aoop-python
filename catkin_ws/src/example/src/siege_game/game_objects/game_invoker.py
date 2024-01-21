@@ -9,6 +9,7 @@ from siege_game.game_objects.player import Player
 from siege_game.game_objects.constants.identity import Identity
 from typing import List, Callable
 from siege_game.game import Game
+import pytest
 
 class GameInvoker():
 
@@ -112,18 +113,11 @@ class GameInvoker():
             self.__sign_out_process(id, args, 'A', self.publish_client_A_server, self.__client_A_player)
 
         else:
-            if self.__client_A_player == None:
-                self.__logger.error("Client A need to sign in in order to use other commands to affect the game")
-                self.publish_client_A_server(id, "not_signed_in_error")
-                self.__logger.debug(f"Returns: \"not_signed_in_error\" back to client")
-            else:
-                reply = self.__client_A_player.execute_command(command)
-                self.__logger.debug(f"Returns: \"{reply}\" back to client")
-                self.publish_client_A_server(id, reply)
+            self.__game_invoker_client_A_player_execute_command(id, command)
 
     def client_B_callback(self, message):
         message_str_list = message.data.split()
-        command = " ".join(message_str_list[1:])
+        command = " ".join(message_str_list[1:])    #connect back, space between; exclude id
         id = None
         heading = None
         args = None
@@ -171,15 +165,9 @@ class GameInvoker():
             self.__sign_out_process(id, args, 'B', self.publish_client_B_server, self.__client_B_player)
 
         else:
-            if self.__client_B_player == None:
-                self.__logger.error("Client B need to sign in in order to use other commands to affect the game")
-                self.publish_client_B_server(id, "not_signed_in_error")
-                self.__logger.debug(f"Returns: \"not_signed_in_error\" back to client")
-            else:
-                reply = self.__client_B_player.execute_command(command)
-                self.__logger.debug(f"Returns: \"{reply}\" back to client")
-                self.publish_client_B_server(id, reply)
-
+            # after signed in, use player to call commander and execute command
+            self.__game_invoker_client_B_player_execute_command(id, command)
+            
     def __client_get_message_info(self, A_or_B:str, id, heading, args):
         self.__logger.info(f"client {A_or_B} callback received message:")
         self.__logger.info("================")
@@ -278,10 +266,7 @@ class GameInvoker():
                             publish_function(id, f"success_{opponent_name}_{opponent_identity}")
                             opponent_active_publish_function(get_str_identity(identity, args[1]))
                         self.__logger.debug(f"Success! Client {A_or_B} Player: {self.__client_B_player}")
-
-                    
-
-                    
+          
         else:
             self.__logger.error("signin commands args not equal to 2")
             publish_function(id, "args_len_error")
@@ -325,4 +310,24 @@ class GameInvoker():
         self.__server_client_B_message.data = msg
         self.__logger.info(f"Sending active data to server client B channel: {msg}")
         self.__server_client_B_publisher.publish(self.__server_client_B_message)
-            
+
+    def __game_invoker_client_A_player_execute_command(self, id, command):
+        if self.__client_A_player == None:
+            self.__logger.error("Client A need to sign in in order to use other commands to affect the game")
+            self.publish_client_A_server(id, "not_signed_in_error")
+            self.__logger.debug(f"Returns: \"not_signed_in_error\" back to client")
+        else:
+            reply = self.__client_A_player.execute_command(command)
+            self.__logger.debug(f"Returns: \"{reply}\" back to client")
+            self.publish_client_A_server(id, reply)
+
+    def __game_invoker_client_B_player_execute_command(self, id, command):
+        if self.__client_B_player == None:
+            self.__logger.error("Client B need to sign in in order to use other commands to affect the game")
+            self.publish_client_B_server(id, "not_signed_in_error")
+            self.__logger.debug(f"Returns: \"not_signed_in_error\" back to client")
+        else:
+            reply = self.__client_B_player.execute_command(command)
+            self.__logger.debug(f"Returns: \"{reply}\" back to client")
+            self.publish_client_B_server(id, reply)
+

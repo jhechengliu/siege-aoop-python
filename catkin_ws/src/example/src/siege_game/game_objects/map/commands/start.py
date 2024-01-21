@@ -16,6 +16,7 @@ class StartGameMapCommand(MapCommand):
     
     def execute(self) -> None:
         self.get_map().get_game_flow_director().next_state()
+        return "success"
     
     def check(self) -> bool:
         if not isinstance(self.get_map().get_game_flow_director().get_state(), StartState):

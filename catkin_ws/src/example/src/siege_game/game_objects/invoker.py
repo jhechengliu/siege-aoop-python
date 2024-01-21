@@ -91,11 +91,6 @@ class Invoker():
                 else:
                     Invoker.logger.error("reboot args must be 0")
 
-
-
-
-
-
     def connect_callback(self, message):
         message_str:str = message.data
         Invoker.logger.info(f"connect callback received: {message_str}")

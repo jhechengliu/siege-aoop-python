@@ -1,3 +1,4 @@
+from typing import Tuple, Callable
 from siege_game.game_objects.map.commands.map_command import MapCommand
 from siege_game.game_objects.states.state import SettingUpState
 from siege_game.game_objects.constants.identity import Identity
@@ -19,7 +20,10 @@ class SetOperatorSettingUpCommand(MapCommand):
         elif (operator_type == Identity.DEFEND):
             self.get_map().add_defender([x, y])
 
+        self.logger.info(f"{type(self)}: Operator {operator_type} added at location x={x}, y={y}")
         self.get_map().map_status()
+
+        return f"success" #success_n_left
 
     def check(self) -> bool:
         if not isinstance(self.get_map().get_game_flow_director().get_state(), SettingUpState):
@@ -57,9 +61,14 @@ class FinishSettingUpCommand(MapCommand):
     command: finishsettingup => Finish setting up
     """
     logger = Logger("FinishSettingUpCommand")
+    
+    def __init__(self, game, args:Tuple[str], identity:Identity):
+        super().__init__(game, args, identity)
 
     def execute(self) -> None:
+        self.logger.info(f"{type(self)}: Setting up finished")
         self.get_send_player().set_has_finish_setting_up(True)
+        return "success"
 
     def check(self) -> bool:
         if not isinstance(self.get_map().get_game_flow_director().get_state(), SettingUpState):
@@ -77,4 +86,4 @@ class FinishSettingUpCommand(MapCommand):
         else:
             return None
 
-        
+# class to send map data to client actively via GameDataPublisher in game.map        

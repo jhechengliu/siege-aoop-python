@@ -7,8 +7,6 @@ from siege_game.game_objects.logger import Logger
 from siege_game.game_objects.commander import Commander
 import time
 
-
-
 class Game():
     instance = None
     logger = Logger("Game")
