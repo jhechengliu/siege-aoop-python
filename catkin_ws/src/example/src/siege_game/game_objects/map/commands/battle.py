@@ -185,16 +185,16 @@ class BattleFlowBattleCommander(MapCommand):
             BattleFlowBattleCommander.static_counter += 1
             chosen_operator = self.__battle_sequence_list[BattleFlowBattleCommander.static_counter]
             identity = chosen_operator.get_identity()
-            msg = f"{BattleFlowBattleCommander.static_counter / 2}_turn"
+            msg = f"{str(BattleFlowBattleCommander.static_counter / 2)}_turn"
         
         BattleFlowBattleCommander.static_counter += 1 if BattleFlowBattleCommander.static_counter < len(self.__battle_sequence_list) else 0
         # tenary operator, if true, return 1, else return 0
 
         if (identity == Identity.ATTACK):
-            BattleFlowBattleCommander.logger.info(f"{type(self)}: Attacker's {BattleFlowBattleCommander.static_counter}th operator's turn")
+            BattleFlowBattleCommander.logger.info(f"{type(self)}: Attacker's {BattleFlowBattleCommander.static_counter-1}th operator's turn")
             self.get_map().get_game_data_publisher().publish_client_A_server_actively(msg)
         elif (identity == Identity.DEFEND):
-            BattleFlowBattleCommander.logger.info(f"{type(self)}: Defender's {BattleFlowBattleCommander.static_counter}th operator's turn")
+            BattleFlowBattleCommander.logger.info(f"{type(self)}: Defender's {BattleFlowBattleCommander.static_counter-1}th operator's turn")
             self.get_map().get_game_data_publisher().publish_client_B_server_actively(msg)
 
         return "success" #success reply incoming message w/ id; use acitve publisher to send who's round to the client
