@@ -23,6 +23,11 @@ class Game():
         self.__commander = Commander(self)
         Game.logger.info(f"Command set: {self.__commander}")
 
+    def get_client_A_player(self):
+        return self.__client_A_player
+
+    def get_client_B_player(self):
+        return self.__client_B_player
   
     def get_instance():
         if Game.instance == None:
