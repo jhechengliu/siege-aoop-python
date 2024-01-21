@@ -6,7 +6,7 @@ from siege_game.game_objects.logger import Logger
 
 class SetOperatorSettingUpCommand(MapCommand):
     """
-    command: setoperator 1.5 2.5 => Set an operator of yours at location x=1.5, y=2.5
+    command: h:setoperator, args:1.5 2.5 => Set an operator of yours at location x=1.5, y=2.5
     """
     logger = Logger("SetOperatorSettingUpCommand")
 
@@ -32,6 +32,9 @@ class SetOperatorSettingUpCommand(MapCommand):
             self.get_map().get_game_data_publisher().publish_client_A_server_actively("start_battle")
             self.get_map().get_game_data_publisher().publish_client_B_server_actively("start_battle")
             self.get_map().get_game_flow_director().next_state() # change state to battle
+            return True
+        else:
+            return False
 
     def check(self) -> bool:
         if not isinstance(self.get_map().get_game_flow_director().get_state(), SettingUpState):
