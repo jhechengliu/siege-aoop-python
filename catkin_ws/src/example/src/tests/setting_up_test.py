@@ -12,8 +12,8 @@ game.get_map().__max_defender_count = 5
 setting_up_attacker = SetOperatorSettingUpCommand(game, ("1.2", "3.4"), Player("testplayer", identity.ATTACK, Commander(game)))
 setting_up_defender = SetOperatorSettingUpCommand(game, ("1.2", "3.4"), Player("testplayer", identity.DEFEND, Commander(game)))
 for i in range (0, 3):
-    game.get_map().add_attacker(i, i)
-    game.get_map().add_defender(i, i)
+    setting_up_attacker.get_map().add_attacker([i, i])
+    setting_up_defender.get_map().add_defender([i, i])
     # now have 3 attackers and 3 defenders
 
 def test_check():
