@@ -86,4 +86,4 @@ class FinishSettingUpCommand(MapCommand):
         else:
             return None
 
-        
+# class to send map data to client actively via GameDataPublisher in game.map        
