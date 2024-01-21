@@ -332,8 +332,7 @@ class GameInvoker():
             self.publish_client_B_server(id, reply)
 
     def __check_players_and_send_start_setting(self):
-        if self.__client_A_player is not None and self.__client_B_player is not None:
-            rospy.sleep(5)
+        if self.__client_A_player != None and self.__client_B_player != None:
             self.publish_client_A_server_actively("start_setting")
             self.publish_client_B_server_actively("start_setting")
             self.__game.get_map().get_game_flow_director().next_state()
