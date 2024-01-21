@@ -35,6 +35,11 @@ class GameDataPublisher:
         self.__server_detect_client_B = rospy.Publisher('/server_detect_client_B', String, queue_size=50, subscriber_listener=ServerDetectClientAListener(self))
         self.__server_detect_client_B_data = String()
         self.__server_detect_client_B_data.data = "safe"
+
+        self.__server_client_A_publisher = rospy.Publisher('/server_client_A_' + self.__game_id, String, queue_size=10)
+        self.__server_client_B_publisher = rospy.Publisher('/server_client_B_' + self.__game_id, String, queue_size=10)
+        self.__server_client_A_message = String()
+        self.__server_client_B_message = String()
     
     def publish_server_signin(self, id, msg):
         full_msg = f"{id} {msg}"
@@ -57,6 +62,16 @@ class GameDataPublisher:
 
     def publishDetectClientB(self):
         self.__server_detect_client_B.publish(self.__server_detect_client_B_data)
+
+    def publish_client_A_server_actively(self, msg):
+        self.__server_client_A_message.data = msg
+        self.__logger.info(f"Sending active data to server client A channel: {msg}")
+        self.__server_client_A_publisher.publish(self.__server_client_A_message)
+
+    def publish_client_B_server_actively(self, msg):
+        self.__server_client_B_message.data = msg
+        self.__logger.info(f"Sending active data to server client B channel: {msg}")
+        self.__server_client_B_publisher.publish(self.__server_client_B_message)
 
     
 
