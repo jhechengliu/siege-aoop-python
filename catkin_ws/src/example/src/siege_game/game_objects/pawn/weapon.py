@@ -18,12 +18,26 @@ class Weapon:
         self.__damage = damage
         self.__required_hands = __required_hands
 
-class Weapons():
-    """
-    """
-    class Guns(Enum):
-        RIFLE: Weapon = Weapon("rifle", 20, 2)
-        PISTOL: Weapon = Weapon("pistol", 10, 1)
+    def get_name(self) -> str:
+        return self.__name
+    
+    def get_damage(self) -> int:
+        return self.__damage
+    
+    def get_required_hands(self) -> int:
+        return self.__required_hands
 
-    class Explosive(Enum):
-        GRENADE: Weapon = Weapon("grenade", 70, 1)
+class Weapons(Enum):
+    RIFLE: Weapon = Weapon("rifle", 20, 2)
+    PISTOL: Weapon = Weapon("pistol", 10, 1)
+    GRENADE: Weapon = Weapon("grenade", 70, 1)
+
+    def get_name(self) -> str:
+        return self.value.get_name()
+    
+    def get_damage(self) -> int:
+        return self.value.get_damage()
+    
+    def get_required_hands(self) -> int:
+        return self.value.get_required_hands()
+      

@@ -10,7 +10,7 @@ class Operator():
     """
     def __init__(self, location: List[float]) -> None:
         self.__hp: int = 100
-        self.__weapon_holding:Weapons = Weapons.Guns.RIFLE
+        self.__weapon_holding:Weapons = Weapons.RIFLE
         self.__mode_in: Modes = Modes.NORMAL
         self.__sight_direction: int = 0
         self.__stemina: float = 5
@@ -44,6 +44,10 @@ class Operator():
 
     def get_stemina(self) -> float:
         return self.__stemina
+
+    def get_weapon_holding(self) -> Weapons:
+        return self.__weapon_holding
+    
 
 class SpecialActions(Enum):
     SWITCH_MODE: str = 'switch_mode'

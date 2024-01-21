@@ -36,7 +36,7 @@ class PlayerMovementBattleCommand(MapCommand):
         
         operator.set_location([self.get_args[1], self.get_args[2]])
         operator.set_stemina(operator.get_stemina() - stemina_cost)
-        PlayerCheckSightCommand.logger.info(f"{type(self)}: {operator.get_identity()}'s {operator.get_index()}th operator moved to {operator.get_location()}, stemina left: {operator.get_stemina()}")
+        PlayerCheckSightBattleCommand.logger.info(f"{type(self)}: {operator.get_identity()}'s {operator.get_index()}th operator moved to {operator.get_location()}, stemina left: {operator.get_stemina()}")
         return "success" #success_stenima
     
     def check(self) -> bool:
@@ -49,14 +49,14 @@ class PlayerMovementBattleCommand(MapCommand):
 
         return None
     
-class PlayerCheckSightCommand(MapCommand):
+class PlayerCheckSightBattleCommand(MapCommand):
     """
     will be call when: client selected an operator, use this operator as reference, and check if other operators are in sight
-    command: checksight 3 => check if Attacker's 3rd operator can see any defender's operator
+    command: h:checksight arg:3 => check if Attacker's 3rd operator can see any defender's operator
     """
     logger = Logger("PlayerCheckSightCommand")
 
-    def execute(self) -> None:
+    def execute(self) -> str:
         """use json to send data"""
         if (self.get_send_player().get_identity() == Identity.ATTACK):
             # pointing same address, not copy
@@ -78,12 +78,15 @@ class PlayerCheckSightCommand(MapCommand):
 
     def check(self) -> bool:
         if not isinstance(self.get_map().get_game_flow_director().get_state(), BattleState):
-            PlayerCheckSightCommand.logger.error("check_sight command can only be used in battle state")
+            PlayerCheckSightBattleCommand.logger.error("check_sight command can only be used in battle state")
             return "not_in_battle_state_error"
+        elif (len(self.get_args()) != 1):
+            PlayerCheckSightBattleCommand.logger.error(f"{type(self)}: Args len must be 1")
+            return "args_len_error"
         
         return None
     
-class PlayerShootCommand(MapCommand):
+class PlayerShootBattleCommand(MapCommand):
     """
     command: shoot 3 2 => X's 3rd operator shoot at Y's 2nd operator
     """ 
@@ -110,14 +113,14 @@ class PlayerShootCommand(MapCommand):
 
     def check(self) -> bool:
         if not isinstance(self.get_map().get_game_flow_director().get_state(), BattleState):
-            PlayerCheckSightCommand.logger.error(f"{type(self)}: check_sight command can only be used in battle state")
+            PlayerCheckSightBattleCommand.logger.error(f"{type(self)}: check_sight command can only be used in battle state")
             return "not_in_battle_state_error"
         elif (len(self.get_args()) != 1):
-            PlayerCheckSightCommand.logger.error(f"{type(self)}: Args len must be 1")
+            PlayerCheckSightBattleCommand.logger.error(f"{type(self)}: Args len must be 1")
         
         return None
     
-class MapUpdateCommand(MapCommand):
+class MapUpdateBattleCommand(MapCommand):
     """
     command: h:mapupdate, no args => send map data to client
     """
@@ -140,20 +143,20 @@ class MapUpdateCommand(MapCommand):
         
         msg:dict = {"player": operators}
         msg = json.dumps(msg)
-        MapUpdateCommand.logger.info(f"{type(self)}: JSON formmated string to be sent: {msg}")
+        MapUpdateBattleCommand.logger.info(f"{type(self)}: JSON formmated string to be sent: {msg}")
         return f"success_" + msg
 
     def check(self) -> bool:
         if not isinstance(self.get_map().get_game_flow_director().get_state(), BattleState):
-            MapUpdateCommand.logger.error("mapupdate command can only be used in battle state")
+            MapUpdateBattleCommand.logger.error("mapupdate command can only be used in battle state")
             return "not_in_battle_state_error"
         elif (len(self.get_args()) != 0):
-            MapUpdateCommand.logger.error("mapupdate command must have no args")
+            MapUpdateBattleCommand.logger.error("mapupdate command must have no args")
             return "args_len_error"
         
         return None
     
-class BattleFlowCommander(MapCommand):
+class BattleFlowBattleCommander(MapCommand):
     """
     use this to control the battle flow. this will call gameflowdirector's  create_sequence_list method to create a sequence list
     when recieve heading, call this commander's execute method
@@ -167,38 +170,47 @@ class BattleFlowCommander(MapCommand):
     logger = Logger("BattleFlowCommander")
     static_counter:int = 0
 
-    def set_battle_sequence_list(self, battle_sequence_list:list) -> None:
-        self.__battle_sequence_list = battle_sequence_list
-
-    def execute(self) -> None:
-        chosen_operator:Operator = self.__battle_sequence_list[BattleFlowCommander.static_counter]
+    def execute(self) -> str:
+        self.__battle_sequence_list = self.get_map().get_game_flow_director().create_sequence_list ( self.get_map().get_attackers(), self.get_map().get_defenders() ) # list of Operator
+        chosen_operator:Operator = self.__battle_sequence_list[BattleFlowBattleCommander.static_counter]
         identity:Identity = chosen_operator.get_identity() # do determine which publisher to call
         msg:str = ""
 
         while not chosen_operator.is_alive():
-            BattleFlowCommander.static_counter += 1
-            chosen_operator = self.__battle_sequence_list[BattleFlowCommander.static_counter]
+            BattleFlowBattleCommander.static_counter += 1
+            chosen_operator = self.__battle_sequence_list[BattleFlowBattleCommander.static_counter]
             identity = chosen_operator.get_identity()
-            msg = f"{BattleFlowCommander.static_counter / 2}_turn"
+            msg = f"{BattleFlowBattleCommander.static_counter / 2}_turn"
         
-        BattleFlowCommander.static_counter += 1 if BattleFlowCommander.static_counter < len(self.__battle_sequence_list) else 0
+        BattleFlowBattleCommander.static_counter += 1 if BattleFlowBattleCommander.static_counter < len(self.__battle_sequence_list) else 0
         # tenary operator, if true, return 1, else return 0
 
         if (identity == Identity.ATTACK):
-            BattleFlowCommander.logger.info(f"{type(self)}: Attacker's {BattleFlowCommander.static_counter}th operator's turn")
+            BattleFlowBattleCommander.logger.info(f"{type(self)}: Attacker's {BattleFlowBattleCommander.static_counter}th operator's turn")
             self.get_map().get_game_data_publisher().publish_client_A_server_actively(msg)
         elif (identity == Identity.DEFEND):
-            BattleFlowCommander.logger.info(f"{type(self)}: Defender's {BattleFlowCommander.static_counter}th operator's turn")
+            BattleFlowBattleCommander.logger.info(f"{type(self)}: Defender's {BattleFlowBattleCommander.static_counter}th operator's turn")
             self.get_map().get_game_data_publisher().publish_client_B_server_actively(msg)
 
         return "success" #success reply incoming message w/ id; use acitve publisher to send who's round to the client
 
     def check(self) -> bool:
         if not isinstance(self.get_map().get_game_flow_director().get_state(), BattleState):
-            BattleFlowCommander.logger.error("battleflowcommander command can only be used in battle state")
+            BattleFlowBattleCommander.logger.error("battleflowcommander command can only be used in battle state")
             return "not_in_battle_state_error"
         elif (len(self.get_args()) != 0):
-            BattleFlowCommander.logger.error("battleflowcommander command must have no args")
+            BattleFlowBattleCommander.logger.error("battleflowcommander command must have no args")
             return "args_len_error"
         
         return None
+    
+class PlayerShootBattleCommand(MapCommand):
+    """
+    command: h:shoot args:3 2 => X's 3rd operator shoot at Y's 2nd operator
+    """
+
+    def execute(self) -> str:
+        pass
+
+    def check(self) -> bool:
+        pass

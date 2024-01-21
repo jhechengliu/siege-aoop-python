@@ -27,10 +27,10 @@ class GameFlowDirector:
     def get_state(self):
         return self.__state
 
-    # # control operator sequence
-    # def create_battle_sequence_list(self, attacker_operators:deque, defender_operators:deque) -> deque:
-    #     # Combine the two lists in an alternating sequence
-    #     # list of Operator
-    #     combined_sequence = [operator for pair in zip((attacker_operators), (defender_operators)) for operator in pair]
-    #     return list(combined_sequence)
+    # control operator sequence
+    def create_battle_sequence_list(self, attacker_operators:deque, defender_operators:deque) -> deque:
+        # Combine the two lists in an alternating sequence
+        # list of Operator
+        combined_sequence = [operator for pair in zip((attacker_operators), (defender_operators)) for operator in pair]
+        return list(combined_sequence)
     
