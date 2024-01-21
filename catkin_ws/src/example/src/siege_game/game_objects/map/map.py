@@ -31,6 +31,8 @@ class Map:
         self.__game_flow_director = GameFlowDirector()
         self.__max_defender_count = max_defender_count
         self.__max_attacker_count = max_attacker_count
+        self.__attacker_ready_battle = False
+        self.__defender_ready_battle = False
     
     def print_map(self):
         Map.logger.info(f"Printing the current map... (Size: {self.__map_width} * {self.__map_height})")
@@ -102,3 +104,15 @@ class Map:
     
     def get_map_object(self, location:List[int]):
         return self.__map_data[(location[0], location[1])]
+    
+    def get_attacker_ready_battle(self) -> bool:
+        return self.__attacker_ready_battle
+    
+    def get_defender_ready_battle(self) -> bool:
+        return self.__defender_ready_battle
+    
+    def set_attacker_ready_battle(self, value:bool) -> None:   
+        self.__attacker_ready_battle = value
+
+    def set_defender_ready_battle(self, value:bool) -> None:
+        self.__defender_ready_battle = value

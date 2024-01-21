@@ -245,7 +245,13 @@ class ReadyBattleBattleCommand(MapCommand):
     logger = Logger("ReadyBattleSettingUpCommand")
 
     def execute(self) -> None:
-        self.get_send_player().set_ready_battle(True)
+        if (self.get_identity() == Identity.ATTACK):
+            self.get_map().set_attacker_ready_battle(True)
+        elif (self.get_identity() == Identity.DEFEND):
+            self.get_map().set_defender_ready_battle(True)
+        
+        if (self.get_map().get_attacker_ready_battle() and self.get_map().get_defender_ready_battle()):
+            pass
         ReadyBattleBattleCommand.logger.debug(f"{type(self)}: Player {self.get_send_player().get_name()}: readybattle")
         return "success"
 
@@ -253,8 +259,8 @@ class ReadyBattleBattleCommand(MapCommand):
         if not isinstance(self.get_map().get_game_flow_director().get_state(), BattleState):
             ReadyBattleBattleCommand.logger.error(f"{type(self)}: readybattle command can only be used in setting up state")
             return "not_in_setting_up_state_error"
-        elif (len(self.get_args()) != 0):
-            ReadyBattleBattleCommand.logger.error(f"{type(self)}: readybattle command must have no args")
+        elif (len(self.get_args()) != 1):
+            ReadyBattleBattleCommand.logger.error(f"{type(self)}: readybattle has one args")
             return "args_len_error"
         
         return None
