@@ -1,5 +1,4 @@
 from siege_game.game_objects.map.commands.map_command import MapCommand
-from siege_game.game_objects.map.commands.battle import Battle
 from siege_game.game_objects.logger import Logger
 from siege_game.game_objects.pawn.operator import Operator
 from siege_game.game_objects.constants.identity import Identity
