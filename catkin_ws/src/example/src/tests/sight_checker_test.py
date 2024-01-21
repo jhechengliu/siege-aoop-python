@@ -4,7 +4,8 @@ from siege_game.game_objects.map_builder import MapBuilder
 from siege_game.game import Game
 from collections import deque
 
-testing_map = MapBuilder("map_example")
+testing_map = MapBuilder("map_example", "testid")
+
 def test_sight_checker():
     sight_checker = SightChecker()
     map_data = (testing_map.get_map()).get_map_data()

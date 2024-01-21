@@ -7,10 +7,9 @@ from siege_game.game import Game
 from collections import deque
 
 
-testing_game = Game()
+testing_game = Game("testid")
+testing_map = MapBuilder("map_example", "testid").get_map()
 
-testing_map = MapBuilder("map_example").get_map()
-# testing_game.map.get_sight_checker(xxx)
 for i in range (0, 5):
     attackers = testing_game.get_map().add_attacker([i, i])
     defenders = testing_game.get_map().add_defender([i, i])
