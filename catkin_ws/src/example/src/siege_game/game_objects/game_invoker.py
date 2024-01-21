@@ -34,12 +34,13 @@ class GameInvoker():
         self.__game = Game(game_id, self)
 
     def print_status(self):
-        self.__logger.debug(f"----- ID: {self.__game_id} Status -----")
-        self.__logger.debug(f"Client A Player Object:{self.__client_A_player}")
-        self.__logger.debug(f"Client B Player Object:{self.__client_B_player}")
-        self.__logger.debug(f"Client A Connected: {self.__client_A_connected}")
-        self.__logger.debug(f"Client B Connected: {self.__client_B_connected}")
-        self.__logger.debug(f"-------------------------------------------")
+        # self.__logger.debug(f"----- ID: {self.__game_id} Status -----")
+        # self.__logger.debug(f"Client A Player Object:{self.__client_A_player}")
+        # self.__logger.debug(f"Client B Player Object:{self.__client_B_player}")
+        # self.__logger.debug(f"Client A Connected: {self.__client_A_connected}")
+        # self.__logger.debug(f"Client B Connected: {self.__client_B_connected}")
+        # self.__logger.debug(f"-------------------------------------------")
+        pass
 
     def get_client_A_player(self):
         return self.__client_A_player

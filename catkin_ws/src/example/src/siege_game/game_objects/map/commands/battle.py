@@ -37,7 +37,7 @@ class ClickBattleCommand(MapCommand):
     """
     command:click args:
     """
-    logger = Logger("ReadyBattleSettingUpCommand")
+    logger = Logger("ClickBattleCommand")
 
     def execute(self) -> None:
         if (self.get_identity() == Identity.ATTACK):
@@ -53,4 +53,24 @@ class ClickBattleCommand(MapCommand):
     def check(self) -> bool:
         return None
     
+class RequestBattleCommand(MapCommand):
+    """
+    command:click args:
+    """
+    logger = Logger("RequestBattleCommand")
+
+    def execute(self) -> str:
+        attacker_count = self.get_game().get_attacker_click_count()
+        defender_count = self.get_game().get_defender_click_count()
+
+        if (self.get_identity() == Identity.ATTACK):
+            return f"success_{attacker_count}_{defender_count}"
+        elif (self.get_identity() == Identity.DEFEND):
+            return f"success_{defender_count}_{attacker_count}"
+        else:
+            return "error"
+        
+
+    def check(self) -> str:
+        return None
     
