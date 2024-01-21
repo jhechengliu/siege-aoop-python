@@ -2,7 +2,7 @@ from siege_game.game_objects.map.map import Map
 from siege_game.game_objects.map.commands.map_command import MapCommand
 from siege_game.game_objects.map.commands.start import StartGameMapCommand
 from siege_game.game_objects.map.commands.setting_up import SetOperatorSettingUpCommand, FinishSettingUpCommand
-from siege_game.game_objects.map.commands.battle import PlayerMovementBattleCommand, PlayerCheckSightBattleCommand, MapUpdateBattleCommand, BattleFlowBattleCommander, ReadyBattleBattleCommand
+from siege_game.game_objects.map.commands.battle import ReadyBattleCommand
 from siege_game.game_objects.player import Player
 from siege_game.game_objects.logger import Logger
 
@@ -20,12 +20,7 @@ class Commander():
             "start": StartGameMapCommand,
             "setoperator": SetOperatorSettingUpCommand,
             "finishsettingup": FinishSettingUpCommand,
-            "move": PlayerMovementBattleCommand,
-            "sight": PlayerCheckSightBattleCommand,
-            "mapupdate": MapUpdateBattleCommand,
-            "checksight": PlayerCheckSightBattleCommand,
-            "finishround": BattleFlowBattleCommander,
-            "readybattle": ReadyBattleBattleCommand
+            "ready": ReadyBattleCommand,
         }
     def execute_command(self, command:str, player:Player) -> str:
         Commander.logger.info(f"{type(self)}: Executing Command")

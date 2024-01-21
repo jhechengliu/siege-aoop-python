@@ -14,6 +14,7 @@ class MapCommand(ABC):
         self.__args:Tuple[str] = args
         self.__send_player = player
         self.__identity:Identity = player.get_identity()
+        self.ready_count = 0
 
     @abc.abstractmethod
     def execute(self) -> None:

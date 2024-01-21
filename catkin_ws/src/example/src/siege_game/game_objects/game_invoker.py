@@ -18,8 +18,6 @@ class GameInvoker():
         self.__client_B_player:Player = None
         self.__client_A_connected = False
         self.__client_B_connected = False
-        
-        self.__game = Game(game_id, self)
 
         self.__game_id = game_id
         self.__logger = Logger("GameInvoker_" + self.__game_id)
@@ -32,6 +30,8 @@ class GameInvoker():
 
         self.__server_client_A_message = String()
         self.__server_client_B_message = String()
+
+        self.__game = Game(game_id, self)
 
     def print_status(self):
         self.__logger.debug(f"----- ID: {self.__game_id} Status -----")
