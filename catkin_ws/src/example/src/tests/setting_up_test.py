@@ -5,11 +5,10 @@ from siege_game.game_objects.player import Player
 from siege_game.game_objects.constants.identity import Identity
 from siege_game.game_objects.commander import Commander
 
-attc = Identity.ATTACKER
-defe = Identity.DEFENDER
+identity = Identity()
 game = Game("test_game")
-setting_up_attacker = SetOperatorSettingUpCommand(game, ("setoperator", "3", "1.2", "3.4"), Player("testplayer", attc, Commander(game)))
-setting_up_defender = SetOperatorSettingUpCommand(game, ("setoperator", "3", "1.2", "3.4"), Player("testplayer", defe, Commander(game)))
+setting_up_attacker = SetOperatorSettingUpCommand(game, ("setoperator", "3", "1.2", "3.4"), Player("testplayer", identity.ATTACK, Commander(game)))
+setting_up_defender = SetOperatorSettingUpCommand(game, ("setoperator", "3", "1.2", "3.4"), Player("testplayer", identity.DEFEND, Commander(game)))
 for i in range (0, 3):
     setting_up_attacker.get_map().add_attacker(i, i)
     setting_up_defender.get_map().add_defender(i, i)
