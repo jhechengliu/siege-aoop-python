@@ -129,7 +129,8 @@ class MapUpdateBattleCommand(MapCommand):
 
     def execute(self) -> str:
         operators:List = []
-        for i, operator in self.get_map().get_attackers():
+        for i in range (0, len(self.get_map().get_attackers())):
+            operator = self.get_map().get_attacker(i)
             map_operator_data:dict = {}
             map_operator_data["index"] = i
             map_operator_data["location"] = operator.get_location()
@@ -209,6 +210,8 @@ class PlayerShootBattleCommand(MapCommand):
     """
     command: h:shoot args:3 2 => X's 3rd operator shoot at Y's 2nd operator
     """
+
+    logger = Logger("PlayerShootBattleCommand")
 
     def execute(self) -> str:
         msg:str = f"success_{self.get_args()[0]}_{self.get_args()[1]}_"
