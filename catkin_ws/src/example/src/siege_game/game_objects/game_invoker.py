@@ -160,7 +160,6 @@ class GameInvoker():
 
         if heading == "signin":
             self.__sign_in_process(id, args, 'B', self.publish_client_B_server, self.publish_client_A_server_actively, self.__client_B_player)
-            self.__check_players_and_send_start_setting()
         elif heading == "signout":
             self.__sign_out_process(id, args, 'B', self.publish_client_B_server, self.__client_B_player)
 
@@ -266,6 +265,8 @@ class GameInvoker():
                             publish_function(id, f"success_{opponent_name}_{opponent_identity}")
                             opponent_active_publish_function(get_str_identity(identity, args[1]))
                         self.__logger.debug(f"Success! Client {A_or_B} Player: {self.__client_B_player}")
+                        self.__check_players_and_send_start_setting()
+
           
         else:
             self.__logger.error("signin commands args not equal to 2")
