@@ -9,8 +9,6 @@ from siege_game.game_objects.player import Player
 from siege_game.game_objects.constants.identity import Identity
 from typing import List, Callable
 from siege_game.game import Game
-import pytest
-import time
 
 class GameInvoker():
 
@@ -334,7 +332,7 @@ class GameInvoker():
 
     def check_players_and_send_start_setting(self):
         if self.__client_A_player is not None and self.__client_B_player is not None:
-            time.sleep(5)
+            rospy.sleep(5)
             self.publish_client_A_server("start_setting")
             self.publish_client_B_server("start_setting")
             self.__game.get_map().get_game_flow_director().next_state()

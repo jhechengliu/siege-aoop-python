@@ -41,7 +41,7 @@ class Invoker():
   
     def run(self):
         while (not rospy.is_shutdown()) and (not self.__force_close):
-            # self.__map.get_game_data_publisher().publishDetectCl  ientA()
+            # self.__map.get_game_data_publisher().publishDetectClientA()
             # self.__map.get_game_data_publisher().publishDetectClientB()
             # rospy.sleep(1.)
             pass
