@@ -11,7 +11,9 @@ class Game():
     instance = None
     logger = Logger("Game")
 
-    def __init__(self, game_id:str):
+    def __init__(self, game_id:str, client_A_player, client_B_player):
+        self.__client_A_player = client_A_player
+        self.__client_B_player = client_B_player
         self.__map_name = "map_example"
         self.__commander = None
         self.__map = None
