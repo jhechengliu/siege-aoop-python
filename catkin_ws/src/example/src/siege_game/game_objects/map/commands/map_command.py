@@ -35,6 +35,9 @@ class MapCommand(ABC):
     def get_send_player(self):
         return self.__send_player
     
+    def get_game(self):
+        return self.__game
+    
 
     
 
