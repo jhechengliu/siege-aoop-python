@@ -68,7 +68,8 @@ class PlayerCheckSightBattleCommand(MapCommand):
 
         # check_sight(map_data:dict, location_a:List[float], location_b:List[float]) -> bool:
         in_sight_list:List = []
-        for i, opponent in enumerate(opponents):
+        for i in range (len(opponents)):
+            opponent = opponents[i]
             if (self.get_map().get_sight_checker().check_sight(self.get_map().get_map_data(), operator.get_location(), opponent.get_location())):
                 in_sight_list.append(i)
 
