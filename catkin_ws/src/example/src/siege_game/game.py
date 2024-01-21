@@ -21,9 +21,23 @@ class Game():
         self.__map = builder.get_map()
         self.__commander = Commander(self)
         Game.logger.info(f"Command set: {self.__commander}")
-
+        
+        self.__attacker_click_count = 0
+        self.__defender_click_count = 0
         self.ready_count = 0
 
+    def get_attacker_click_count(self):
+        return self.__attacker_click_count
+
+    def get_defender_click_count(self):
+        return self.__defender_click_count
+    
+    def increment_attacker_click_count(self):
+        self.__attacker_click_count += 1
+
+    def increment_defender_click_count(self):
+        self.__defender_click_count += 1
+        
     def get_client_A_player(self):
         return self.__game_invoker.get_client_A_player()
 

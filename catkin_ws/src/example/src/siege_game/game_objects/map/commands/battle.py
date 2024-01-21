@@ -33,3 +33,24 @@ class ReadyBattleCommand(MapCommand):
     def check(self) -> bool:
         return None
     
+class ClickBattleCommand(MapCommand):
+    """
+    command:click args:
+    """
+    logger = Logger("ReadyBattleSettingUpCommand")
+
+    def execute(self) -> None:
+        if (self.get_identity() == Identity.ATTACK):
+            self.get_game().increment_attacker_click_count()
+            return "success"
+        elif (self.get_identity() == Identity.DEFEND):
+            self.get_game().increment_defender_click_count()
+            return "success"
+        else:
+            return "error"
+        
+
+    def check(self) -> bool:
+        return None
+    
+    
