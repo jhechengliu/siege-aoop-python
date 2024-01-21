@@ -321,7 +321,6 @@ class GameInvoker():
             self.__logger.debug(f"Returns: \"{reply}\" back to client")
             self.publish_client_A_server(id, reply)
 
-
     def __game_invoker_client_B_player_execute_command(self, id, command):
         if self.__client_B_player == None:
             self.__logger.error("Client B need to sign in in order to use other commands to affect the game")
@@ -331,3 +330,4 @@ class GameInvoker():
             reply = self.__client_B_player.execute_command(command)
             self.__logger.debug(f"Returns: \"{reply}\" back to client")
             self.publish_client_B_server(id, reply)
+

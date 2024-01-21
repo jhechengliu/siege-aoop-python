@@ -23,6 +23,12 @@ class Operator():
     def set_location(self, location: List[float]) -> None:
         self.__location = location
 
+    def get_hp(self) -> int:
+        return self.__hp
+    
+    def set_hp(self, hp: int) -> None:
+        self.__hp = hp
+
 class SpecialActions(Enum):
     SWITCH_MODE: str = 'switch_mode'
     THROW_GRENADE: str = 'throw_grenade'

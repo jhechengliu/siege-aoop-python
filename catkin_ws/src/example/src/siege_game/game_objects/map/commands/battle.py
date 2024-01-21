@@ -64,7 +64,7 @@ class PlayerCheckSightCommand(MapCommand):
             else:
                 msg[str(i)] = 0
 
-        return json.dumps(msg) #convert from dictionary to json-formatted string
+        return "success_" + json.dumps(msg) #convert from dictionary to json-formatted string
 
 
     def check(self) -> bool:
@@ -72,5 +72,35 @@ class PlayerCheckSightCommand(MapCommand):
             PlayerCheckSightCommand.logger.error("check_sight command can only be used in battle state")
             return "not_in_battle_state_error"
         
+        return None
+    
+class PlayerShootCommand(MapCommand):
+    """
+    command: shoot 3 2 => X's 3rd operator shoot at Y's 2nd operator
+    """ 
+    logger = Logger("PlayerShootCommand")
 
+    def execute(self) -> str:
+        if (self.get_send_player().get_identity() == Identity.ATTACK):
+            # pointing same address, not copy
+            operator:Operator = self.get_map().get_attacker(self.get_args[0]).set_location([self.get_args[1], self.get_args[2]])
+            opponent:Operator = self.get_map().get_defender(self.get_args[0]).set_location([self.get_args[1], self.get_args[2]])
+
+        elif (self.get_send_player().get_identity() == Identity.DEFEND):
+            operator:Operator = self.get_map().get_defender(self.get_args[0]).set_location([self.get_args[1], self.get_args[2]])
+            opponent:Operator = self.get_map().get_attacker(self.get_args[0]).set_location([self.get_args[1], self.get_args[2]])
+
+        # check_sight(map_data:dict, location_a:List[float], location_b:List[float]) -> bool:
+        if not (self.get_map().get_sight_checker().check_sight(self.get_map().get_map_data(), operator.get_location(), opponent.get_location())):
+            return "not-in-sight-error"
+        # else -> in sight, contunue. use shooting system to calculate damage
+        self.get_map().get_shooting_system().shoot(operator, opponent)
+        return f"success_{str(opponent.get_hp())}"
+
+
+    def check(self) -> bool:
+        if not isinstance(self.get_map().get_game_flow_director().get_state(), Battle):
+            PlayerCheckSightCommand.logger.error("check_sight command can only be used in battle state")
+            return "not_in_battle_state_error"
+        
         return None

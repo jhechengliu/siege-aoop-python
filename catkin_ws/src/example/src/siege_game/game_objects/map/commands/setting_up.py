@@ -23,7 +23,7 @@ class SetOperatorSettingUpCommand(MapCommand):
         self.logger.info(f"{type(self)}: Operator {operator_type} added at location x={x}, y={y}")
         self.get_map().map_status()
 
-        return "success"
+        return f"success" #success_n_left
 
     def check(self) -> bool:
         if not isinstance(self.get_map().get_game_flow_director().get_state(), SettingUpState):
