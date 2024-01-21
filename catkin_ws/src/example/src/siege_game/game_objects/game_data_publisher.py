@@ -65,12 +65,12 @@ class GameDataPublisher:
 
     def publish_client_A_server_actively(self, msg):
         self.__server_client_A_message.data = msg
-        self.__logger.info(f"Sending active data to server client A channel: {msg}")
+        GameDataPublisher.logger.info(f"Sending active data to server client A channel: {msg}")
         self.__server_client_A_publisher.publish(self.__server_client_A_message)
 
     def publish_client_B_server_actively(self, msg):
         self.__server_client_B_message.data = msg
-        self.__logger.info(f"Sending active data to server client B channel: {msg}")
+        GameDataPublisher.logger.info(f"Sending active data to server client B channel: {msg}")
         self.__server_client_B_publisher.publish(self.__server_client_B_message)
 
     
