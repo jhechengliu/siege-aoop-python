@@ -245,6 +245,7 @@ class ReadyBattleBattleCommand(MapCommand):
     logger = Logger("ReadyBattleSettingUpCommand")
 
     def execute(self) -> None:
+        self.get_map().get_game_data_publisher().publish_client_A_server_actively("turnzero")
         if (self.get_identity() == Identity.ATTACK):
             self.get_map().set_attacker_ready_battle(True)
         elif (self.get_identity() == Identity.DEFEND):
