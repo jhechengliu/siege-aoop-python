@@ -13,7 +13,7 @@ from siege_game.game_objects.logger import Logger
 class Map:
     logger = Logger('map')
 
-    def __init__(self, map_data:dict, map_width:int, map_height:int, defender_count:int, attacker_count:int):
+    def __init__(self, map_data:dict, map_width:int, map_height:int, max_attacker_count:int, max_defender_count:int):
         """
         Don't use constructor to init this class, use get_instance method instead
         """
@@ -28,8 +28,8 @@ class Map:
         self.__map_data_processor = MapDataProcessor()
         self.__game_data_publisher = GameDataPublisher()
         self.__game_flow_director = GameFlowDirector()
-        self.__max_defender_count = defender_count
-        self.__max_attacker_count = attacker_count
+        self.__max_defender_count = max_defender_count
+        self.__max_attacker_count = max_attacker_count
     
     def print_map(self):
         Map.logger.info(f"Printing the current map... (Size: {self.__map_width} * {self.__map_height})")
@@ -39,10 +39,10 @@ class Map:
             print()
    
     def add_attacker(self, location:List[float]) -> None:
-        self.__attackers.append(Attacker(location, self.__shooting_system))
+        self.__attackers.append(Attacker(location))
 
     def add_defender(self, location:List[float]) -> None:
-        self.__defenders.append(Defender(location, self.__shooting_system))
+        self.__defenders.append(Defender(location))
 
     def map_status(self):
         Map.logger.info("--- Map Status ---")

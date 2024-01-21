@@ -17,6 +17,7 @@ class SetOperatorSettingUpCommand(MapCommand):
 
         if (operator_type == Identity.ATTACK):
             self.get_map().add_attacker([x, y])
+            #coda = 
         elif (operator_type == Identity.DEFEND):
             self.get_map().add_defender([x, y])
 
@@ -24,6 +25,7 @@ class SetOperatorSettingUpCommand(MapCommand):
         # self.get_map().map_status()
         self.check_if_ready_to_next_stage()
 
+        
         return f"success" #success_n_left
     
     def check_if_ready_to_next_stage(self) -> bool:
