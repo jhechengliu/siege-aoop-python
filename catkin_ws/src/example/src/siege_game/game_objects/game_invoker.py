@@ -19,7 +19,7 @@ class GameInvoker():
         self.__client_A_connected = False
         self.__client_B_connected = False
         
-        self.__game = Game(game_id, self.__client_A_player, self.__client_B_player)
+        self.__game = Game(game_id, self)
 
         self.__game_id = game_id
         self.__logger = Logger("GameInvoker_" + self.__game_id)
