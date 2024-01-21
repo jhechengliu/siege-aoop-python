@@ -23,8 +23,8 @@ class ReadyBattleCommand(MapCommand):
             return "success"
 
         if (self.ready_count <= 0):
-            ReadyBattleCommand.logger.debug("GONNA TO PLAY")
             self.ready_count = 1
+            ReadyBattleCommand.logger.debug("GONNA TO PLAY")
             return "success"
         
         ReadyBattleCommand.logger.debug("BRUH")
