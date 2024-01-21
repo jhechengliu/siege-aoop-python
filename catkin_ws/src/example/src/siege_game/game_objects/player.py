@@ -11,7 +11,7 @@ class Player():
         self.__name = name
         self.__identity:Identity = identity
         self.__commander:commander_file.Commander = commander
-        self.__has_finish_setting_up = False
+        self.__has_finish_setting_up = False # redundant but i already wrote some func else so i'll just leave it here
 
     def execute_command(self, command:str) -> str:
         return self.__commander.execute_command(command, self)

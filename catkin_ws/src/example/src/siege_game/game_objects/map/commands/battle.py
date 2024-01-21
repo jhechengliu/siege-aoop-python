@@ -210,7 +210,23 @@ class PlayerShootBattleCommand(MapCommand):
     """
 
     def execute(self) -> str:
-        pass
+        msg:str = f"success_{self.get_args()[0]}_{self.get_args()[1]}_"
+        opponent_hp = self.get_map().get_shooting_system().shoot(self.get_map().get_attacker(self.get_args[0]), self.get_map().get_defender(self.get_args[1]))
+        msg += str(opponent_hp)
+        PlayerCheckSightBattleCommand.logger.debug(f"{type(self)}: {msg}")
+
+        if (self.get_identity == Identity.ATTACK):
+            pass
+        return msg
 
     def check(self) -> bool:
-        pass
+        if not isinstance(self.get_map().get_game_flow_director().get_state(), BattleState):
+            PlayerShootBattleCommand.logger.error(f"{type(self)}: shoot command can only be used in battle state")
+            return "not_in_battle_state_error"
+        elif (len(self.get_args()) != 2):
+            PlayerShootBattleCommand.logger.error(f"{type(self)}: shoot command must have 2 args")
+            return "args_len_error"
+        else:
+            PlayerCheckSightBattleCommand.logger.error(f"{type(self)}: unknown error")
+            return "unknown_error"
+        return None

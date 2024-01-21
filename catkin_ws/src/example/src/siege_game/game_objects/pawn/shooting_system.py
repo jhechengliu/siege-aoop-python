@@ -11,5 +11,9 @@ class ShootingSystem:
     def shoot(self, from_operator:Operator, to_operator:Operator) -> None:
         self.__from_operator = from_operator
         self.__to_operator = to_operator
-        # cal damage
-        pass
+        
+        damage = self.__from_operator.get_weapon_holding().get_damage() * random.uniform(0.5, 1)
+        return self.__to_operator.set_hp(self.__to_operator.get_hp() - damage)
+
+        
+        

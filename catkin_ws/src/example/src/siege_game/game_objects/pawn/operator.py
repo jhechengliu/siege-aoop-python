@@ -29,15 +29,15 @@ class Operator():
     
     def set_hp(self, hp: int) -> None:
         self.__hp = hp
+        if (self.__hp <= 0):
+            self.__hp = 0
+            self.__alive = False
 
     def get_identity(self) -> Identity:
         return self.__identity
     
     def is_alive(self) -> bool:
         return self.__alive
-    
-    def die(self) -> None:
-        self.__alive = False
 
     def set_stemina(self, stemina: float) -> None:
         self.__stemina = stemina
