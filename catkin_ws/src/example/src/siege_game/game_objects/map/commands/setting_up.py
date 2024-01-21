@@ -17,21 +17,21 @@ class SetOperatorSettingUpCommand(MapCommand):
 
         if (operator_type == Identity.ATTACK):
             self.get_map().add_attacker([x, y])
-            #coda = 
+            coda = str(len(self.get_map().get_attackers()))
         elif (operator_type == Identity.DEFEND):
             self.get_map().add_defender([x, y])
-
+            coda = str(len(self.get_map().get_defenders()))
         self.logger.info(f"{type(self)}: Operator {operator_type} added at location x={x}, y={y}")
         # self.get_map().map_status()
         self.check_if_ready_to_next_stage()
-
         
-        return f"success" #success_n_left
+        return f"success_{coda}_left"
     
     def check_if_ready_to_next_stage(self) -> bool:
         if (len(self.get_map().get_attackers()) == self.get_map().get_max_attacker_count() and len(self.get_map().get_defenders()) == self.get_map().get_max_defender_count()):
             self.get_map().get_game_data_publisher().publish_client_A_server_actively("start_battle")
             self.get_map().get_game_data_publisher().publish_client_B_server_actively("start_battle")
+            self.get_map().get_game_flow_director().next_state() # change state to battle
 
     def check(self) -> bool:
         if not isinstance(self.get_map().get_game_flow_director().get_state(), SettingUpState):
