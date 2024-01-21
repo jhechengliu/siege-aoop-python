@@ -332,6 +332,8 @@ class GameInvoker():
             self.publish_client_B_server(id, reply)
 
     def __check_players_and_send_start_setting(self):
+        self.__logger.debug(f"checking players: A: {self.__client_A_player}, B: {self.__client_B_player}")
+        self.__logger.debug(f"Pass the Test?: {self.__client_A_player and self.__client_B_player}")
         if self.__client_A_player and self.__client_B_player:
             self.publish_client_A_server_actively("start_setting")
             self.publish_client_B_server_actively("start_setting")
