@@ -22,6 +22,8 @@ class Game():
         self.__commander = Commander(self)
         Game.logger.info(f"Command set: {self.__commander}")
 
+        self.ready_count = 0
+
     def get_client_A_player(self):
         return self.__game_invoker.get_client_A_player()
 

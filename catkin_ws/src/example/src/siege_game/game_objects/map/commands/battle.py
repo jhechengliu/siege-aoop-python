@@ -15,15 +15,15 @@ class ReadyBattleCommand(MapCommand):
     logger = Logger("ReadyBattleSettingUpCommand")
 
     def execute(self) -> None:
-        if (self.ready_count >= 1):
+        if (self.get_game().ready_count >= 1):
             # Start timer
             ReadyBattleCommand.logger.debug("PLAY")
             self.get_game().get_map().get_game_data_publisher().publish_client_A_server_actively("Play")
             self.get_game().get_map().get_game_data_publisher().publish_client_B_server_actively("Play")
             return "success"
 
-        if (self.ready_count <= 0):
-            self.ready_count = 1
+        if (self.get_game().ready_count <= 0):
+            self.get_game().ready_count += 1
             ReadyBattleCommand.logger.debug("GONNA TO PLAY")
             return "success"
         
