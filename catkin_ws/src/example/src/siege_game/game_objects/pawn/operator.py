@@ -3,6 +3,7 @@ from enum import Enum
 from typing import List, Tuple
 from siege_game.game_objects.pawn.weapon import Weapon, Weapons
 from siege_game.game_objects.pawn.mode import Mode, Modes
+from siege_game.game_objects.constants.identity import Identity
 
 class Operator():
     """
@@ -12,8 +13,10 @@ class Operator():
         self.__weapon_holding:Weapons = Weapons.Guns.RIFLE
         self.__mode_in: Modes = Modes.NORMAL
         self.__sight_direction: int = 0
-        self.__steps: int = 5
+        self.__stemina: float = 5
         self.__location: List[float] = location
+        self.__indentity: Identity = None
+        self.__alive: bool = True
 
     def get_location(self) -> List[float]:
         return self.__location
@@ -26,6 +29,12 @@ class Operator():
     
     def set_hp(self, hp: int) -> None:
         self.__hp = hp
+
+    def get_identity(self) -> Identity:
+        return self.__identity
+    
+    def is_alive(self) -> bool:
+        return self.__alive
 
 class SpecialActions(Enum):
     SWITCH_MODE: str = 'switch_mode'

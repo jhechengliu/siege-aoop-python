@@ -130,7 +130,7 @@ class MapUpdateCommand(MapCommand):
         
         msg:dict = {"player": operators}
         msg = json.dumps(msg)
-        
+        MapUpdateCommand.logger.info(f"{type(self)}: JSON formmated string to be sent: {msg}")
         return f"success_" + msg
 
     def check(self) -> bool:
@@ -139,6 +139,55 @@ class MapUpdateCommand(MapCommand):
             return "not_in_battle_state_error"
         elif (len(self.get_args()) != 0):
             MapUpdateCommand.logger.error("mapupdate command must have no args")
+            return "args_len_error"
+        
+        return None
+    
+class BattleFlowCommander(MapCommand):
+    """
+    use this to control the battle flow. this will call gameflowdirector's  create_sequence_list method to create a sequence list
+    when recieve heading, call this commander's execute method
+    execute() check who will be next be looking at the sequence list, and call the corresponding publisher (server direct)
+    headings and args that leads to this commander:
+    1. h:readybattle args:
+    2. h:finnishround args: numofoperator
+    get identity from self, as we do send Player into MapCommand
+    """
+
+    logger = Logger("BattleFlowCommander")
+    static_counter:int = 0
+
+    def set_battle_sequence_list(self, battle_sequence_list:list) -> None:
+        self.__battle_sequence_list = battle_sequence_list
+
+    def execute(self) -> None:
+        chosen_operator:Operator = self.__battle_sequence_list[BattleFlowCommander.static_counter]
+        identity:Identity = chosen_operator.get_identity() # do determine which publisher to call
+        msg:str = ""
+
+        while not chosen_operator.is_alive():
+            BattleFlowCommander.static_counter += 1
+            chosen_operator = self.__battle_sequence_list[BattleFlowCommander.static_counter]
+            identity = chosen_operator.get_identity()
+            msg = f"{BattleFlowCommander.static_counter / 2}_turn"
+        
+        BattleFlowCommander.static_counter += 1
+
+        if (identity == Identity.ATTACK):
+            BattleFlowCommander.logger.info(f"{type(self)}: Attacker's {BattleFlowCommander.static_counter}th operator's turn")
+            self.get_map().get_game_data_publisher().publish_client_A_server_actively(msg)
+        elif (identity == Identity.DEFEND):
+            BattleFlowCommander.logger.info(f"{type(self)}: Defender's {BattleFlowCommander.static_counter}th operator's turn")
+            self.get_map().get_game_data_publisher().publish_client_B_server_actively(msg)
+
+        return "success" #success reply incoming message w/ id; use acitve publisher to send who's round to the client
+
+    def check(self) -> bool:
+        if not isinstance(self.get_map().get_game_flow_director().get_state(), BattleState):
+            BattleFlowCommander.logger.error("battleflowcommander command can only be used in battle state")
+            return "not_in_battle_state_error"
+        elif (len(self.get_args()) != 0):
+            BattleFlowCommander.logger.error("battleflowcommander command must have no args")
             return "args_len_error"
         
         return None

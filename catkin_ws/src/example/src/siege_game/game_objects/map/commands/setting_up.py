@@ -32,6 +32,7 @@ class SetOperatorSettingUpCommand(MapCommand):
             self.get_map().get_game_data_publisher().publish_client_A_server_actively("start_battle")
             self.get_map().get_game_data_publisher().publish_client_B_server_actively("start_battle")
             self.get_map().get_game_flow_director().next_state() # change state to battle
+            self.get_map().get_game_flow_director().battle_sequence(self.get_map().get_game_data_publisher())
             return True
         else:
             return False

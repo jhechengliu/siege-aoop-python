@@ -1,5 +1,6 @@
 from siege_game.game_objects.logger import Logger
 from siege_game.game_objects.states.state import State, StartState, BattleState, SettingUpState, EndState
+from collections import deque
 
 class GameFlowDirector:
     logger = Logger('GameFlowDirector')
@@ -26,5 +27,10 @@ class GameFlowDirector:
     def get_state(self):
         return self.__state
 
-    # control operator setting sequence
+    # # control operator sequence
+    # def create_battle_sequence_list(self, attacker_operators:deque, defender_operators:deque) -> deque:
+    #     # Combine the two lists in an alternating sequence
+    #     # list of Operator
+    #     combined_sequence = [operator for pair in zip((attacker_operators), (defender_operators)) for operator in pair]
+    #     return list(combined_sequence)
     
