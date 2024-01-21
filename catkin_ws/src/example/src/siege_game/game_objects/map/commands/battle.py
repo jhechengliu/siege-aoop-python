@@ -256,7 +256,5 @@ class ReadyBattleBattleCommand(MapCommand):
         elif (len(self.get_args()) != 0):
             ReadyBattleBattleCommand.logger.error(f"{type(self)}: readybattle command must have no args")
             return "args_len_error"
-        else:
-            ReadyBattleBattleCommand.logger.error(f"{type(self)}: unknown error")
-            return "unknown_error"
+        
         return None
