@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import rospy
 from std_msgs.msg import String
+import json
 
 from siege_game.game_objects.logger import Logger
 
@@ -73,5 +74,5 @@ class GameDataPublisher:
         GameDataPublisher.logger.info(f"Sending active data to server client B channel: {msg}")
         self.__server_client_B_publisher.publish(self.__server_client_B_message)
 
-    
+
 

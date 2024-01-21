@@ -26,5 +26,5 @@ class GameFlowDirector:
     def get_state(self):
         return self.__state
 
-    
+    # control operator setting sequence
     

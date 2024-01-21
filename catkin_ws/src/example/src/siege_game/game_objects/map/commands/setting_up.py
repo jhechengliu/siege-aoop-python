@@ -41,7 +41,7 @@ class SetOperatorSettingUpCommand(MapCommand):
             SetOperatorSettingUpCommand.logger.error(f"setoperator command can only be used in setting up state. Current State: {self.get_map().get_game_flow_director().get_state()}")
             return "not_in_setting_up_state_error"
         elif (len(self.get_args()) != 2):
-            SetOperatorSettingUpCommand.logger.error("Args len must be 3")
+            SetOperatorSettingUpCommand.logger.error("Args len must be 2")
             return "args_len_error"
         elif (self.get_identity() == Identity.ATTACK and len(self.get_map().get_attackers()) >= self.get_map().get_max_attacker_count()):
             SetOperatorSettingUpCommand.logger.error("Cant add another Attacker because attacker count reached max limit")

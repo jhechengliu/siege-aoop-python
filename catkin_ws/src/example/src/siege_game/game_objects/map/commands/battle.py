@@ -2,7 +2,8 @@ from siege_game.game_objects.map.commands.map_command import MapCommand
 from siege_game.game_objects.logger import Logger
 from siege_game.game_objects.pawn.operator import Operator
 from siege_game.game_objects.constants.identity import Identity
-from typing import List
+from siege_game.game_objects.states.state import BattleState
+from typing import List, Dict
 from collections import deque
 import json
 
@@ -23,17 +24,17 @@ class PlayerMovementBattleCommand(MapCommand):
         # check_sight(map_data:dict, location_a:List[float], location_b:List[float]) -> bool:
         if (self.get_map().get_sight_checker().check_sight(self.get_map().get_map_data(), operator.get_location(), [self.get_args[1](), self.get_args[2]()]) ):
             operator.set_location([self.get_args[1], self.get_args[2]])
-            return "success"
+            return "success" #success_stenima
         else:
-            return "not-in-sight-error"
+            return "fail_block"
             # use dash (-) to connect heading
     
     def check(self) -> bool:
-        if not isinstance(self.get_map().get_game_flow_director().get_state(), Battle):
+        if not isinstance(self.get_map().get_game_flow_director().get_state(), BattleState):
             PlayerMovementBattleCommand.logger.error("move command can only be used in battle state")
             return "not-in-battle-state-error"
-        elif (len(self.get_args()) != 3):
-            PlayerMovementBattleCommand.logger.error(f"{type(self)}: Args len must be 3")
+        elif (len(self.get_args()) != 2):
+            PlayerMovementBattleCommand.logger.error(f"{type(self)}: Args len must be 2")
             return "args-len-error"
 
         return None
@@ -56,20 +57,17 @@ class PlayerCheckSightCommand(MapCommand):
             opponents:deque = self.get_map().get_attackers()
 
         # check_sight(map_data:dict, location_a:List[float], location_b:List[float]) -> bool:
-        # msg = {}
-        # for i, opponent in enumerate(opponents):
-        #     if (self.get_map().get_sight_checker().check_sight(self.get_map().get_map_data(), operator.get_location(), opponent.get_location())):
-        #         msg[str(i)] = 1
-        #     else:
-        #         msg[str(i)] = 0
+        in_sight_list:List = []
+        for i, opponent in enumerate(opponents):
+            if (self.get_map().get_sight_checker().check_sight(self.get_map().get_map_data(), operator.get_location(), opponent.get_location())):
+                in_sight_list.append(i)
 
-        # return "success_" + json.dumps(msg) #convert from dictionary to json-formatted string
-            # success_{json}
-            # {"in_sight": [0,1]}
+        msg:dict = {"in_sight": in_sight_list}
+        return "success_" + json.dumps(msg) #convert from dictionary to json-formatted string
 
 
     def check(self) -> bool:
-        if not isinstance(self.get_map().get_game_flow_director().get_state(), Battle):
+        if not isinstance(self.get_map().get_game_flow_director().get_state(), BattleState):
             PlayerCheckSightCommand.logger.error("check_sight command can only be used in battle state")
             return "not_in_battle_state_error"
         
@@ -95,13 +93,52 @@ class PlayerShootCommand(MapCommand):
         if not (self.get_map().get_sight_checker().check_sight(self.get_map().get_map_data(), operator.get_location(), opponent.get_location())):
             return "not-in-sight-error"
         # else -> in sight, contunue. use shooting system to calculate damage
+        # shoot sys, not implemented yet
         self.get_map().get_shooting_system().shoot(operator, opponent)
         return f"success_{str(opponent.get_hp())}"
 
 
     def check(self) -> bool:
-        if not isinstance(self.get_map().get_game_flow_director().get_state(), Battle):
-            PlayerCheckSightCommand.logger.error("check_sight command can only be used in battle state")
+        if not isinstance(self.get_map().get_game_flow_director().get_state(), BattleState):
+            PlayerCheckSightCommand.logger.error(f"{type(self)}: check_sight command can only be used in battle state")
             return "not_in_battle_state_error"
+        elif (len(self.get_args()) != 1):
+            PlayerCheckSightCommand.logger.error(f"{type(self)}: Args len must be 1")
+        
+        return None
+    
+class MapUpdateCommand(MapCommand):
+    """
+    command: h:mapupdate, no args => send map data to client
+    """
+    logger = Logger("MapUpdateCommand")
+
+    def execute(self) -> str:
+        operators:List = []
+        for i, operator in self.get_map().get_attackers():
+            map_operator_data:dict = {}
+            map_operator_data["index"] = i
+            map_operator_data["location"] = operator.get_location()
+            map_operator_data["identity"] = "attacker"
+            operators.append(map_operator_data)
+        for i, operator in self.get_map().get_defenders():
+            map_operator_data:dict = {}
+            map_operator_data["index"] = i
+            map_operator_data["location"] = operator.get_location()
+            map_operator_data["identity"] = "defender"
+            operators.append(map_operator_data)
+        
+        msg:dict = {"player": operators}
+        msg = json.dumps(msg)
+        
+        return f"success_" + msg
+
+    def check(self) -> bool:
+        if not isinstance(self.get_map().get_game_flow_director().get_state(), BattleState):
+            MapUpdateCommand.logger.error("mapupdate command can only be used in battle state")
+            return "not_in_battle_state_error"
+        elif (len(self.get_args()) != 0):
+            MapUpdateCommand.logger.error("mapupdate command must have no args")
+            return "args_len_error"
         
         return None
