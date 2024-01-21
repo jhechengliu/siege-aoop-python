@@ -44,7 +44,10 @@ class Invoker():
             # self.__map.get_game_data_publisher().publishDetectClientA()
             # self.__map.get_game_data_publisher().publishDetectClientB()
             # rospy.sleep(1.)
+            for game_invoker in self.__game_invokers.values():
+                game_invoker.run()
             pass
+
 
     def run_terminal(self):
         while not rospy.is_shutdown() and (not self.__force_close):

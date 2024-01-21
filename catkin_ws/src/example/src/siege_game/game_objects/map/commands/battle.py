@@ -173,7 +173,7 @@ class BattleFlowBattleCommander(MapCommand):
     """
 
     logger = Logger("BattleFlowCommander")
-    static_counter:int = 0
+    static_counter:int = 1
 
     def execute(self) -> str:
         self.__battle_sequence_list = self.get_map().get_game_flow_director().create_battle_sequence_list ( self.get_map().get_attackers(), self.get_map().get_defenders() ) # list of Operator
@@ -185,7 +185,7 @@ class BattleFlowBattleCommander(MapCommand):
             BattleFlowBattleCommander.static_counter += 1
             chosen_operator = self.__battle_sequence_list[BattleFlowBattleCommander.static_counter]
             identity = chosen_operator.get_identity()
-            msg = f"{str(BattleFlowBattleCommander.static_counter / 2)}_turn"
+            msg = f"{str(BattleFlowBattleCommander.static_counter // 2)}_turn"
         
         BattleFlowBattleCommander.static_counter += 1 if BattleFlowBattleCommander.static_counter < len(self.__battle_sequence_list) else 0
         # tenary operator, if true, return 1, else return 0
@@ -235,5 +235,28 @@ class PlayerShootBattleCommand(MapCommand):
             return "args_len_error"
         else:
             PlayerCheckSightBattleCommand.logger.error(f"{type(self)}: unknown error")
+            return "unknown_error"
+        return None
+        
+class ReadyBattleBattleCommand(MapCommand):
+    """
+    command: h:readybattle args:
+    """
+    logger = Logger("ReadyBattleSettingUpCommand")
+
+    def execute(self) -> None:
+        self.get_send_player().set_ready_battle(True)
+        ReadyBattleBattleCommand.logger.debug(f"{type(self)}: Player {self.get_send_player().get_name()}: readybattle")
+        return "success"
+
+    def check(self) -> bool:
+        if not isinstance(self.get_map().get_game_flow_director().get_state(), BattleState):
+            ReadyBattleBattleCommand.logger.error(f"{type(self)}: readybattle command can only be used in setting up state")
+            return "not_in_setting_up_state_error"
+        elif (len(self.get_args()) != 0):
+            ReadyBattleBattleCommand.logger.error(f"{type(self)}: readybattle command must have no args")
+            return "args_len_error"
+        else:
+            ReadyBattleBattleCommand.logger.error(f"{type(self)}: unknown error")
             return "unknown_error"
         return None

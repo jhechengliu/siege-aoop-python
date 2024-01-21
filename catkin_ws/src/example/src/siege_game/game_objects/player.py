@@ -12,6 +12,7 @@ class Player():
         self.__identity:Identity = identity
         self.__commander:commander_file.Commander = commander
         self.__has_finish_setting_up = False # redundant but i already wrote some func else so i'll just leave it here
+        self.__ready_battle = False
 
     def execute_command(self, command:str) -> str:
         return self.__commander.execute_command(command, self)
@@ -24,6 +25,12 @@ class Player():
 
     def get_has_finish_setting_up(self):
         return self.__has_finish_setting_up
+    
+    def set_ready_battle(self, ready_battle:bool):
+        self.__ready_battle = ready_battle
+
+    def get_ready_battle(self):
+        return self.__ready_battle
     
     def get_name(self):
         return self.__name

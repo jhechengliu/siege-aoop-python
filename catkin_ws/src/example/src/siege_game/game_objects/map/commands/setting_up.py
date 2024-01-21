@@ -100,4 +100,3 @@ class FinishSettingUpCommand(MapCommand):
         else:
             return None
 
-        
