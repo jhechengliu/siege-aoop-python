@@ -337,6 +337,7 @@ class GameInvoker():
         self.__logger.debug(f"checking players: A: {self.__client_A_player}, B: {self.__client_B_player}")
         self.__logger.debug(f"Pass the Test?: {self.__client_A_player and self.__client_B_player}")
         if self.__client_A_player and self.__client_B_player:
+            rospy.sleep(3)
             self.publish_client_A_server_actively("start_setting")
             self.publish_client_B_server_actively("start_setting")
             self.__game.get_map().get_game_flow_director().next_state()
