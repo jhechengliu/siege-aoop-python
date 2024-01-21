@@ -136,8 +136,8 @@ class MapUpdateBattleCommand(MapCommand):
             map_operator_data["location"] = operator.get_location()
             map_operator_data["identity"] = "attacker"
             operators.append(map_operator_data)
-        for i, operator in self.get_map().get_defenders():
-            map_operator_data:dict = {}
+        for i in range (0, len(self.get_map().get_defenders())):
+            operator = self.get_map().get_defender(i)
             map_operator_data["index"] = i
             map_operator_data["location"] = operator.get_location()
             map_operator_data["identity"] = "defender"
