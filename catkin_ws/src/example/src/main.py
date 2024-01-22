@@ -11,7 +11,7 @@ from siege_game.game_objects.logger import Logger
 
 if __name__ == "__main__":
     while True:
-        rospy.init_node('cube_position_node', log_level=rospy.FATAL)
+        rospy.init_node('cube_position_node', log_level=rospy.DEBUG)
         logging.basicConfig(level=logging.NOTSET)
         logger = Logger("main")
         logger.debug("Start server...")
