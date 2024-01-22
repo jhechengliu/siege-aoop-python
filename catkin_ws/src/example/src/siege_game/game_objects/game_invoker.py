@@ -169,12 +169,13 @@ class GameInvoker():
             self.__game_invoker_client_B_player_execute_command(id, command)
             
     def __client_get_message_info(self, A_or_B:str, id, heading, args):
-        self.__logger.info(f"client {A_or_B} callback received message:")
-        self.__logger.info("================")
-        self.__logger.info(f"id: {id}")
-        self.__logger.info(f"heading: {heading}")
-        self.__logger.info(f"args: {args}")
-        self.__logger.info("================")
+        # self.__logger.info(f"client {A_or_B} callback received message:")
+        # self.__logger.info("================")
+        # self.__logger.info(f"id: {id}")
+        # self.__logger.info(f"heading: {heading}")
+        # self.__logger.info(f"args: {args}")
+        # self.__logger.info("================")
+        pass
 
     def make_client_A_player(self, name, identity, commander):
         self.__client_A_player = Player(name, identity, commander)
