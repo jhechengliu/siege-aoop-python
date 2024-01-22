@@ -74,3 +74,34 @@ class RequestBattleCommand(MapCommand):
     def check(self) -> str:
         return None
     
+class WhoWinBattleCommand(MapCommand):
+    """
+    command:whowin args:
+    """
+    logger = Logger("WhoWinBattleCommand")
+
+    def execute(self) -> str:
+        attacker_count = self.get_game().get_attacker_click_count()
+        defender_count = self.get_game().get_defender_click_count()
+        if (self.get_identity() == Identity.ATTACK):
+            if (attacker_count > defender_count):
+                return f"success_win"
+            elif (attacker_count < defender_count):
+                return f"success_lose"
+            else:
+                return f"success_draw"
+            
+        elif (self.get_identity() == Identity.DEFEND):
+            if (defender_count > attacker_count):
+                return f"success_win"
+            elif (defender_count < attacker_count):
+                return f"success_lose"
+            else:
+                return f"success_draw"
+        else:
+            return "error"
+        
+
+    def check(self) -> str:
+        return None
+    
