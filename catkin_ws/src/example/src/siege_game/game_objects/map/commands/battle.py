@@ -83,21 +83,22 @@ class WhoWinBattleCommand(MapCommand):
     def execute(self) -> str:
         attacker_count = self.get_game().get_attacker_click_count()
         defender_count = self.get_game().get_defender_click_count()
+        
         if (self.get_identity() == Identity.ATTACK):
             if (attacker_count > defender_count):
-                return f"success_win"
+                return f"success_win_{attacker_count}_{defender_count}"
             elif (attacker_count < defender_count):
-                return f"success_lose"
+                return f"success_lose_{attacker_count}_{defender_count}"
             else:
-                return f"success_draw"
+                return f"success_draw_{attacker_count}_{defender_count}"
             
         elif (self.get_identity() == Identity.DEFEND):
             if (defender_count > attacker_count):
-                return f"success_win"
+                return f"success_win_{defender_count}_{attacker_count}"
             elif (defender_count < attacker_count):
-                return f"success_lose"
+                return f"success_lose_{defender_count}_{attacker_count}"
             else:
-                return f"success_draw"
+                return f"success_draw_{defender_count}_{attacker_count}"
         else:
             return "error"
         
