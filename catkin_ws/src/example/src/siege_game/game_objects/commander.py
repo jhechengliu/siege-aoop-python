@@ -1,7 +1,6 @@
 from siege_game.game_objects.map.commands.map_command import MapCommand
 from siege_game.game_objects.map.commands.start import StartGameMapCommand
 from siege_game.game_objects.map.commands.battle import ReadyBattleCommand, ClickBattleCommand, RequestBattleCommand, WhoWinBattleCommand
-from siege_game.game_objects.player import Player
 from siege_game.game_objects.logger import Logger
 
 class Commander():
@@ -30,7 +29,7 @@ class Commander():
             "request": RequestBattleCommand,
             "whowin": WhoWinBattleCommand
         }
-    def execute_command(self, command:str, player:Player) -> str:
+    def execute_command(self, command:str, player) -> str:
         """
         Executes a command for a player and returns the result.
 
