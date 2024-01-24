@@ -19,8 +19,9 @@ class TestGameInvoker(unittest.TestCase):
         
 
     def test_get_client_A_player(self):
-        player_A = Player("Alice", Identity.ATTACK, self.commander)
-        self.assertEqual(self.game_invoker.get_client_A_player(), player_A)
+        self.game_invoker.make_client_A_player("Alice", Identity.ATTACK, self.commander)
+        self.assertEqual(self.game_invoker.get_client_A_player().get_name(), "Alice")
+        self.assertEqual(self.game_invoker.get_client_A_player().get_identity(), Identity.ATTACK)
 
 if __name__ == '__main__':
     unittest.main()
