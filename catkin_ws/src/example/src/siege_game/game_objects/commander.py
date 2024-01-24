@@ -1,7 +1,5 @@
-from siege_game.game_objects.map.map import Map
 from siege_game.game_objects.map.commands.map_command import MapCommand
 from siege_game.game_objects.map.commands.start import StartGameMapCommand
-from siege_game.game_objects.map.commands.setting_up import SetOperatorSettingUpCommand, FinishSettingUpCommand
 from siege_game.game_objects.map.commands.battle import ReadyBattleCommand, ClickBattleCommand, RequestBattleCommand, WhoWinBattleCommand
 from siege_game.game_objects.player import Player
 from siege_game.game_objects.logger import Logger
@@ -18,8 +16,6 @@ class Commander():
         self.__game:Game = game
         self.__command_headings = {
             "start": StartGameMapCommand,
-            "setoperator": SetOperatorSettingUpCommand,
-            "finishsettingup": FinishSettingUpCommand,
             "ready": ReadyBattleCommand,
             "click": ClickBattleCommand,
             "request": RequestBattleCommand,

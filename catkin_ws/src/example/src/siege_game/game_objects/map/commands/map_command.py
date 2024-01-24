@@ -1,7 +1,5 @@
 from abc import ABC
 import abc
-from siege_game.game_objects.states.state import State
-from siege_game.game_objects.map.map import Map
 from siege_game.game_objects.constants.identity import Identity
 from typing import Tuple
 
@@ -23,9 +21,6 @@ class MapCommand(ABC):
     @abc.abstractmethod
     def check(self) -> str: 
         raise NotImplementedError()
-    
-    def get_map(self):
-        return self.__game.get_map()
     
     def get_args(self) -> Tuple:
         return self.__args
