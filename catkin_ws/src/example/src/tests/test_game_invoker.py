@@ -1,7 +1,7 @@
 import sys
 import os
 import unittest
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../..')))
 
 from src.siege_game.game_objects.game_invoker import GameInvoker
 from src.siege_game.game_objects.player import Player
