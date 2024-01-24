@@ -16,7 +16,27 @@ class Invoker():
 
     def __init__(self) -> None:
         """
-        Initialize the Invoker with an empty list to store commands.
+        The Invoker class manages all game invokers. It handles the creation of new game invokers,
+        connection to subscribers, and publishing to the server connect.
+
+        Attributes:
+            logger: A Logger object for logging messages.
+            __game_invokers: A dictionary to store game invokers.
+            __unfull_game_id: A unique identifier for the unfull game.
+            connect_subscriber: A rospy.Subscriber object for subscribing to '/connect'.
+            __server_connect_publisher: A rospy.Publisher object for publishing to '/server_connect'.
+            __server_connect_message: A String message for the server connect.
+            __force_close: A boolean flag to indicate whether to force close the game.
+
+        Methods:
+            get_new_unfull_game(game_id: str): Creates a new GameInvoker and adds it to the game_invokers dictionary.
+            del_game(game_id: str): Deletes a GameInvoker from the game_invokers dictionary.
+            always_run(): Keeps the program running until rospy is shutdown or force_close is True.
+            run(): Keeps the program running and publishes game data until rospy is shutdown or force_close is True.
+            run_terminal(): Keeps the program running and logs terminal input until rospy is shutdown or force_close is True.
+            connect_callback(message): Handles the callback for the '/connect' subscriber.
+            connect_execute(heading:str, args:List): Executes the command received from the '/connect' topic.
+            publish_server_connect(id, msg): Publishes a message to the '/server_connect' topic.
         """
         Invoker.logger.warning("Use get_instance class method to obtain the instance")
 
@@ -32,26 +52,37 @@ class Invoker():
         self.__force_close = False
 
     def get_new_unfull_game(self, game_id):
+        """
+        Creates a new GameInvoker and adds it to the game_invokers dictionary.
+
+        Args:
+            game_id (str): The unique identifier for the game.
+        """
         self.__game_invokers[game_id] = GameInvoker(game_id)
         Invoker.logger.debug(f"New Game Invoker id: {game_id} added")
 
     def del_game(self, game_id):
+        """
+        Deletes a GameInvoker from the game_invokers dictionary.
+
+        Args:
+            game_id (str): The unique identifier for the game.
+        """
         del self.__game_invokers[game_id]
         Invoker.logger.debug(f"del Game Invoker id: {game_id}")
-        
-    def always_run(self):
-        while (not rospy.is_shutdown()) and (not self.__force_close):
-            pass
 
     def run(self):
+        """
+        Keeps the program running and publishes game data until rospy is shutdown or force_close is True.
+        """
         while (not rospy.is_shutdown()) and (not self.__force_close):
-            # self.__map.get_game_data_publisher().publishDetectClientA()
-            # self.__map.get_game_data_publisher().publishDetectClientB()
-            # rospy.sleep(1.)
             pass
 
 
     def run_terminal(self):
+        """
+        Keeps the program running and logs terminal input until rospy is shutdown or force_close is True.
+        """
         while not rospy.is_shutdown() and (not self.__force_close):
             input_str = input()
             Invoker.logger.info(f"Received Command \"{input_str}\" from terminal")
@@ -97,6 +128,14 @@ class Invoker():
                     Invoker.logger.error("reboot args must be 0")
 
     def connect_callback(self, message):
+        """
+            Handles the callback for the '/connect' subscriber.
+
+            Args:
+                message: The message received from the '/connect' topic.
+
+            This method parses the message, logs the received command, and executes the command.
+        """
         message_str:str = message.data
         Invoker.logger.info(f"connect callback received: {message_str}")
         message_str_list = message_str.split()
@@ -113,12 +152,16 @@ class Invoker():
             
     def connect_execute(self, heading:str, args:List) -> str:
         """
-        connect command all response:
-        args_must_be_0
-        client_A
-        client_B
-        full
-        fatal_error
+            Executes the command received from the '/connect' topic.
+
+            Args:
+                heading (str): The command to execute.
+                args (List): The arguments for the command.
+
+            Returns:
+                str: The result of the command execution.
+
+            This method executes the command and returns the result.
         """
         if (heading == "connect"):
             if (len(args) != 0):
@@ -147,6 +190,15 @@ class Invoker():
                     return "fatal_error"
                 
     def publish_server_connect(self, id, msg):
+        """
+            Publishes a message to the '/server_connect' topic.
+
+            Args:
+                id: The unique identifier for the game.
+                msg: The message to publish.
+
+            This method constructs the full message, logs the message, and publishes it to the '/server_connect' topic.
+        """
         full_msg = f"{id} {msg}"
         self.__server_connect_message.data = full_msg
         Invoker.logger.info(f"Sending data to server connect channel: {full_msg}")
