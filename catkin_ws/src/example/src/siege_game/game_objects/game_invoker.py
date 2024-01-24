@@ -34,6 +34,10 @@ class GameInvoker():
         self.__game = Game(game_id, self)
 
     def print_status(self):
+        """
+        Prints the current status of the game. This includes the status of both clients and their players.
+        Currently, this method is not implemented.
+        """
         # self.__logger.debug(f"----- ID: {self.__game_id} Status -----")
         # self.__logger.debug(f"Client A Player Object:{self.__client_A_player}")
         # self.__logger.debug(f"Client B Player Object:{self.__client_B_player}")
@@ -43,31 +47,79 @@ class GameInvoker():
         pass
 
     def get_client_A_player(self):
+        """
+        Returns the player object for Client A.
+
+        Returns:
+            The player object for Client A.
+        """
         return self.__client_A_player
     
     def get_client_B_player(self):
+        """
+        Returns the player object for Client B.
+
+        Returns:
+            The player object for Client B.
+        """
         return self.__client_B_player
     
     def get_client_A_connected(self):
+        """
+        Checks if Client A is connected.
+
+        Returns:
+            True if Client A is connected, False otherwise.
+        """
         return self.__client_A_connected
     
     def get_client_B_connected(self):
+        """
+        Checks if Client B is connected.
+
+        Returns:
+            True if Client B is connected, False otherwise.
+        """
         return self.__client_B_connected
     
     def set_client_A_connected(self, connected:bool):
+        """
+        Sets the connection status of Client A.
+
+        Args:
+            connected (bool): The connection status to set for Client A.
+        """
         self.__client_A_connected = connected
 
     def set_client_B_connected(self, connected:bool):
+        """
+        Sets the connection status of Client B.
+
+        Args:
+            connected (bool): The connection status to set for Client B.
+        """
         self.__client_B_connected = connected
     
     def client_A_callback(self, message):
         """
-        global error:
-        empty_command_error
-        not_signed_in_error
+        Handles the callback for Client A. This function is triggered when a message is received from Client A.
 
-        command_not_found_error
-        command_denied_error
+        The function parses the message, identifies the command and its arguments, and executes the command.
+
+        Args:
+            message (str): The message received from Client A. The message should be in the format:
+                "<id> <command> <args>"
+                where:
+                - <id> is the identifier for the client
+                - <command> is the command to be executed
+                - <args> are the arguments for the command
+
+        The function handles the following commands:
+        - "signin": Signs in the client. The args should be in the format "<username> <password>".
+        - "signout": Signs out the client. The args should be empty.
+        - Any other command is passed to the `__game_invoker_client_A_player_execute_command` function.
+
+        The function returns an error message if the command is not recognized or if the command is denied.
         """
         message_str_list = message.data.split()
         command = " ".join(message_str_list[1:])
@@ -116,6 +168,26 @@ class GameInvoker():
             self.__game_invoker_client_A_player_execute_command(id, command)
 
     def client_B_callback(self, message):
+        """
+        Handles the callback for Client B. This function is triggered when a message is received from Client B.
+
+        The function parses the message, identifies the command and its arguments, and executes the command.
+
+        Args:
+            message (str): The message received from Client B. The message should be in the format:
+                "<id> <command> <args>"
+                where:
+                - <id> is the identifier for the client
+                - <command> is the command to be executed
+                - <args> are the arguments for the command
+
+        The function handles the following commands:
+        - "signin": Signs in the client. The args should be in the format "<username> <password>".
+        - "signout": Signs out the client. The args should be empty.
+        - Any other command is passed to the `__game_invoker_client_B_player_execute_command` function.
+
+        The function returns an error message if the command is not recognized or if the command is denied.
+        """
         message_str_list = message.data.split()
         command = " ".join(message_str_list[1:])    #connect back, space between; exclude id
         id = None
@@ -169,6 +241,17 @@ class GameInvoker():
             self.__game_invoker_client_B_player_execute_command(id, command)
             
     def __client_get_message_info(self, A_or_B:str, id, heading, args):
+        """
+        Logs the message information received from a client.
+
+        This method is currently not implemented.
+
+        Args:
+            A_or_B (str): Indicates whether the message is from Client A or Client B.
+            id: The identifier for the client.
+            heading: The heading of the message.
+            args: The arguments of the message.
+        """
         # self.__logger.info(f"client {A_or_B} callback received message:")
         # self.__logger.info("================")
         # self.__logger.info(f"id: {id}")
@@ -178,12 +261,49 @@ class GameInvoker():
         pass
 
     def make_client_A_player(self, name, identity, commander):
+        """
+        Creates a player for Client A.
+
+        Args:
+            name: The name of the player.
+            identity: The identity of the player.
+            commander: The commander of the player.
+        """
         self.__client_A_player = Player(name, identity, commander)
 
     def make_client_B_player(self, name, identity, commander):
+        """
+        Creates a player for Client B.
+
+        Args:
+            name: The name of the player.
+            identity: The identity of the player.
+            commander: The commander of the player.
+        """
         self.__client_B_player = Player(name, identity, commander)
 
     def __sign_in_process(self, id, args:List, A_or_B:str, publish_function:Callable, opponent_active_publish_function:Callable, client_player):
+        """
+        Handles the sign-in process for a client.
+
+        This function checks if the client is already signed in, if the chosen identity is available, and then signs in the client.
+        It also checks the status of the opponent and sends the appropriate response.
+
+        Args:
+            id: The identifier for the client.
+            args (List): The arguments for the sign-in command. Should be in the format ['A'/'D', 'name'], where 'A'/'D' is the chosen identity (Attacker/Defender) and 'name' is the name of the player.
+            A_or_B (str): Indicates whether the client is Client A or Client B.
+            publish_function (Callable): The function to call to publish a response to the client.
+            opponent_active_publish_function (Callable): The function to call to publish a response to the opponent.
+            client_player: The player object for the client. None if the client is not signed in.
+
+        The function sends the following responses:
+        - "already_signin": If the client is already signed in.
+        - "identity_used": If the chosen identity is already in use by the opponent.
+        - "identity_error": If the chosen identity is not 'A' (Attacker) or 'D' (Defender).
+        - "success_<opponent_name>_<opponent_identity>": If the sign-in is successful. <opponent_name> and <opponent_identity> are the name and identity of the opponent, or 'none' if the opponent is not signed in.
+        - "args_len_error": If the number of arguments is not 2.
+        """
         if len(args) == 2:
                 if (client_player != None):
                     self.__logger.error(f"Client {A_or_B} already signed in")
@@ -276,6 +396,21 @@ class GameInvoker():
             publish_function(id, "args_len_error")
 
     def __sign_out_process(self, id, args:List, A_or_B:str, publish_function:Callable, client_player):
+        """
+        Handles the sign-out process for a client.
+
+        Args:
+            id: The identifier for the client.
+            args (List): The arguments for the sign-out command. Should be empty.
+            A_or_B (str): Indicates whether the client is Client A or Client B.
+            publish_function (Callable): The function to call to publish a response to the client.
+            client_player: The player object for the client. None if the client is not signed in.
+
+        The function sends the following responses:
+        - "args_len_error": If the number of arguments is not 0.
+        - "already_signout": If the client is already signed out.
+        - "success": If the sign-out is successful.
+        """
         if (len(args) != 0):
             self.__logger.error("signout Args len must be 0")
             publish_function(id, "args_len_error")
@@ -294,28 +429,61 @@ class GameInvoker():
                 return
             
     def publish_client_A_server(self, id, msg):
+        """
+        Publishes a message to Client A.
+
+        Args:
+            id: The identifier for the client.
+            msg: The message to send.
+        """
         full_msg = f"{id} {msg}"
         self.__server_client_A_message.data = full_msg
         self.__logger.info(f"Sending data to server client A channel: {full_msg}")
         self.__server_client_A_publisher.publish(self.__server_client_A_message)
     
     def publish_client_A_server_actively(self, msg):
+        """
+        Actively publishes a message to Client A.
+
+        Args:
+            msg: The message to send.
+        """
         self.__server_client_A_message.data = msg
         self.__logger.info(f"Sending active data to server client A channel: {msg}")
         self.__server_client_A_publisher.publish(self.__server_client_A_message)
 
     def publish_client_B_server(self, id, msg):
+        """
+        Publishes a message to Client B.
+
+        Args:
+            id: The identifier for the client.
+            msg: The message to send.
+        """
         full_msg = f"{id} {msg}"
         self.__server_client_B_message.data = full_msg
         self.__logger.info(f"Sending data to server client B channel: {full_msg}")
         self.__server_client_B_publisher.publish(self.__server_client_B_message)
 
     def publish_client_B_server_actively(self, msg):
+        """
+        Actively publishes a message to Client B.
+
+        Args:
+            msg: The message to send.
+        """
         self.__server_client_B_message.data = msg
         self.__logger.info(f"Sending active data to server client B channel: {msg}")
         self.__server_client_B_publisher.publish(self.__server_client_B_message)
 
     def __game_invoker_client_A_player_execute_command(self, id, command):
+        """
+        Executes a command for Client A.
+
+        Args:
+            id: The identifier for the client.
+            command: The command to execute.
+        """
         if self.__client_A_player == None:
             self.__logger.error("Client A need to sign in in order to use other commands to affect the game")
             self.publish_client_A_server(id, "not_signed_in_error")
@@ -326,6 +494,13 @@ class GameInvoker():
             self.publish_client_A_server(id, reply)
 
     def __game_invoker_client_B_player_execute_command(self, id, command):
+        """
+        Executes a command for Client B.
+
+        Args:
+            id: The identifier for the client.
+            command: The command to execute.
+        """
         if self.__client_B_player == None:
             self.__logger.error("Client B need to sign in in order to use other commands to affect the game")
             self.publish_client_B_server(id, "not_signed_in_error")
@@ -336,10 +511,12 @@ class GameInvoker():
             self.publish_client_B_server(id, reply)
 
     def __check_players_and_send_start_setting(self):
+        """
+        Checks if both players are signed in and sends the "start_setting" command to both clients.
+        """
         self.__logger.debug(f"checking players: A: {self.__client_A_player}, B: {self.__client_B_player}")
         self.__logger.debug(f"Pass the Test?: {self.__client_A_player and self.__client_B_player}")
         if self.__client_A_player and self.__client_B_player:
             rospy.sleep(3)
             self.publish_client_A_server_actively("start_setting")
             self.publish_client_B_server_actively("start_setting")
-            self.__game.get_map().get_game_flow_director().next_state()
