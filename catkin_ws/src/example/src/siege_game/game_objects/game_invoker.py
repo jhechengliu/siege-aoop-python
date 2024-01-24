@@ -9,8 +9,7 @@ from siege_game.game_objects.player import Player
 from siege_game.game_objects.constants.identity import Identity
 from typing import List, Callable
 from siege_game.game import Game
-import unittest
-from player import Player
+
 
 class GameInvoker():
 
@@ -522,15 +521,3 @@ class GameInvoker():
             rospy.sleep(3)
             self.publish_client_A_server_actively("start_setting")
             self.publish_client_B_server_actively("start_setting")
-
-class TestGameInvoker(unittest.TestCase):
-    def setUp(self):
-        self.game_invoker = GameInvoker()
-
-    def test_get_client_A_player(self):
-        player_A = Player("Alice", "A", "CommanderA")
-        self.game_invoker.set_client_A_player(player_A)
-        self.assertEqual(self.game_invoker.get_client_A_player(), player_A)
-
-if __name__ == '__main__':
-    unittest.main()
