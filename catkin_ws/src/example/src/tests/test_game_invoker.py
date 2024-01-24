@@ -1,6 +1,7 @@
 import sys
 import os
 import unittest
+import shortuuid
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../../src')))
 
 from siege_game.game_objects.game_invoker import GameInvoker
@@ -8,7 +9,7 @@ from siege_game.game_objects.player import Player
 
 class TestGameInvoker(unittest.TestCase):
     def setUp(self):
-        self.game_invoker = GameInvoker()
+        self.game_invoker = GameInvoker(shortuuid.uuid())
 
     def test_get_client_A_player(self):
         player_A = Player("Alice", "A", "CommanderA")
