@@ -12,11 +12,14 @@ from siege_game.game import Game
 
 class TestGameInvoker(unittest.TestCase):
     def setUp(self):
-        self.game_invoker = GameInvoker(shortuuid.uuid())
+        self.new_uuid = shortuuid.uuid()
+        self.game_invoker = GameInvoker(self.new_uuid)
+        self.game = Game(self.new_uuid, self.game_invoker)
+        self.commander = Commander(self.game)
+        
 
     def test_get_client_A_player(self):
-        new_uuid = shortuuid.uuid()
-        player_A = Player("Alice", Identity.ATTACK, Commander(Game(shortuuid.uuid(new_uuid), GameInvoker(new_uuid))))
+        player_A = Player("Alice", Identity.ATTACK, self.commander)
         self.assertEqual(self.game_invoker.get_client_A_player(), player_A)
 
 if __name__ == '__main__':
