@@ -1,5 +1,7 @@
-This repo is a starter kit of python (ROS) side for advance-oop class student.  
-You need another repo for python side to run this project.  
-https://github.com/wellyowo/oop-proj-unity/tree/main  
-If you want to know the detail please see this slides.  
-http://gofile.me/773h8/oi727cCdj  
+# UniRosPair
+### A tool that builds a simple string message network between two Unity clients by a python server
+For more details, check for "Customize the Game" Section in this doc for more details: 
+https://github.com/dctime/unirospair-unity/blob/main/UniRosPair.pdf
+
+Unity (client) side: 
+https://github.com/dctime/unirospair-unity
